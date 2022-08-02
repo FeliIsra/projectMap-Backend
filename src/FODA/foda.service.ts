@@ -26,7 +26,7 @@ export class FodaService {
     return this.mapToValues(foda);
   }
 
-  async insertRelation(id: string, factor: FactorDTO) {
+  async insertFactor(id: string, factor: FactorDTO) {
     const foda = await this.fodaModel.findById(id);
     const fodaObject = foda.toObject();
     const factores = fodaObject.factores;
@@ -46,6 +46,15 @@ export class FodaService {
 
   async delete(id: string) {
     return this.fodaModel.deleteOne({ _id: id });
+  }
+
+  async deleteFactor(id: string, idFactor: string) {
+    const foda = await this.fodaModel.findById(id);
+    const fodaObject = foda.toObject();
+    const factores = fodaObject.factores.filter(
+      (factor) => factor._id != idFactor,
+    );
+    return this.fodaModel.findOneAndUpdate({ _id: id }, { factores });
   }
 
   private mapToValues(foda: any): FodaWithValues {

@@ -34,7 +34,7 @@ export class FodaController {
 
   @Post(':id/relation')
   async insertRelation(@Param('id') id: string, @Body() factorDTO: FactorDTO) {
-    const foda = await this.fodaService.insertRelation(id, factorDTO);
+    const foda = await this.fodaService.insertFactor(id, factorDTO);
     return foda;
   }
 
@@ -47,6 +47,15 @@ export class FodaController {
   @Delete(':id')
   async delete(@Param('id') id: string) {
     const response = await this.fodaService.delete(id);
+    return response;
+  }
+
+  @Delete(':id/factor/:idFactor')
+  async deleteFacotr(
+    @Param('id') id: string,
+    @Param('idFactor') idFactor: string,
+  ) {
+    const response = await this.fodaService.deleteFactor(id, idFactor);
     return response;
   }
 }
