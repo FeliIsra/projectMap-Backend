@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { FodaDTO } from './foda.dto';
+import { FactorDTO, FodaDTO } from './foda.dto';
 import { Foda, FodaWithValues } from './foda.type';
 import {
   mapImportanciaToValue,
@@ -21,10 +21,31 @@ export class FodaService {
     });
   }
 
+  async getOne(id: string) {
+    const foda = await this.fodaModel.findById(id);
+    return this.mapToValues(foda);
+  }
+
+  async insertRelation(id: string, factor: FactorDTO) {
+    const foda = await this.fodaModel.findById(id);
+    const fodaObject = foda.toObject();
+    const factores = fodaObject.factores;
+    factores.push(factor);
+    return this.fodaModel.findOneAndUpdate({ _id: id }, { factores });
+  }
+
   async create(newFoda: FodaDTO) {
     const foda = new this.fodaModel(newFoda);
     const fodaCreadted = await foda.save();
     return fodaCreadted;
+  }
+
+  async update(id: string, updated: FodaDTO) {
+    return this.fodaModel.findOneAndUpdate({ _id: id }, updated);
+  }
+
+  async delete(id: string) {
+    return this.fodaModel.deleteOne({ _id: id });
   }
 
   private mapToValues(foda: any): FodaWithValues {

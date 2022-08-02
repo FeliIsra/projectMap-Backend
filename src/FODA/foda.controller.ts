@@ -1,5 +1,13 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
-import { FodaDTO } from './foda.dto';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
+import { FactorDTO, FodaDTO } from './foda.dto';
 import { FodaService } from './foda.service';
 
 @Controller('foda')
@@ -12,9 +20,33 @@ export class FodaController {
     return fodas;
   }
 
+  @Get(':id')
+  async getOne(@Param('id') id: string) {
+    const foda = await this.fodaService.getOne(id);
+    return foda;
+  }
+
   @Post('')
   async insert(@Body() fodaDTO: FodaDTO) {
     const foda = await this.fodaService.create(fodaDTO);
     return foda;
+  }
+
+  @Post(':id/relation')
+  async insertRelation(@Param('id') id: string, @Body() factorDTO: FactorDTO) {
+    const foda = await this.fodaService.insertRelation(id, factorDTO);
+    return foda;
+  }
+
+  @Patch(':id')
+  async update(@Param('id') id: string, @Body() fodaDTO: FodaDTO) {
+    const foda = await this.fodaService.update(id, fodaDTO);
+    return foda;
+  }
+
+  @Delete(':id')
+  async delete(@Param('id') id: string) {
+    const response = await this.fodaService.delete(id);
+    return response;
   }
 }

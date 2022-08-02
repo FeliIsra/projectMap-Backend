@@ -6,3 +6,10 @@ export interface FodaDTO {
     tendencia: string;
   }[];
 }
+
+export interface FactorDTO {
+  area: string;
+  importancia: string;
+  intensidad: string;
+  tendendia: string;
+}
