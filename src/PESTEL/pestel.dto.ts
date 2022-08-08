@@ -1,4 +1,4 @@
-export interface FodaDTO {
+export interface PestelDTO {
   factores: {
     area: string;
     descripcion: string;
@@ -10,6 +10,7 @@ export interface FodaDTO {
 
 export interface FactorDTO {
   area: string;
+  descripcion: string;
   importancia: string;
   intensidad: string;
   tendendia: string;

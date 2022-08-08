@@ -7,6 +7,7 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import * as dotenv from 'dotenv';
 import { FodaModule } from './FODA/foda.module';
+import { PestelModule } from './PESTEL/pestel.module';
 dotenv.config();
 
 @Module({
@@ -15,6 +16,7 @@ dotenv.config();
     UserModule,
     AuthModule,
     FodaModule,
+    PestelModule,
   ],
   controllers: [AppController],
   providers: [AppService],

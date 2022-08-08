@@ -51,7 +51,7 @@ export class FodaController {
   }
 
   @Delete(':id/factor/:idFactor')
-  async deleteFacotr(
+  async deleteFactor(
     @Param('id') id: string,
     @Param('idFactor') idFactor: string,
   ) {
