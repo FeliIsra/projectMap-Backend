@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { UserDTO } from 'src/user/user.dto';
+import { CreateUserDTO } from 'src/user/user.dto';
 import { UserService } from 'src/user/user.service';
 import { AuthService } from './auth.service';
 import { LoginDTO } from './login.dto';
@@ -23,8 +23,8 @@ export class AuthController {
     return 'this can be seen by anyone';
   }
 
-  @Post('register')
-  async register(@Body() userDTO: UserDTO) {
+  @Post('/register')
+  async register(@Body() userDTO: CreateUserDTO) {
     const user = await this.userService.create(userDTO);
     const payload = {
       email: user.email,
