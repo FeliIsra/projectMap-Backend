@@ -10,7 +10,7 @@ export class AnsoffService {
     }
 
     async create(ansoffDto: AnsoffDto): Promise<Ansoff> {
-        const ansoff = new this.ansoffModel(createCatDto);
+        const ansoff = new this.ansoffModel(ansoffDto);
         return ansoff.save();
     }
 
