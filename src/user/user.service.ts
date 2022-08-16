@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { UserDTO } from './user.dto';
+import { CreateUserDTO, UserDTO } from './user.dto';
 import { User } from './user.type';
 import * as bcrypt from 'bcrypt';
 
@@ -9,12 +9,8 @@ import * as bcrypt from 'bcrypt';
 export class UserService {
   constructor(@InjectModel('User') private userModel: Model<User>) {}
 
-  async create(userDTO: UserDTO) {
-    const { email } = userDTO;
-    const user = await this.userModel.findOne({ email });
-    if (user) {
-      throw new HttpException('user already exists', HttpStatus.BAD_REQUEST);
-    }
+  async create(userDTO: CreateUserDTO) {
+    await this.validate(userDTO);
     const createUser = new this.userModel(userDTO);
     await createUser.save();
 
@@ -43,5 +39,15 @@ export class UserService {
   async findByPayload(payload: { email: string }) {
     const { email } = payload;
     return await this.userModel.findOne({ email });
+  }
+
+  async validate(newUser: CreateUserDTO) {
+    const { email, password, confirmPassword } = newUser;
+    if (password !== confirmPassword)
+      throw new HttpException('Passwords not match', HttpStatus.BAD_REQUEST);
+
+    const user = await this.userModel.findOne({ email });
+    if (user)
+      throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
   }
 }
