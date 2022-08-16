@@ -8,6 +8,6 @@ import { FodaService } from './foda.service';
   imports: [MongooseModule.forFeature([{ name: 'FODA', schema: FODASchema }])],
   providers: [FodaService],
   controllers: [FodaController],
-  exports: [],
+  exports: [FodaService],
 })
 export class FodaModule {}

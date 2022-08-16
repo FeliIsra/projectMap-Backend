@@ -21,6 +21,14 @@ export class PestelService {
     });
   }
 
+  async getAllByProjectId(projectId: string) {
+    const pestels = await this.pestelModel.find({ projectId });
+    return pestels.map((pestel) => {
+      const pestelObject = pestel.toObject();
+      return this.mapToValues(pestelObject);
+    });
+  }
+
   async getOne(id: string) {
     const pestel = await this.pestelModel.findById(id);
     return this.mapToValues(pestel);
