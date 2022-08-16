@@ -12,7 +12,7 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { FodaService } from 'src/FODA/foda.service';
 import { PestelService } from 'src/PESTEL/pestel.service';
-import { ProjectDTO } from './project.dto';
+import { ProjectDTO, PuedeVerDTO } from './project.dto';
 import { ProjectService } from './project.service';
 
 @UseGuards(AuthGuard('jwt'))
@@ -57,6 +57,18 @@ export class ProjectController {
     projectDTO.puedenVer = [id];
 
     const project = await this.projectService.create(projectDTO);
+    return project;
+  }
+
+  @Post(':id/puedeVer')
+  async insertPuedeVer(
+    @Param('id') id: string,
+    @Body() puedeVerDTO: PuedeVerDTO,
+  ) {
+    const project = await this.projectService.createPuedeVer(
+      id,
+      puedeVerDTO.puedeVer,
+    );
     return project;
   }
 

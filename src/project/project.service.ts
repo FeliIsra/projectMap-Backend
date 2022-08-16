@@ -24,6 +24,14 @@ export class ProjectService {
     return projectCreadted;
   }
 
+  async createPuedeVer(id: string, _puedeVer: string[]) {
+    const project = await this.projectModel.findById(id);
+    const projectObject = project.toObject();
+    const concatPuedeVer = [...projectObject.puedeVer, ..._puedeVer];
+    const puedeVer = [...new Set(concatPuedeVer)];
+    return this.projectModel.findOneAndUpdate({ _id: id }, { puedeVer });
+  }
+
   async update(id: string, updated: ProjectDTO) {
     return this.projectModel.findOneAndUpdate({ _id: id }, updated);
   }

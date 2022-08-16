@@ -4,3 +4,7 @@ export interface ProjectDTO {
   descripcion: string;
   puedenVer: string[];
 }
+
+export interface PuedeVerDTO {
+  puedeVer: string[];
+}
