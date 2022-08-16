@@ -8,8 +8,8 @@ import { Project } from './project.type';
 export class ProjectService {
   constructor(@InjectModel('Project') private projectModel: Model<Project>) {}
 
-  async getAll() {
-    const projects = await this.projectModel.find();
+  async getAll(owner: string) {
+    const projects = await this.projectModel.find({ owner });
     return projects;
   }
 

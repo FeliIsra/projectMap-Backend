@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Req,
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
@@ -24,8 +25,9 @@ export class ProjectController {
   ) {}
 
   @Get('')
-  async getAll() {
-    const projects = await this.projectService.getAll();
+  async getAll(@Req() req: any) {
+    const { id } = req.user;
+    const projects = await this.projectService.getAll(id);
     return projects;
   }
 
@@ -48,7 +50,9 @@ export class ProjectController {
   }
 
   @Post('')
-  async insert(@Body() projectDTO: ProjectDTO) {
+  async insert(@Req() req: any, @Body() projectDTO: ProjectDTO) {
+    const { id } = req.user;
+    projectDTO.owner = id;
     const project = await this.projectService.create(projectDTO);
     return project;
   }
