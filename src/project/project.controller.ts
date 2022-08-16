@@ -52,7 +52,10 @@ export class ProjectController {
   @Post('')
   async insert(@Req() req: any, @Body() projectDTO: ProjectDTO) {
     const { id } = req.user;
+
     projectDTO.owner = id;
+    projectDTO.puedenVer = [id];
+
     const project = await this.projectService.create(projectDTO);
     return project;
   }
