@@ -1,22 +1,34 @@
-import {Body, Controller, Get, Param, Post} from "@nestjs/common";
+import {Body, Controller, Delete, Get, Param, Post} from "@nestjs/common";
 import {AnsoffService} from "./ansoff.service";
-import {AnsoffDto} from "./ansoff.dto";
+import {AnsoffRequestDto, AnsoffResponseDto, ProductoRequestDto} from "./ansoff.dto";
+import {Ansoff} from "./ansoff.schema";
 
 @Controller('ansoff')
 export class AnsoffController {
     constructor(private ansoffService: AnsoffService) {
     }
 
-    @Get(':id')
-    async find(@Param('id') id: string) {
-        const ansoffs = await this.ansoffService.findByProjectId(id);
-        return ansoffs;
+    @Post('')
+    async insert(@Body() ansoffDto: AnsoffRequestDto): Promise<Ansoff> {
+        const ansoff = await this.ansoffService.create(ansoffDto);
+        return ansoff;
     }
 
+    @Get(':projectId')
+    async find(@Param('projectId') projectId: string): Promise<AnsoffResponseDto> {
+        const ansoff = await this.ansoffService.findByProjectId(projectId);
+        return new AnsoffResponseDto(ansoff);
+    }
 
-    @Post('')
-    async insert(@Body() ansoffDto: AnsoffDto) {
-        const ansoff = await this.ansoffService.create(ansoffDto);
+    @Post(':projectId/products')
+    async addProduct(@Param('projectId') projectId: string, @Body() productRequest: ProductoRequestDto): Promise<Ansoff> {
+        const ansoff = await this.ansoffService.addProduct(projectId, productRequest);
+        return ansoff;
+    }
+
+    @Delete(':projectId/products/:nombre')
+    async deleteProduct(@Param('projectId') projectId: string, @Param('nombre') name: string) {
+        const ansoff = await this.ansoffService.deleteProduct(projectId, name);
         return ansoff;
     }
 }
