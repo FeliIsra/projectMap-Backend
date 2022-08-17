@@ -22,11 +22,15 @@ export class AnsoffService {
 
     }
 
-    async editProduct(projectId: string,productId: string, productRequest: ProductoRequest): Promise<Ansoff> {
+    async editProduct(projectId: string, productId: string, productRequest: ProductoRequest): Promise<Ansoff> {
         const ansoff: Ansoff = await (this.ansoffModel.findOne({projectId: projectId}).exec());
         ansoff.productos = ansoff.productos.map(product => {
                 if (product._id.toString() == productId) {
-                    return new Producto(productRequest.nombre, productRequest.situacionDelMercado, productRequest.situacionDelProducto, productRequest.exito);
+                    product.nombre = productRequest.nombre;
+                    product.situacionDelProducto = productRequest.situacionDelProducto.toString();
+                    product.situacionDelMercado = productRequest.situacionDelMercado.toString();
+                    product.exito = productRequest.exito;
+                    return product;
                 }
                 return product;
             }
@@ -35,7 +39,7 @@ export class AnsoffService {
     }
 
     async deleteProduct(projectId: string, productId: string) {
-        const ansoff :Ansoff= await (this.ansoffModel.findOne({projectId: projectId}).exec());
+        const ansoff: Ansoff = await (this.ansoffModel.findOne({projectId: projectId}).exec());
         ansoff.productos = ansoff.productos.filter(product => product._id.toString() != productId)
         return new this.ansoffModel(ansoff).save();
     }
