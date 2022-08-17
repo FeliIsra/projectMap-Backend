@@ -1,6 +1,6 @@
 import {Body, Controller, Delete, Get, Param, Post, Put} from "@nestjs/common";
 import {AnsoffService} from "./ansoff.service";
-import {AnsoffRequestDto, AnsoffResponseDto, ProductoRequestDto} from "./ansoff.dto";
+import {AnsoffRequest, AnsoffResponse, ProductoRequest} from "./ansoff.dto";
 import {Ansoff} from "./ansoff.schema";
 
 @Controller('ansoff')
@@ -9,32 +9,42 @@ export class AnsoffController {
     }
 
     @Post('')
-    async insert(@Body() ansoffDto: AnsoffRequestDto): Promise<Ansoff> {
+    async insert(@Body() ansoffDto: AnsoffRequest): Promise<Ansoff> {
         const ansoff = await this.ansoffService.create(ansoffDto);
         return ansoff;
     }
 
     @Get(':projectId')
-    async find(@Param('projectId') projectId: string): Promise<AnsoffResponseDto> {
+    async find(@Param('projectId') projectId: string): Promise<AnsoffResponse> {
         const ansoff = await this.ansoffService.findByProjectId(projectId);
-        return new AnsoffResponseDto(ansoff);
+        return new AnsoffResponse(ansoff);
     }
 
     @Post(':projectId/products')
-    async addProduct(@Param('projectId') projectId: string, @Body() productRequest: ProductoRequestDto): Promise<Ansoff> {
+    async addProduct(
+        @Param('projectId') projectId: string,
+        @Body() productRequest: ProductoRequest
+    ): Promise<AnsoffResponse> {
         const ansoff = await this.ansoffService.addProduct(projectId, productRequest);
-        return ansoff;
+        return new AnsoffResponse(ansoff);
     }
 
-    @Put(':projectId/products/:nombre')
-    async editProduct(@Param('projectId') projectId: string, @Body() productRequest: ProductoRequestDto): Promise<Ansoff> {
-        const ansoff = await this.ansoffService.editProduct(projectId, productRequest);
-        return ansoff;
+    @Put(':projectId/products/:productId')
+    async editProduct(
+        @Param('projectId') projectId: string,
+        @Param('productId') productId: string,
+        @Body() productRequest: ProductoRequest
+    ): Promise<AnsoffResponse> {
+        const ansoff = await this.ansoffService.editProduct(projectId, productId, productRequest);
+        return new AnsoffResponse(ansoff);
     }
 
-    @Delete(':projectId/products/:nombre')
-    async deleteProduct(@Param('projectId') projectId: string, @Param('nombre') name: string) {
-        const ansoff = await this.ansoffService.deleteProduct(projectId, name);
-        return ansoff;
+    @Delete(':projectId/products/:productId')
+    async deleteProduct(
+        @Param('projectId') projectId: string,
+        @Param('productId') productId: string
+    ) {
+        const ansoff = await this.ansoffService.deleteProduct(projectId, productId);
+        return new AnsoffResponse(ansoff);
     }
 }

@@ -4,30 +4,30 @@ import {Exito} from "./exito";
 import {Estrategia} from "./estrategia";
 import {Ansoff, Producto} from "./ansoff.schema";
 
-export class AnsoffRequestDto {
+export class AnsoffRequest {
     projectId: string;
-    productos: ProductoRequestDto[];
+    productos: ProductoRequest[];
 }
 
-export class ProductoRequestDto {
+export class ProductoRequest {
     nombre: string;
     situacionDelMercado: SituacionDelMercado;
     situacionDelProducto: SituacionDelProducto;
     exito: Exito;
 }
 
-export class AnsoffResponseDto {
+export class AnsoffResponse {
     projectId: string;
-    productos: ProductoResponseDto[];
+    productos: ProductoResponse[];
 
     constructor(ansoff: Ansoff) {
         this.projectId = ansoff.projectId;
-        this.productos = ansoff.productos.map(producto => new ProductoResponseDto(producto))
+        this.productos = ansoff.productos.map(producto => new ProductoResponse(producto))
     }
 }
 
-//TODO como garompa le pongo aca un id
-export class ProductoResponseDto {
+export class ProductoResponse {
+    id:string;
     nombre: string;
     situacionDelMercado: SituacionDelMercado;
     situacionDelProducto: SituacionDelProducto;
@@ -35,6 +35,7 @@ export class ProductoResponseDto {
     estrategia: Estrategia;
 
     constructor(producto: Producto) {
+        this.id = producto._id.toString();
         this.nombre = producto.nombre;
         this.situacionDelMercado = producto.situacionDelMercado as SituacionDelMercado;
         this.situacionDelProducto = producto.situacionDelProducto as SituacionDelProducto;

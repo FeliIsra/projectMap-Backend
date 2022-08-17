@@ -1,5 +1,5 @@
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
-import {Document} from 'mongoose';
+import mongoose, {Document} from 'mongoose';
 import {SituacionDelProducto} from "./situacionDelProducto";
 import {SituacionDelMercado} from "./situacionDelMercado";
 import {Exito} from "./exito";
@@ -8,6 +8,8 @@ export type AnsoffDocument = Ansoff & Document;
 
 @Schema()
 export class Producto {
+    _id: mongoose.Types.ObjectId
+
     @Prop({type: String, required: true})
     nombre: string;
 
