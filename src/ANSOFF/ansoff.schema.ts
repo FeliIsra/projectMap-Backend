@@ -20,11 +20,11 @@ export class Producto {
     @Prop({type: String, enum: Exito})
     exito: string;
 
-    constructor(nombre: string, situacionDelMercado: SituacionDelMercado, situacionDelProducto: SituacionDelProducto, exito: string) {
+    constructor(nombre: string, situacionDelMercado: SituacionDelMercado, situacionDelProducto: SituacionDelProducto, exito?: string) {
         this.nombre = nombre;
         this.situacionDelMercado = situacionDelMercado.valueOf();
         this.situacionDelProducto = situacionDelProducto.valueOf();
-        this.exito = exito.valueOf();
+        this.exito = exito?.valueOf();
     }
 }
 

@@ -26,8 +26,8 @@ export class AnsoffResponseDto {
     }
 }
 
+//TODO como garompa le pongo aca un id
 export class ProductoResponseDto {
-    id: string;
     nombre: string;
     situacionDelMercado: SituacionDelMercado;
     situacionDelProducto: SituacionDelProducto;

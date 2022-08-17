@@ -1,4 +1,4 @@
-import {Body, Controller, Delete, Get, Param, Post} from "@nestjs/common";
+import {Body, Controller, Delete, Get, Param, Post, Put} from "@nestjs/common";
 import {AnsoffService} from "./ansoff.service";
 import {AnsoffRequestDto, AnsoffResponseDto, ProductoRequestDto} from "./ansoff.dto";
 import {Ansoff} from "./ansoff.schema";
@@ -23,6 +23,12 @@ export class AnsoffController {
     @Post(':projectId/products')
     async addProduct(@Param('projectId') projectId: string, @Body() productRequest: ProductoRequestDto): Promise<Ansoff> {
         const ansoff = await this.ansoffService.addProduct(projectId, productRequest);
+        return ansoff;
+    }
+
+    @Put(':projectId/products/:nombre')
+    async editProduct(@Param('projectId') projectId: string, @Body() productRequest: ProductoRequestDto): Promise<Ansoff> {
+        const ansoff = await this.ansoffService.editProduct(projectId, productRequest);
         return ansoff;
     }
 
