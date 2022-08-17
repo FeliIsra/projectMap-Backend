@@ -10,6 +10,6 @@ import { PestelService } from './pestel.service';
   ],
   providers: [PestelService],
   controllers: [PestelController],
-  exports: [],
+  exports: [PestelService],
 })
 export class PestelModule {}

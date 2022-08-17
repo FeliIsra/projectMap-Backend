@@ -7,7 +7,7 @@ export class AuthService {
   constructor(private userService: UserService) {}
 
   async signPayload(payload: { email: string }) {
-    return sign(payload, process.env.SECRET_KEY, { expiresIn: '5m' });
+    return sign(payload, process.env.SECRET_KEY, { expiresIn: '10d' });
   }
 
   async validateUser(payload: { email: string }) {

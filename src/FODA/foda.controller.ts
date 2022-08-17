@@ -6,10 +6,13 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { FactorDTO, FodaDTO } from './foda.dto';
 import { FodaService } from './foda.service';
 
+@UseGuards(AuthGuard('jwt'))
 @Controller('foda')
 export class FodaController {
   constructor(private fodaService: FodaService) {}

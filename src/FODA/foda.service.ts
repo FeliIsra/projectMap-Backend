@@ -14,7 +14,15 @@ export class FodaService {
   constructor(@InjectModel('FODA') private fodaModel: Model<Foda>) {}
 
   async getAll() {
-    const fodas = await this.fodaModel.find();
+    const fodas = await this.fodaModel.find({});
+    return fodas.map((foda) => {
+      const fodaObject = foda.toObject();
+      return this.mapToValues(fodaObject);
+    });
+  }
+
+  async getAllByProjectId(projectId) {
+    const fodas = await this.fodaModel.find({ projectId });
     return fodas.map((foda) => {
       const fodaObject = foda.toObject();
       return this.mapToValues(fodaObject);

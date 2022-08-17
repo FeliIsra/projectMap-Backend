@@ -6,10 +6,13 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { FactorDTO, PestelDTO } from './pestel.dto';
 import { PestelService } from './pestel.service';
 
+@UseGuards(AuthGuard('jwt'))
 @Controller('pestel')
 export class PestelController {
   constructor(private pestelService: PestelService) {}
