@@ -6,9 +6,9 @@ import {MongooseModule} from '@nestjs/mongoose';
 import {UserModule} from './user/user.module';
 import {AuthModule} from './auth/auth.module';
 import * as dotenv from 'dotenv';
-import {FodaModule} from './FODA/foda.module';
-import {PestelModule} from './PESTEL/pestel.module';
-import {AnsoffModule} from "./ANSOFF/ansoff.module";
+import {FodaModule} from './herramientas/foda/foda.module';
+import {PestelModule} from './herramientas/pestel/pestel.module';
+import {AnsoffModule} from "./herramientas/ansoff/ansoff.module";
 import {ProjectModule} from './project/project.module';
 
 dotenv.config();

@@ -51,4 +51,8 @@ export class AnsoffService {
         }).exec();
     }
 
+    async getAllByProjectId(projectId: string) {
+        return this.ansoffModel.find({projectId: projectId}).exec();
+    }
+
 }

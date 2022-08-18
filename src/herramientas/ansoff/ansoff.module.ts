@@ -8,7 +8,7 @@ import {AnsoffController} from "./ansoff.controller";
     imports: [MongooseModule.forFeature([{name: Ansoff.name, schema: AnsoffSchema}])],
     providers: [AnsoffService],
     controllers: [AnsoffController],
-    exports: [],
+    exports: [AnsoffService],
 })
 export class AnsoffModule {
 }
