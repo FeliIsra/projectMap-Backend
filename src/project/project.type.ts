@@ -5,4 +5,5 @@ export interface Project extends Document {
   titulo: string;
   descripcion: string;
   puedenVer: string[];
+  color: string;
 }

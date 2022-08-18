@@ -16,7 +16,7 @@ import { ProjectDTO, PuedeVerDTO } from './project.dto';
 import { ProjectService } from './project.service';
 
 @UseGuards(AuthGuard('jwt'))
-@Controller('project')
+@Controller('projects')
 export class ProjectController {
   constructor(
     private projectService: ProjectService,

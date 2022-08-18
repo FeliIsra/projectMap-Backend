@@ -3,6 +3,7 @@ export interface ProjectDTO {
   titulo: string;
   descripcion: string;
   puedenVer: string[];
+  color: string;
 }
 
 export interface PuedeVerDTO {

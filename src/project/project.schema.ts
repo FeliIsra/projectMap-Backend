@@ -5,4 +5,5 @@ export const ProjectSchema = new mongoose.Schema({
   titulo: { type: String, require: true },
   descripcion: { type: String, require: true },
   puedenVer: [{ type: String, require: true }],
+  color: {type: String, require: true},
 });
