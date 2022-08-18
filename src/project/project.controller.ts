@@ -7,7 +7,7 @@ import {ProjectService} from './project.service';
 import {AnsoffService} from "../herramientas/ansoff/ansoff.service";
 
 @UseGuards(AuthGuard('jwt'))
-@Controller('project')
+@Controller('projects')
 export class ProjectController {
     constructor(
         private projectService: ProjectService,
