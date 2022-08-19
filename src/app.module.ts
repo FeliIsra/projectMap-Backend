@@ -10,6 +10,7 @@ import {FodaModule} from './herramientas/foda/foda.module';
 import {PestelModule} from './herramientas/pestel/pestel.module';
 import {AnsoffModule} from "./herramientas/ansoff/ansoff.module";
 import {ProjectModule} from './project/project.module';
+import { PorterModule } from './herramientas/porter/porter.module';
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ dotenv.config();
         PestelModule,
         AnsoffModule,
         ProjectModule,
+        PorterModule
     ],
     controllers: [AppController],
     providers: [AppService],
