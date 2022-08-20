@@ -7,18 +7,6 @@ import { Fuerza } from "./fuerza";
 export type PorterDocument = Porter & Document;
 
 @Schema()
-export class Porter {    
-    @Prop({required: true})
-    projectId: string;
-
-    @Prop([])
-    preguntas: Pregunta[];
-
-}
-
-export const porterSchema = SchemaFactory.createForClass(Porter);
-
-@Schema()
 export class Pregunta {
 
     _id: mongoose.Types.ObjectId
@@ -44,3 +32,16 @@ export class Pregunta {
 }
 
 const preguntaSchema = SchemaFactory.createForClass(Pregunta);
+
+@Schema()
+export class Porter {    
+    @Prop({required: true})
+    projectId: string;
+
+    @Prop([preguntaSchema])
+    preguntas: Pregunta[];
+
+}
+
+export const porterSchema = SchemaFactory.createForClass(Porter);
+

@@ -14,5 +14,20 @@ export class PorterController {
         return porter;
     }
 
+    @Get(':projectId')
+    async findPorters(@Param('projectId') projectId: string) {
+        const porters = await this.porterService.getAllByProjectId(projectId);
+        return porters;
+    }
+
+    @Get(':projectId/:porterId')
+    async findPorter(@Param('projectId') projectId: string, @Param('porterId') porterId: string) {
+        const porters = await this.porterService.getPorterById(projectId, porterId);
+        return porters;
+    }
+
    
+    
+
+
 }
