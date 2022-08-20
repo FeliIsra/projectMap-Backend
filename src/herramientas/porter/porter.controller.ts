@@ -1,12 +1,16 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { PorterService } from './porter.service';
-import { PorterDto } from './porter.dto';
-import { Fuerza } from './fuerza';
-import { NivelDeConcordancia } from './nivelDeConcordancia';
-import { Valoracion } from './valoracion';
-import { AuthGuard } from '@nestjs/passport';
+import { PorterDto, PreguntaDto } from './porter.dto';
+import { Porter } from './porter.schema';
 
-@UseGuards(AuthGuard('jwt'))
 @Controller('porter')
 export class PorterController {
   constructor(private porterService: PorterService) {}
@@ -17,19 +21,39 @@ export class PorterController {
     return porter;
   }
 
+  @Get('options')
+  async getOptions() {
+    return await this.porterService.getOptions();
+  }
+
   @Get(':projectId')
   async findPorters(@Param('projectId') projectId: string) {
     const porters = await this.porterService.getAllByProjectId(projectId);
     return porters;
   }
 
-  @Get('options')
-  async getOptions() {
-    return await this.porterService.getOptions();
+  @Get(':projectId/:porterId')
+  async findPorter(
+    @Param('projectId') projectId: string,
+    @Param('porterId') porterId: string,
+  ) {
+    const porters = await this.porterService.getPorterById(projectId, porterId);
+    return porters;
   }
 
-  @Get(':id')
-  async findById(@Param('id') id: string) {
-    return await this.porterService.findById(id);
+  @Put(':projectId/:porterId/questions/:questionId')
+  async editQuestion(
+    @Param('projectId') projectId: string,
+    @Param('porterId') porterId: string,
+    @Param('questionId') questionId: string,
+    @Body() questionDto: PreguntaDto,
+  ) {
+    const porter = await this.porterService.editQuestion(
+      projectId,
+      porterId,
+      questionId,
+      questionDto,
+    );
+    return porter;
   }
 }

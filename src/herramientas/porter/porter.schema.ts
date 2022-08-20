@@ -8,6 +8,8 @@ export type PorterDocument = Porter & Document;
 
 @Schema()
 export class Pregunta {
+  _id: mongoose.Types.ObjectId;
+
   @Prop({ type: Number, required: true })
   preguntaId: number;
 
