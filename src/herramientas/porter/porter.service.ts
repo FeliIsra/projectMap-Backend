@@ -29,6 +29,15 @@ export class PorterService {
     };
   }
 
+  async getPorterById(projectId: string, porterId: string) {
+    return this.porterModel
+      .find({
+        projectId: projectId,
+        _id: porterId,
+      })
+      .exec();
+  }
+
   async findById(id: string) {
     return this.porterModel
       .findOne({
