@@ -8,49 +8,39 @@ import {
   Put,
 } from '@nestjs/common';
 import { AnsoffService } from './ansoff.service';
-import { AnsoffRequest, AnsoffResponse, ProductoRequest } from './ansoff.dto';
 import { Ansoff } from './ansoff.schema';
+import { AnsoffDto, AnsoffProductDto } from './ansoff.dto';
 
 @Controller('ansoff')
 export class AnsoffController {
   constructor(private ansoffService: AnsoffService) {}
 
   @Post('')
-  async insert(@Body() ansoffDto: AnsoffRequest): Promise<Ansoff> {
+  async insert(@Body() ansoffDto: AnsoffDto): Promise<Ansoff> {
     const ansoff = await this.ansoffService.create(ansoffDto);
     return ansoff;
   }
 
-  @Get(':projectId')
-  async find(@Param('projectId') projectId: string): Promise<AnsoffResponse> {
-    const ansoff = await this.ansoffService.findByProjectId(projectId);
-    return new AnsoffResponse(ansoff);
+  @Get(':id')
+  async find(@Param('id') id: string) {
+    return await this.ansoffService.findById(id);
   }
 
-  @Post(':projectId/products')
+  @Post(':id/products')
   async addProduct(
-    @Param('projectId') projectId: string,
-    @Body() productRequest: ProductoRequest,
-  ): Promise<AnsoffResponse> {
-    const ansoff = await this.ansoffService.addProduct(
-      projectId,
-      productRequest,
-    );
-    return new AnsoffResponse(ansoff);
+    @Param('id') id: string,
+    @Body() productRequest: AnsoffProductDto,
+  ) {
+    return await this.ansoffService.addProduct(id, productRequest);
   }
 
-  @Put(':projectId/products/:productId')
+  @Put(':id/products/:productId')
   async editProduct(
-    @Param('projectId') projectId: string,
+    @Param('id') id: string,
     @Param('productId') productId: string,
-    @Body() productRequest: ProductoRequest,
-  ): Promise<AnsoffResponse> {
-    const ansoff = await this.ansoffService.editProduct(
-      projectId,
-      productId,
-      productRequest,
-    );
-    return new AnsoffResponse(ansoff);
+    @Body() productRequest: AnsoffProductDto,
+  ) {
+    return await this.ansoffService.editProduct(id, productId, productRequest);
   }
 
   @Delete(':projectId/products/:productId')
@@ -58,7 +48,6 @@ export class AnsoffController {
     @Param('projectId') projectId: string,
     @Param('productId') productId: string,
   ) {
-    const ansoff = await this.ansoffService.deleteProduct(projectId, productId);
-    return new AnsoffResponse(ansoff);
+    return await this.ansoffService.deleteProduct(projectId, productId);
   }
 }

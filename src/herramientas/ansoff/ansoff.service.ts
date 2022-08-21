@@ -2,7 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Ansoff, AnsoffDocument, Producto } from './ansoff.schema';
 import { Model } from 'mongoose';
-import { AnsoffRequest, ProductoRequest } from './ansoff.dto';
+import { Estrategia } from './estrategia';
+import { AnsoffDto, AnsoffProductDto } from './ansoff.dto';
 
 @Injectable()
 export class AnsoffService {
@@ -10,18 +11,16 @@ export class AnsoffService {
     @InjectModel(Ansoff.name) private ansoffModel: Model<AnsoffDocument>,
   ) {}
 
-  async create(ansoffDto: AnsoffRequest): Promise<Ansoff> {
+  async create(ansoffDto: AnsoffDto) {
     const ansoff = new this.ansoffModel(ansoffDto);
+    ansoff.productos.forEach((product) => {
+      product.estrategia = Estrategia.calcularEstrategia(product);
+    });
     return ansoff.save();
   }
 
-  async addProduct(
-    projectId: string,
-    productRequest: ProductoRequest,
-  ): Promise<Ansoff> {
-    const ansoff: Ansoff = await this.ansoffModel
-      .findOne({ projectId: projectId })
-      .exec();
+  async addProduct(id: string, productRequest: AnsoffProductDto) {
+    const ansoff = await this.ansoffModel.findOne({ _id: id }).exec();
     ansoff.productos.push(
       new Producto(
         productRequest.nombre,
@@ -30,18 +29,15 @@ export class AnsoffService {
         productRequest.exito,
       ),
     );
-    await new this.ansoffModel(ansoff).save();
-    return await this.ansoffModel.findOne({ projectId: projectId }).exec();
+    return await new this.ansoffModel(ansoff).save();
   }
 
   async editProduct(
-    projectId: string,
+    id: string,
     productId: string,
-    productRequest: ProductoRequest,
-  ): Promise<Ansoff> {
-    const ansoff: Ansoff = await this.ansoffModel
-      .findOne({ projectId: projectId })
-      .exec();
+    productRequest: AnsoffProductDto,
+  ) {
+    const ansoff = await this.ansoffModel.findOne({ _id: id }).exec();
     ansoff.productos = ansoff.productos.map((product) => {
       if (product._id.toString() == productId) {
         product.nombre = productRequest.nombre;
@@ -50,6 +46,7 @@ export class AnsoffService {
         product.situacionDelMercado =
           productRequest.situacionDelMercado.toString();
         product.exito = productRequest.exito;
+        product.estrategia = Estrategia.calcularEstrategia(product);
         return product;
       }
       return product;
@@ -57,20 +54,18 @@ export class AnsoffService {
     return new this.ansoffModel(ansoff).save();
   }
 
-  async deleteProduct(projectId: string, productId: string) {
-    const ansoff: Ansoff = await this.ansoffModel
-      .findOne({ projectId: projectId })
-      .exec();
+  async deleteProduct(id: string, productId: string) {
+    const ansoff: Ansoff = await this.ansoffModel.findOne({ _id: id }).exec();
     ansoff.productos = ansoff.productos.filter(
       (product) => product._id.toString() != productId,
     );
     return new this.ansoffModel(ansoff).save();
   }
 
-  async findByProjectId(projectId: string): Promise<Ansoff> {
+  async findById(id: string): Promise<Ansoff> {
     return this.ansoffModel
       .findOne({
-        projectId: projectId,
+        _id: id,
       })
       .exec();
   }

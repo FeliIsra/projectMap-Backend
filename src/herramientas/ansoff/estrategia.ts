@@ -24,4 +24,11 @@ export namespace Estrategia {
         else return Estrategia.DIVERSIFICAICON;
     }
   }
+
+  export function calcularEstrategia(product) {
+    return calculate(
+      product.situacionDelMercado as SituacionDelMercado,
+      product.situacionDelProducto as SituacionDelProducto,
+    );
+  }
 }

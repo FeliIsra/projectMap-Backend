@@ -3,6 +3,7 @@ import mongoose, { Document } from 'mongoose';
 import { SituacionDelProducto } from './situacionDelProducto';
 import { SituacionDelMercado } from './situacionDelMercado';
 import { Exito } from './exito';
+import { Estrategia } from './estrategia';
 
 export type AnsoffDocument = Ansoff & Document;
 
@@ -22,6 +23,9 @@ export class Producto {
   @Prop({ type: String, enum: Exito })
   exito: string;
 
+  @Prop({ type: String, enum: Estrategia })
+  estrategia: string;
+
   constructor(
     nombre: string,
     situacionDelMercado: SituacionDelMercado,
@@ -32,6 +36,10 @@ export class Producto {
     this.situacionDelMercado = situacionDelMercado.valueOf();
     this.situacionDelProducto = situacionDelProducto.valueOf();
     this.exito = exito?.valueOf();
+    this.estrategia = Estrategia.calculate(
+      this.situacionDelMercado as SituacionDelMercado,
+      this.situacionDelProducto as SituacionDelProducto,
+    );
   }
 }
 
@@ -39,7 +47,7 @@ const productSchema = SchemaFactory.createForClass(Producto);
 
 @Schema()
 export class Ansoff {
-  @Prop({ required: true, unique: true })
+  @Prop({ required: true })
   projectId: string;
 
   @Prop([productSchema])
