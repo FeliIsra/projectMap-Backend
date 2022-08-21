@@ -1,5 +1,5 @@
 export enum Exito {
-    INDEFINIDO = "Indefinido",
-    BAJO = "Bajo",
-    ALTO = "Alto"
+  INDEFINIDO = 'Indefinido',
+  BAJO = 'Bajo',
+  ALTO = 'Alto',
 }
