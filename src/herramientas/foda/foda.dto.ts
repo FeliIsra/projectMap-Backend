@@ -13,4 +13,5 @@ export interface FactorDTO {
   importancia: string;
   intensidad: string;
   tendendia: string;
+  descripcion: string;
 }

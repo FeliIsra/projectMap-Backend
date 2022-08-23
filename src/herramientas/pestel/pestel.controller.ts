@@ -35,7 +35,7 @@ export class PestelController {
     return pestel;
   }
 
-  @Post(':id/relation')
+  @Post(':id/factor')
   async insertRelation(@Param('id') id: string, @Body() factorDTO: FactorDTO) {
     const pestel = await this.pestelService.insertFactor(id, factorDTO);
     return pestel;

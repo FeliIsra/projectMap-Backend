@@ -3,8 +3,8 @@ import { Area, Importancia, Intensidad, Tendencia } from './enums';
 
 export interface Foda extends Document {
   projectId: string;
-  factor: {
-    id: string;
+  factores: {
+    _id: string;
     area: Area;
     descripcion: string;
     importancia: Importancia;
@@ -15,8 +15,8 @@ export interface Foda extends Document {
 
 export interface FodaWithValues {
   projectId: string;
-  factor: {
-    id: string;
+  factores: {
+    _id: string;
     area: number;
     importancia: number;
     intensidad: number;

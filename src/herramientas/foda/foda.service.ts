@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { threadId } from 'worker_threads';
+import { Area, Importancia, Intensidad, Tendencia } from './enums';
 import { FactorDTO, FodaDTO } from './foda.dto';
 import { Foda, FodaWithValues } from './foda.type';
 import {
@@ -63,6 +65,28 @@ export class FodaService {
       (factor) => factor._id != idFactor,
     );
     return this.fodaModel.findOneAndUpdate({ _id: id }, { factores });
+  }
+
+  async updateFactor(id: string, idFactor: string, updatedFactor: FactorDTO) {
+    const foda = await this.fodaModel.findById(id).then((foda) => {
+      console.log(foda.factores[0]._id.toString());
+      console.log(idFactor)
+      const factor = foda.factores.find(
+        (factor) => factor._id.toString() == idFactor,
+      );
+      console.log(factor);
+      if (updatedFactor.area) factor.area = updatedFactor.area as Area;
+      if (updatedFactor.importancia)
+        factor.importancia = updatedFactor.importancia as Importancia;
+      if (updatedFactor.intensidad)
+        factor.intensidad = updatedFactor.intensidad as Intensidad;
+      if (updatedFactor.tendendia)
+        factor.tendencia = updatedFactor.tendendia as Tendencia;
+      if (updatedFactor.descripcion)
+        factor.descripcion = updatedFactor.descripcion;
+      return foda.save();
+    });
+    return foda;
   }
 
   private mapToValues(foda: any): FodaWithValues {

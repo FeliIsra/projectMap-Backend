@@ -35,7 +35,7 @@ export class FodaController {
     return foda;
   }
 
-  @Post(':id/relation')
+  @Post(':id/factor')
   async insertRelation(@Param('id') id: string, @Body() factorDTO: FactorDTO) {
     const foda = await this.fodaService.insertFactor(id, factorDTO);
     return foda;
@@ -44,6 +44,16 @@ export class FodaController {
   @Patch(':id')
   async update(@Param('id') id: string, @Body() fodaDTO: FodaDTO) {
     const foda = await this.fodaService.update(id, fodaDTO);
+    return foda;
+  }
+
+  @Patch(':id/factor/:idFactor')
+  async updateFactor(
+    @Param('id') id: string,
+    @Param('idFactor') idFactor: string,
+    @Body() factorDTO: FactorDTO,
+  ) {
+    const foda = await this.fodaService.updateFactor(id, idFactor, factorDTO);
     return foda;
   }
 
