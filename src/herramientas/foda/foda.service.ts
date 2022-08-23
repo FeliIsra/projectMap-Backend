@@ -23,6 +23,32 @@ export class FodaService {
     });
   }
 
+  async getOptions() {
+    return {
+      importancia: [
+        Importancia['Totalmente importante'],
+        Importancia['Muy importante'],
+        Importancia.Importante,
+        Importancia.Inmaterial,
+        Importancia['Sin importancia'],
+      ],
+      intensidad: [
+        Intensidad['Muy fuerte'],
+        Intensidad.Fuerte,
+        Intensidad.Promedio,
+        Intensidad.Debil,
+        Intensidad['Muy debil'],
+      ],
+      tendencia: [
+        Tendencia['Mucha mejora'],
+        Tendencia.Mejora,
+        Tendencia.Mantiene,
+        Tendencia.Empeoramiento,
+        Tendencia.Peor,
+      ],
+    };
+  }
+
   async getAllByProjectId(projectId) {
     const fodas = await this.fodaModel.find({ projectId });
     return fodas.map((foda) => {

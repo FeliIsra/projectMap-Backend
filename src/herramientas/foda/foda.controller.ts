@@ -17,6 +17,12 @@ import { FodaService } from './foda.service';
 export class FodaController {
   constructor(private fodaService: FodaService) {}
 
+  @Get('options')
+  async getOptions() {
+    const options = await this.fodaService.getOptions();
+    return options;
+  }
+
   @Get('')
   async getAll() {
     const fodas = await this.fodaService.getAll();
