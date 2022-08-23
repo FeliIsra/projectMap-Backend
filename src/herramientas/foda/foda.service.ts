@@ -69,8 +69,6 @@ export class FodaService {
 
   async updateFactor(id: string, idFactor: string, updatedFactor: FactorDTO) {
     const foda = await this.fodaModel.findById(id).then((foda) => {
-      console.log(foda.factores[0]._id.toString());
-      console.log(idFactor)
       const factor = foda.factores.find(
         (factor) => factor._id.toString() == idFactor,
       );
