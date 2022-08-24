@@ -100,7 +100,6 @@ export class FodaService {
       const factor = foda.factores.find(
         (factor) => factor._id.toString() == idFactor,
       );
-      console.log(factor);
       if (updatedFactor.area) factor.area = updatedFactor.area as Area;
       if (updatedFactor.importancia)
         factor.importancia = updatedFactor.importancia as Importancia;
@@ -117,13 +116,17 @@ export class FodaService {
 
   private mapToValues(foda: any): FodaWithValues {
     foda.factores = foda?.factores?.map((factor) => {
-      factor.importancia = mapImportanciaToValue(factor.importancia);
-      factor.intensidad = mapIntensidadToValue(factor.intensidad);
-      factor.tendencia = mapTendenciaToValue(factor.tendencia);
-      factor.puntuacion =
-        factor.importancia * factor.intensidad * factor.tendencia;
+      factor.puntuacion = this.getPuntuacion(factor);
       return factor;
     });
     return foda;
+  }
+
+  private getPuntuacion(_factor: any): number {
+    const factor = _factor;
+    const importancia = mapImportanciaToValue(factor.importancia);
+    const intensidad = mapIntensidadToValue(factor.intensidad);
+    const tendencia = mapTendenciaToValue(factor.tendencia);
+    return importancia * intensidad * tendencia;
   }
 }
