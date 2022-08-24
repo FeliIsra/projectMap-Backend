@@ -144,7 +144,7 @@ export class FodaService {
     const calcularOportunidades = (_factor) => {
       const factor = _factor;
       const importancia = mapImportanciaToValue(factor.importancia);
-      const urgencia = mapUrgenciaToValue(factor.intensidad);
+      const urgencia = mapUrgenciaToValue(factor.urgencia);
       const tendencia = mapTendenciaToValue(factor.tendencia, factor.area);
 
       return importancia * urgencia * tendencia;
@@ -153,7 +153,7 @@ export class FodaService {
     const calcularAmenazas = (_factor) => {
       const factor = _factor;
       const importancia = mapImportanciaToValue(factor.importancia);
-      const urgencia = mapUrgenciaToValue(factor.intensidad);
+      const urgencia = mapUrgenciaToValue(factor.urgencia);
       const tendencia = mapTendenciaToValue(factor.tendencia, factor.area);
 
       return importancia * urgencia * tendencia;
