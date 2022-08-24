@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { threadId } from 'worker_threads';
-import { Area, Importancia, Intensidad, Tendencia } from './enums';
+import { Area, Importancia, Intensidad, Tendencia, Urgencia } from './enums';
 import { FactorDTO, FodaDTO } from './foda.dto';
 import { Foda, FodaWithValues } from './foda.type';
 import {
   mapImportanciaToValue,
   mapIntensidadToValue,
   mapTendenciaToValue,
+  mapUrgenciaToValue,
 } from './utils/mapEnumsToValues';
 
 @Injectable()
@@ -45,6 +45,13 @@ export class FodaService {
         Tendencia.Mantiene,
         Tendencia.Empeoramiento,
         Tendencia.Peor,
+      ],
+      urgencia: [
+        Urgencia['Algo urgente'],
+        Urgencia['Muy urgente'],
+        Urgencia['Nada urgente'],
+        Urgencia['Para ayer'],
+        Urgencia.Urgente,
       ],
     };
   }
@@ -107,6 +114,8 @@ export class FodaService {
         factor.intensidad = updatedFactor.intensidad as Intensidad;
       if (updatedFactor.tendendia)
         factor.tendencia = updatedFactor.tendendia as Tendencia;
+      if (updatedFactor.urgencia)
+        factor.urgencia = updatedFactor.urgencia as Urgencia;
       if (updatedFactor.descripcion)
         factor.descripcion = updatedFactor.descripcion;
       return foda.save();
@@ -122,11 +131,49 @@ export class FodaService {
     return foda;
   }
 
-  private getPuntuacion(_factor: any): number {
-    const factor = _factor;
-    const importancia = mapImportanciaToValue(factor.importancia);
-    const intensidad = mapIntensidadToValue(factor.intensidad);
-    const tendencia = mapTendenciaToValue(factor.tendencia);
-    return importancia * intensidad * tendencia;
+  private getPuntuacion(factor: any): number {
+    const calcularFortalezas = (_factor) => {
+      const factor = _factor;
+      const importancia = mapImportanciaToValue(factor.importancia);
+      const intensidad = mapIntensidadToValue(factor.intensidad, factor.area);
+      const tendencia = mapTendenciaToValue(factor.tendencia, factor.area);
+
+      return importancia * intensidad * tendencia;
+    };
+
+    const calcularOportunidades = (_factor) => {
+      const factor = _factor;
+      const importancia = mapImportanciaToValue(factor.importancia);
+      const urgencia = mapUrgenciaToValue(factor.intensidad);
+      const tendencia = mapTendenciaToValue(factor.tendencia, factor.area);
+
+      return importancia * urgencia * tendencia;
+    };
+
+    const calcularAmenazas = (_factor) => {
+      const factor = _factor;
+      const importancia = mapImportanciaToValue(factor.importancia);
+      const urgencia = mapUrgenciaToValue(factor.intensidad);
+      const tendencia = mapTendenciaToValue(factor.tendencia, factor.area);
+
+      return importancia * urgencia * tendencia;
+    };
+
+    const calcularDebilidades = (_factor) => {
+      const factor = _factor;
+      const importancia = mapImportanciaToValue(factor.importancia);
+      const intensidad = mapIntensidadToValue(factor.intensidad, factor.area);
+      const tendencia = mapTendenciaToValue(factor.tendencia, factor.area);
+
+      return importancia * intensidad * tendencia;
+    };
+
+    const dict = {
+      [Area.OPORTUNIDAD]: calcularOportunidades,
+      [Area.AMENAZA]: calcularAmenazas,
+      [Area.DEBILIDAD]: calcularDebilidades,
+      [Area.FORTALEZA]: calcularFortalezas,
+    };
+    return dict[factor.area](factor);
   }
 }

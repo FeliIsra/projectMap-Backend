@@ -4,6 +4,7 @@ export interface FodaDTO {
     descripcion: string;
     importancia: string;
     intensidad: string;
+    urgencia: string;
     tendencia: string;
   }[];
 }
@@ -13,5 +14,6 @@ export interface FactorDTO {
   importancia: string;
   intensidad: string;
   tendendia: string;
+  urgencia: string;
   descripcion: string;
 }

@@ -28,3 +28,11 @@ export enum Tendencia {
   'Empeoramiento' = 'Empeoramiento',
   'Peor' = 'Peor',
 }
+
+export enum Urgencia {
+  'Nada urgente' = 'Nada urgente',
+  'Algo urgente' = 'Algo urgente',
+  'Urgente' = 'Urgente',
+  'Muy urgente' = 'Muy urgente',
+  'Para ayer' = 'Para ayer',
+}

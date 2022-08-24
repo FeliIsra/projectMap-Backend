@@ -1,5 +1,5 @@
 import * as mongoose from 'mongoose';
-import { Area, Importancia, Intensidad, Tendencia } from './enums';
+import { Area, Importancia, Intensidad, Tendencia, Urgencia } from './enums';
 
 export const FODASchema = new mongoose.Schema({
   projectId: { type: String, require: true },
@@ -28,6 +28,11 @@ export const FODASchema = new mongoose.Schema({
         type: String,
         require: true,
         enum: Tendencia,
+      },
+      urgencia: {
+        type: String,
+        require: true,
+        enum: Urgencia,
       },
       puntuacion: {
         type: Number,

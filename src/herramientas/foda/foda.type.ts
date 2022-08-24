@@ -1,5 +1,5 @@
 import { Document } from 'mongoose';
-import { Area, Importancia, Intensidad, Tendencia } from './enums';
+import { Area, Importancia, Intensidad, Tendencia, Urgencia } from './enums';
 
 export interface Foda extends Document {
   projectId: string;
@@ -10,6 +10,7 @@ export interface Foda extends Document {
     importancia: Importancia;
     intensidad: Intensidad;
     tendencia: Tendencia;
+    urgencia: Urgencia;
   }[];
 }
 
@@ -21,6 +22,7 @@ export interface FodaWithValues {
     importancia: number;
     intensidad: number;
     tendencia: number;
+    urgencia: number;
     puntuacion: number;
   }[];
 }
