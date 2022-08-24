@@ -4,6 +4,9 @@ import { Ansoff, AnsoffDocument, Producto } from './ansoff.schema';
 import { Model } from 'mongoose';
 import { Estrategia } from './estrategia';
 import { AnsoffDto, AnsoffProductDto } from './ansoff.dto';
+import { SituacionDelMercado } from './situacionDelMercado';
+import { Exito } from './exito';
+import { SituacionDelProducto } from './situacionDelProducto';
 
 @Injectable()
 export class AnsoffService {
@@ -72,5 +75,13 @@ export class AnsoffService {
 
   async getAllByProjectId(projectId: string) {
     return this.ansoffModel.find({ projectId: projectId }).exec();
+  }
+
+  async getOptions() {
+    return {
+      ['situacionDelMercado']: Object.values(SituacionDelMercado),
+      ['situacionDelProducto']: Object.values(SituacionDelProducto),
+      ['exito']: Object.values(Exito),
+    };
   }
 }

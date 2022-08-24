@@ -50,4 +50,9 @@ export class AnsoffController {
   ) {
     return await this.ansoffService.deleteProduct(projectId, productId);
   }
+
+  @Get('options')
+  async getOptions() {
+    return await this.ansoffService.getOptions();
+  }
 }

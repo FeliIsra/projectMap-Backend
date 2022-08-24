@@ -61,4 +61,9 @@ export class PestelController {
     const response = await this.pestelService.deleteFactor(id, idFactor);
     return response;
   }
+
+  @Get('options')
+  async getOptions() {
+    return await this.pestelService.getOptions();
+  }
 }

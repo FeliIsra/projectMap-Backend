@@ -8,6 +8,10 @@ import {
   mapIntensidadToValue,
   mapTendenciaToValue,
 } from './utils/mapEnumsToValues';
+import { SituacionDelMercado } from '../ansoff/situacionDelMercado';
+import { SituacionDelProducto } from '../ansoff/situacionDelProducto';
+import { Exito } from '../ansoff/exito';
+import { Area, Importancia, Intensidad, Tendencia } from './enums';
 
 @Injectable()
 export class PestelService {
@@ -76,5 +80,14 @@ export class PestelService {
       return factor;
     });
     return pestel;
+  }
+
+  async getOptions() {
+    return {
+      ['area']: Object.values(Area),
+      ['importancia']: Object.values(Importancia),
+      ['intesidad']: Object.values(Intensidad),
+      ['tendencia']: Object.values(Tendencia),
+    };
   }
 }
