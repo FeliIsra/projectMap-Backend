@@ -1,8 +1,8 @@
 export enum Area {
   FORTALEZA = 'Fortaleza',
   DEBILIDAD = 'Debilidad',
-  OPORTUNIDADES = 'Oportunidades',
-  AMENAZAS = 'Amenazas',
+  OPORTUNIDAD = 'Oportunidad',
+  AMENAZA = 'Amenaza',
 }
 
 export enum Importancia {
