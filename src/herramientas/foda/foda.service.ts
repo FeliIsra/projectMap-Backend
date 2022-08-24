@@ -99,7 +99,8 @@ export class FodaService {
     const factores = fodaObject.factores.filter(
       (factor) => factor._id != idFactor,
     );
-    return this.fodaModel.findOneAndUpdate({ _id: id }, { factores });
+    await this.fodaModel.findOneAndUpdate({ _id: id }, { factores });
+    return this.fodaModel.findById(id);
   }
 
   async updateFactor(id: string, idFactor: string, updatedFactor: FactorDTO) {
