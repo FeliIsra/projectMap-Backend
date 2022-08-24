@@ -63,11 +63,13 @@ export class FodaService {
   }
 
   async insertFactor(id: string, factor: FactorDTO) {
-    const foda = await this.fodaModel.findById(id);
+    let foda = await this.fodaModel.findById(id);
     const fodaObject = foda.toObject();
     const factores = fodaObject.factores;
     factores.push(factor);
-    return this.fodaModel.findOneAndUpdate({ _id: id }, { factores });
+    await this.fodaModel.findOneAndUpdate({ _id: id }, { factores });
+    foda = await this.fodaModel.findById(id);
+    return this.mapToValues(foda);
   }
 
   async create(newFoda: FodaDTO) {
