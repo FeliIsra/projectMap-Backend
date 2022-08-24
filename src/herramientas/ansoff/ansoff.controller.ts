@@ -6,11 +6,14 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { AnsoffService } from './ansoff.service';
 import { Ansoff } from './ansoff.schema';
 import { AnsoffDto, AnsoffProductDto } from './ansoff.dto';
+import { AuthGuard } from '@nestjs/passport';
 
+@UseGuards(AuthGuard('jwt'))
 @Controller('ansoff')
 export class AnsoffController {
   constructor(private ansoffService: AnsoffService) {}
@@ -19,6 +22,11 @@ export class AnsoffController {
   async insert(@Body() ansoffDto: AnsoffDto): Promise<Ansoff> {
     const ansoff = await this.ansoffService.create(ansoffDto);
     return ansoff;
+  }
+
+  @Get('options')
+  async getOptions() {
+    return await this.ansoffService.getOptions();
   }
 
   @Get(':id')
@@ -49,10 +57,5 @@ export class AnsoffController {
     @Param('productId') productId: string,
   ) {
     return await this.ansoffService.deleteProduct(projectId, productId);
-  }
-
-  @Get('options')
-  async getOptions() {
-    return await this.ansoffService.getOptions();
   }
 }

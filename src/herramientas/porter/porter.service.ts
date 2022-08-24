@@ -14,4 +14,8 @@ export class PorterService {
     const porter = new this.ansoffModel(porterDto);
     return porter.save();
   }
+
+  async getOptions() {
+    return Promise.resolve(undefined);
+  }
 }

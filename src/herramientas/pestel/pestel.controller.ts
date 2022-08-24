@@ -23,6 +23,11 @@ export class PestelController {
     return pestels;
   }
 
+  @Get('options')
+  async getOptions() {
+    return await this.pestelService.getOptions();
+  }
+
   @Get(':id')
   async getOne(@Param('id') id: string) {
     const pestel = await this.pestelService.getOne(id);
@@ -60,10 +65,5 @@ export class PestelController {
   ) {
     const response = await this.pestelService.deleteFactor(id, idFactor);
     return response;
-  }
-
-  @Get('options')
-  async getOptions() {
-    return await this.pestelService.getOptions();
   }
 }
