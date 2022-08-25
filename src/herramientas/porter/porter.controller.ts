@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { PorterService } from './porter.service';
 import { PorterDto } from './porter.dto';
 import { Fuerza } from './fuerza';
@@ -19,10 +19,11 @@ export class PorterController {
 
   @Get('options')
   async getOptions() {
-    return {
-      ['fuerza']: Object.values(Fuerza),
-      ['nivelDeConcordancia']: Object.values(NivelDeConcordancia),
-      ['valoracion']: Object.values(Valoracion),
-    };
+    return await this.porterService.getOptions();
+  }
+
+  @Get(':id')
+  async findById(@Param('id') id: string) {
+    return await this.porterService.findById(id);
   }
 }

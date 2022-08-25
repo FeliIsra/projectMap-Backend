@@ -1,4 +1,6 @@
 export interface FodaDTO {
+  titulo: string;
+  createdAt: string;
   factores: {
     area: string;
     descripcion: string;

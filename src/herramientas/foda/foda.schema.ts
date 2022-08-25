@@ -3,6 +3,8 @@ import { Area, Importancia, Intensidad, Tendencia, Urgencia } from './enums';
 
 export const FODASchema = new mongoose.Schema({
   projectId: { type: String, require: true },
+  titulo: { type: String, require: true },
+  createdAt: { type: Date, default: Date.now() },
   factores: [
     {
       area: {
