@@ -19,7 +19,8 @@ export const porterSchema = SchemaFactory.createForClass(Porter);
 
 @Schema()
 export class Pregunta {
-  _id: mongoose.Types.ObjectId;
+  @Prop({ type: Number, required: true })
+  preguntaId: number;
 
   @Prop({ type: String, required: true })
   pregunta: string;
