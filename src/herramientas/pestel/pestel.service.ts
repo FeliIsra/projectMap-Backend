@@ -86,7 +86,7 @@ export class PestelService {
     return {
       ['area']: Object.values(Area),
       ['importancia']: Object.values(Importancia),
-      ['intesidad']: Object.values(Intensidad),
+      ['intensidad']: Object.values(Intensidad),
       ['tendencia']: Object.values(Tendencia),
       ['factor']: Object.values(Factor),
     };
