@@ -3,6 +3,8 @@ import { Area, Factor, Importancia, Intensidad, Tendencia } from './enums';
 
 export const PESTELSchema = new mongoose.Schema({
   projectId: { type: String, require: true },
+  titulo: { type: String },
+  createdAt: { type: Date, default: Date.now() },
   factores: [
     {
       factor: {

@@ -1,4 +1,6 @@
 export interface PestelDTO {
+  titulo: string;
+  createdAt: string;
   factores: {
     factor: string;
     area: string;

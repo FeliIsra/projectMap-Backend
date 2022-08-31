@@ -8,6 +8,12 @@ export type PorterDocument = Porter & Document;
 
 @Schema()
 export class Porter {
+  @Prop({ type: String })
+  titulo: string;
+
+  @Prop({ type: Date, default: Date.now() })
+  createdAt: Date;
+
   @Prop({ required: true })
   projectId: string;
 
