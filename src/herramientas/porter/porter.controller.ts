@@ -26,6 +26,11 @@ export class PorterController {
     return await this.porterService.getOptions();
   }
 
+  @Get('preguntas')
+  async getPreguntas() {
+    return this.porterService.getPreguntas();
+  }
+
   @Get(':projectId')
   async findPorters(@Param('projectId') projectId: string) {
     const porters = await this.porterService.getAllByProjectId(projectId);
@@ -55,5 +60,14 @@ export class PorterController {
       questionDto,
     );
     return porter;
+  }
+
+  @Get(':projectId/:porterId/consejos')
+  async getConsejos(
+    @Param('projectId') projectId: string,
+    @Param('porterId') porterId: string,
+  ) {
+    const porter = await this.porterService.getPorterById(projectId, porterId);
+    return this.porterService.calcularConsejos((porter as Porter).preguntas);
   }
 }

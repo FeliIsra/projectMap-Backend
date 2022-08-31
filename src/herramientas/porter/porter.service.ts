@@ -30,7 +30,7 @@ export class PorterService {
 
   async getPorterById(projectId: string, porterId: string) {
     return this.porterModel
-      .find({
+      .findOne({
         projectId: projectId,
         _id: porterId,
       })
@@ -63,7 +63,36 @@ export class PorterService {
     return this.porterModel.find({ projectId: projectId }).exec();
   }
 
-  calcularConsejosSegunFuerza(preguntas: [Pregunta], fuerza: Fuerza) {
+  getPreguntas() {
+    return {
+      [Fuerza.RIVALIDAD_ENTRE_COMPETIDORES]:
+        Preguntas.rivalidadEntreCompetidores,
+      [Fuerza.PODER_DE_NEGOCIACION_CON_LOS_CLIENTES]:
+        Preguntas.poderDeNegociacionConElCliente,
+      [Fuerza.PODER_DE_NEGOCIACION_CON_LOS_PROVEEDORES]:
+        Preguntas.poderDeNegociacionConProveedores,
+      [Fuerza.AMENAZA_DE_NUEVOS_COMPETIDORES]:
+        Preguntas.amenazaDeNuevosCompetidores,
+      [Fuerza.AMENAZA_DE_PRODUCTOS_SUBSTITUTOS]: Preguntas.amenazaDeSustitucion,
+    };
+  }
+
+  calcularConsejos(preguntas: Pregunta[]) {
+    return Object.values(Fuerza).map((fuerza) => {
+      const consejosPorFuerza = this.calcularConsejosSegunFuerza(
+        preguntas,
+        fuerza,
+      );
+
+      consejosPorFuerza.sort((a, b) => -(a.factor - b.factor));
+      return {
+        fuerza: fuerza,
+        consejos: consejosPorFuerza.splice(0, 4),
+      };
+    });
+  }
+
+  private calcularConsejosSegunFuerza(preguntas: Pregunta[], fuerza: Fuerza) {
     const preguntasConPuntaje: Map<number, number> = new Map();
     preguntas
       .filter((p) => p.fuerza == fuerza)
@@ -82,5 +111,6 @@ export class PorterService {
       const factor = puntaje + Number(id) / 10000;
       consejos.push({ consejo: consejo.consejo, factor: factor });
     }
+    return consejos;
   }
 }
