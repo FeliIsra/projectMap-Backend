@@ -29,3 +29,12 @@ export enum Tendencia {
   'Empeoramiento' = 'Empeoramiento',
   'Peor' = 'Peor',
 }
+
+export enum Factor {
+  'Politicos' = 'Politicos',
+  'Economicos' = 'Economicos',
+  ' Sociales' = 'Sociales',
+  ' Tecnologicos' = 'Tecnologicos',
+  ' Ambiental' = 'Ambiental',
+  ' Legal' = 'Legal',
+}

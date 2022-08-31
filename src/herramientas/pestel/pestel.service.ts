@@ -11,7 +11,7 @@ import {
 import { SituacionDelMercado } from '../ansoff/situacionDelMercado';
 import { SituacionDelProducto } from '../ansoff/situacionDelProducto';
 import { Exito } from '../ansoff/exito';
-import { Area, Importancia, Intensidad, Tendencia } from './enums';
+import { Area, Factor, Importancia, Intensidad, Tendencia } from './enums';
 
 @Injectable()
 export class PestelService {
@@ -88,6 +88,7 @@ export class PestelService {
       ['importancia']: Object.values(Importancia),
       ['intesidad']: Object.values(Intensidad),
       ['tendencia']: Object.values(Tendencia),
+      ['factor']: Object.values(Factor),
     };
   }
 }

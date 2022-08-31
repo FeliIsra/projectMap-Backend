@@ -1,5 +1,6 @@
 export interface PestelDTO {
   factores: {
+    factor: string;
     area: string;
     descripcion: string;
     importancia: string;
