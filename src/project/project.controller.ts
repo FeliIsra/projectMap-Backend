@@ -4,7 +4,7 @@ import {
   Delete,
   Get,
   Param,
-  Patch,
+  Put,
   Post,
   Req,
   UseGuards,
@@ -80,7 +80,7 @@ export class ProjectController {
     return project;
   }
 
-  @Patch(':id')
+  @Put(':id')
   async update(@Param('id') id: string, @Body() projectDTO: ProjectDTO) {
     const project = await this.projectService.update(id, projectDTO);
     return project;

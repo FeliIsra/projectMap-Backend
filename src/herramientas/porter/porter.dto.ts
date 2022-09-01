@@ -6,6 +6,8 @@ import { Pregunta } from './porter.schema';
 export class PorterDto {
   _id: string;
   projectId: string;
+  titulo: string;
+  createdAt: string;
   preguntas: Pregunta[];
 }
 

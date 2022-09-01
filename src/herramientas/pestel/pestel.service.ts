@@ -8,10 +8,7 @@ import {
   mapIntensidadToValue,
   mapTendenciaToValue,
 } from './utils/mapEnumsToValues';
-import { SituacionDelMercado } from '../ansoff/situacionDelMercado';
-import { SituacionDelProducto } from '../ansoff/situacionDelProducto';
-import { Exito } from '../ansoff/exito';
-import { Area, Importancia, Intensidad, Tendencia } from './enums';
+import { Area, Factor, Importancia, Intensidad, Tendencia } from './enums';
 
 @Injectable()
 export class PestelService {
@@ -46,6 +43,24 @@ export class PestelService {
     return this.pestelModel.findOneAndUpdate({ _id: id }, { factores });
   }
 
+  async editFactor(id: string, idFactor: string, updatedFactor: FactorDTO) {
+    await this.pestelModel.findById(id).then((pestel) => {
+      const factor = pestel
+        .toObject()
+        .factores.find((factor) => factor._id.toString() == idFactor);
+
+      factor.area = updatedFactor.area as Area;
+      factor.descripcion = updatedFactor.descripcion;
+      factor.importancia = updatedFactor.importancia as Importancia;
+      factor.intensidad = updatedFactor.intensidad as Intensidad;
+      factor.tendencia = updatedFactor.tendendia as Tendencia;
+      factor.puntuacion =
+        factor.importancia * factor.intensidad * factor.tendencia;
+      return pestel.save();
+    });
+    return this.pestelModel.findById(id);
+  }
+
   async create(newPestel: PestelDTO) {
     const pestel = new this.pestelModel(newPestel);
     const pestelCreadted = await pestel.save();
@@ -54,11 +69,13 @@ export class PestelService {
 
   async update(id: string, updated: PestelDTO) {
     console.log(updated);
-    return this.pestelModel.findOneAndUpdate({ _id: id }, updated);
+    await this.pestelModel.findOneAndUpdate({ _id: id }, updated);
+    return this.pestelModel.findById(id);
   }
 
   async delete(id: string) {
-    return this.pestelModel.deleteOne({ _id: id });
+    await this.pestelModel.deleteOne({ _id: id });
+    return this.pestelModel.findById(id);
   }
 
   async deleteFactor(id: string, idFactor: string) {
@@ -67,7 +84,8 @@ export class PestelService {
     const factores = pestelObject.factores.filter(
       (factor) => factor._id != idFactor,
     );
-    return this.pestelModel.findOneAndUpdate({ _id: id }, { factores });
+    await this.pestelModel.findOneAndUpdate({ _id: id }, { factores });
+    return this.pestelModel.findById(id);
   }
 
   private mapToValues(pestel: any): PestelWithValues {
@@ -86,8 +104,9 @@ export class PestelService {
     return {
       ['area']: Object.values(Area),
       ['importancia']: Object.values(Importancia),
-      ['intesidad']: Object.values(Intensidad),
+      ['intensidad']: Object.values(Intensidad),
       ['tendencia']: Object.values(Tendencia),
+      ['factor']: Object.values(Factor),
     };
   }
 }

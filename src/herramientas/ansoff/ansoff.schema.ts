@@ -50,6 +50,12 @@ export class Ansoff {
   @Prop({ required: true })
   projectId: string;
 
+  @Prop({ type: String })
+  titulo: string;
+
+  @Prop({ type: Date, default: Date.now() })
+  createdAt: Date;
+
   @Prop([productSchema])
   productos: Producto[];
 }

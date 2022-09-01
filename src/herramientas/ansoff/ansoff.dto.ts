@@ -5,6 +5,8 @@ import { Estrategia } from './estrategia';
 
 export class AnsoffDto {
   projectId: string;
+  titulo: string;
+  createdAt: string;
   productos: AnsoffProductDto[];
 }
 
