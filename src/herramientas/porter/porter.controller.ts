@@ -1,12 +1,16 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { PorterService } from './porter.service';
-import { PorterDto } from './porter.dto';
-import { Fuerza } from './fuerza';
-import { NivelDeConcordancia } from './nivelDeConcordancia';
-import { Valoracion } from './valoracion';
-import { AuthGuard } from '@nestjs/passport';
+import { PorterDto, PreguntaDto } from './porter.dto';
+import { Porter } from './porter.schema';
 
-@UseGuards(AuthGuard('jwt'))
 @Controller('porter')
 export class PorterController {
   constructor(private porterService: PorterService) {}
@@ -22,8 +26,48 @@ export class PorterController {
     return await this.porterService.getOptions();
   }
 
-  @Get(':id')
-  async findById(@Param('id') id: string) {
-    return await this.porterService.findById(id);
+  @Get('preguntas')
+  async getPreguntas() {
+    return this.porterService.getPreguntas();
+  }
+
+  @Get(':projectId')
+  async findPorters(@Param('projectId') projectId: string) {
+    const porters = await this.porterService.getAllByProjectId(projectId);
+    return porters;
+  }
+
+  @Get(':projectId/:porterId')
+  async findPorter(
+    @Param('projectId') projectId: string,
+    @Param('porterId') porterId: string,
+  ) {
+    const porters = await this.porterService.getPorterById(projectId, porterId);
+    return porters;
+  }
+
+  @Put(':projectId/:porterId/preguntas/:questionId')
+  async editQuestion(
+    @Param('projectId') projectId: string,
+    @Param('porterId') porterId: string,
+    @Param('questionId') questionId: string,
+    @Body() questionDto: PreguntaDto,
+  ) {
+    const porter = await this.porterService.editQuestion(
+      projectId,
+      porterId,
+      questionId,
+      questionDto,
+    );
+    return porter;
+  }
+
+  @Get(':projectId/:porterId/consejos')
+  async getConsejos(
+    @Param('projectId') projectId: string,
+    @Param('porterId') porterId: string,
+  ) {
+    const porter = await this.porterService.getPorterById(projectId, porterId);
+    return this.porterService.calcularConsejos((porter as Porter).preguntas);
   }
 }

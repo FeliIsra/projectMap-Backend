@@ -7,28 +7,11 @@ import { Fuerza } from './fuerza';
 export type PorterDocument = Porter & Document;
 
 @Schema()
-export class Porter {
-  @Prop({ type: String })
-  titulo: string;
-
-  @Prop({ type: Date, default: Date.now() })
-  createdAt: Date;
-
-  @Prop({ required: true })
-  projectId: string;
-
-  @Prop([])
-  preguntas: Pregunta[];
-}
-
-export const porterSchema = SchemaFactory.createForClass(Porter);
-
-@Schema()
 export class Pregunta {
   _id: mongoose.Types.ObjectId;
 
-  @Prop({ type: String, required: true })
-  pregunta: string;
+  @Prop({ type: Number, required: true })
+  preguntaId: number;
 
   @Prop({ type: String, enum: Fuerza, required: true })
   fuerza: string;
@@ -40,12 +23,10 @@ export class Pregunta {
   valoracion: string;
 
   constructor(
-    pregunta: string,
     fuerza: Fuerza,
     nivelDeConcordancia: NivelDeConcordancia,
     valoracion: Valoracion,
   ) {
-    this.pregunta = pregunta;
     this.fuerza = fuerza.valueOf();
     this.nivelDeConcordancia = nivelDeConcordancia.valueOf();
     this.valoracion = valoracion.valueOf();
@@ -53,3 +34,20 @@ export class Pregunta {
 }
 
 const preguntaSchema = SchemaFactory.createForClass(Pregunta);
+
+@Schema()
+export class Porter {
+  @Prop({ required: true })
+  projectId: string;
+
+  @Prop({ type: String })
+  titulo: string;
+
+  @Prop({ type: Date, default: Date.now })
+  createdAt: Date;
+
+  @Prop([preguntaSchema])
+  preguntas: Pregunta[];
+}
+
+export const porterSchema = SchemaFactory.createForClass(Porter);
