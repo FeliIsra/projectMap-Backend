@@ -40,7 +40,24 @@ export class PestelService {
     const pestelObject = pestel.toObject();
     const factores = pestelObject.factores;
     factores.push(factor);
-    await this.pestelModel.findOneAndUpdate({ _id: id }, { factores });
+    return this.pestelModel.findOneAndUpdate({ _id: id }, { factores });
+  }
+
+  async editFactor(id: string, idFactor: string, updatedFactor: FactorDTO) {
+    await this.pestelModel.findById(id).then((pestel) => {
+      const factor = pestel
+        .toObject()
+        .factores.find((factor) => factor._id.toString() == idFactor);
+
+      factor.area = updatedFactor.area as Area;
+      factor.descripcion = updatedFactor.descripcion;
+      factor.importancia = updatedFactor.importancia as Importancia;
+      factor.intensidad = updatedFactor.intensidad as Intensidad;
+      factor.tendencia = updatedFactor.tendendia as Tendencia;
+      factor.puntuacion =
+        factor.importancia * factor.intensidad * factor.tendencia;
+      return pestel.save();
+    });
     return this.pestelModel.findById(id);
   }
 
@@ -87,7 +104,7 @@ export class PestelService {
     return {
       ['area']: Object.values(Area),
       ['importancia']: Object.values(Importancia),
-      ['intesidad']: Object.values(Intensidad),
+      ['intensidad']: Object.values(Intensidad),
       ['tendencia']: Object.values(Tendencia),
       ['factor']: Object.values(Factor),
     };

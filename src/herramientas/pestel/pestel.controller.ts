@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Put,
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
@@ -64,6 +65,19 @@ export class PestelController {
     @Param('idFactor') idFactor: string,
   ) {
     const response = await this.pestelService.deleteFactor(id, idFactor);
+    return response;
+  }
+  @Patch(':id/factor/:idFactor')
+  async editFactor(
+    @Param('id') id: string,
+    @Param('idFactor') idFactor: string,
+    @Body() updatedFactor: FactorDTO,
+  ) {
+    const response = await this.pestelService.editFactor(
+      id,
+      idFactor,
+      updatedFactor,
+    );
     return response;
   }
 }
