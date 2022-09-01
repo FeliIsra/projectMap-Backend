@@ -8,7 +8,7 @@ import {
   mapIntensidadToValue,
   mapTendenciaToValue,
 } from './utils/mapEnumsToValues';
-import { Area, Importancia, Intensidad, Tendencia } from './enums';
+import { Area, Factor, Importancia, Intensidad, Tendencia } from './enums';
 
 @Injectable()
 export class PestelService {
