@@ -4,7 +4,7 @@ import {
   Delete,
   Get,
   Param,
-  Patch,
+  Put,
   Post,
   UseGuards,
 } from '@nestjs/common';
@@ -47,13 +47,13 @@ export class FodaController {
     return foda;
   }
 
-  @Patch(':id')
+  @Put(':id')
   async update(@Param('id') id: string, @Body() fodaDTO: FodaDTO) {
     const foda = await this.fodaService.update(id, fodaDTO);
     return foda;
   }
 
-  @Patch(':id/factor/:idFactor')
+  @Put(':id/factor/:idFactor')
   async updateFactor(
     @Param('id') id: string,
     @Param('idFactor') idFactor: string,

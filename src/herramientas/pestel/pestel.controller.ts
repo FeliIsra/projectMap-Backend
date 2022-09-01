@@ -4,7 +4,6 @@ import {
   Delete,
   Get,
   Param,
-  Patch,
   Post,
   Put,
   UseGuards,
@@ -47,7 +46,7 @@ export class PestelController {
     return pestel;
   }
 
-  @Patch(':id')
+  @Put(':id')
   async update(@Param('id') id: string, @Body() pestelDTO: PestelDTO) {
     const pestel = await this.pestelService.update(id, pestelDTO);
     return pestel;
@@ -67,7 +66,7 @@ export class PestelController {
     const response = await this.pestelService.deleteFactor(id, idFactor);
     return response;
   }
-  @Patch(':id/factor/:idFactor')
+  @Put(':id/factor/:idFactor')
   async editFactor(
     @Param('id') id: string,
     @Param('idFactor') idFactor: string,
