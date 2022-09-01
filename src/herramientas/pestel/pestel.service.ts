@@ -8,10 +8,7 @@ import {
   mapIntensidadToValue,
   mapTendenciaToValue,
 } from './utils/mapEnumsToValues';
-import { SituacionDelMercado } from '../ansoff/situacionDelMercado';
-import { SituacionDelProducto } from '../ansoff/situacionDelProducto';
-import { Exito } from '../ansoff/exito';
-import { Area, Factor, Importancia, Intensidad, Tendencia } from './enums';
+import { Area, Importancia, Intensidad, Tendencia } from './enums';
 
 @Injectable()
 export class PestelService {
@@ -43,7 +40,8 @@ export class PestelService {
     const pestelObject = pestel.toObject();
     const factores = pestelObject.factores;
     factores.push(factor);
-    return this.pestelModel.findOneAndUpdate({ _id: id }, { factores });
+    await this.pestelModel.findOneAndUpdate({ _id: id }, { factores });
+    return this.pestelModel.findById(id);
   }
 
   async create(newPestel: PestelDTO) {
@@ -54,11 +52,13 @@ export class PestelService {
 
   async update(id: string, updated: PestelDTO) {
     console.log(updated);
-    return this.pestelModel.findOneAndUpdate({ _id: id }, updated);
+    await this.pestelModel.findOneAndUpdate({ _id: id }, updated);
+    return this.pestelModel.findById(id);
   }
 
   async delete(id: string) {
-    return this.pestelModel.deleteOne({ _id: id });
+    await this.pestelModel.deleteOne({ _id: id });
+    return this.pestelModel.findById(id);
   }
 
   async deleteFactor(id: string, idFactor: string) {
@@ -67,7 +67,8 @@ export class PestelService {
     const factores = pestelObject.factores.filter(
       (factor) => factor._id != idFactor,
     );
-    return this.pestelModel.findOneAndUpdate({ _id: id }, { factores });
+    await this.pestelModel.findOneAndUpdate({ _id: id }, { factores });
+    return this.pestelModel.findById(id);
   }
 
   private mapToValues(pestel: any): PestelWithValues {
@@ -86,7 +87,7 @@ export class PestelService {
     return {
       ['area']: Object.values(Area),
       ['importancia']: Object.values(Importancia),
-      ['intensidad']: Object.values(Intensidad),
+      ['intesidad']: Object.values(Intensidad),
       ['tendencia']: Object.values(Tendencia),
       ['factor']: Object.values(Factor),
     };
