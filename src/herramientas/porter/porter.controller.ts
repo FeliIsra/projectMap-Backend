@@ -46,7 +46,7 @@ export class PorterController {
     return porters;
   }
 
-  @Put(':projectId/:porterId/questions/:questionId')
+  @Put(':projectId/:porterId/preguntas/:questionId')
   async editQuestion(
     @Param('projectId') projectId: string,
     @Param('porterId') porterId: string,
