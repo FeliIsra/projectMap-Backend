@@ -11,7 +11,7 @@ export class PorterDto {
 
 export class PreguntaDto {
   _id: string;
-  pregunta: string;
+  preguntaId: string;
   fuerza: Fuerza;
   nivelDeConcordancia: SituacionDelMercado;
   valoracion: SituacionDelProducto;

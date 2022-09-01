@@ -48,8 +48,6 @@ export class PorterService {
       .exec();
     porter.preguntas = porter.preguntas.map((pregunta) => {
       if (pregunta._id.toString() == questionId) {
-        pregunta.pregunta = preguntaDto.pregunta;
-        pregunta.fuerza = preguntaDto.fuerza.toString();
         pregunta.valoracion = preguntaDto.valoracion.toString();
         pregunta.nivelDeConcordancia = preguntaDto.nivelDeConcordancia;
         return pregunta;
@@ -87,7 +85,9 @@ export class PorterService {
       consejosPorFuerza.sort((a, b) => -(a.factor - b.factor));
       return {
         fuerza: fuerza,
-        consejos: consejosPorFuerza.splice(0, 4),
+        consejos: consejosPorFuerza
+          .splice(0, 5)
+          .map((consejo) => consejo.consejo),
       };
     });
   }
