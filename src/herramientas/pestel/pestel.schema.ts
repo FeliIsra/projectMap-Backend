@@ -1,5 +1,5 @@
 import * as mongoose from 'mongoose';
-import { Area, Factor, Importancia, Intensidad, Tendencia } from './enums';
+import { Area, Importancia, Intensidad, Tendencia } from './enums';
 
 export const PESTELSchema = new mongoose.Schema({
   projectId: { type: String, require: true },
@@ -7,11 +7,6 @@ export const PESTELSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now() },
   factores: [
     {
-      factor: {
-        type: String,
-        require: true,
-        enum: Factor,
-      },
       area: {
         type: String,
         require: true,

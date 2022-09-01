@@ -8,7 +8,7 @@ import {
   mapIntensidadToValue,
   mapTendenciaToValue,
 } from './utils/mapEnumsToValues';
-import { Area, Factor, Importancia, Intensidad, Tendencia } from './enums';
+import { Area, Importancia, Intensidad, Tendencia } from './enums';
 
 @Injectable()
 export class PestelService {
@@ -36,29 +36,32 @@ export class PestelService {
   }
 
   async insertFactor(id: string, factor: FactorDTO) {
-    const pestel = await this.pestelModel.findById(id);
+    let pestel = await this.pestelModel.findById(id);
     const pestelObject = pestel.toObject();
     const factores = pestelObject.factores;
     factores.push(factor);
-    return this.pestelModel.findOneAndUpdate({ _id: id }, { factores });
+    await this.pestelModel.findOneAndUpdate({ _id: id }, { factores });
+    pestel = await this.pestelModel.findById(id);
+    return this.mapToValues(pestel);
   }
 
   async editFactor(id: string, idFactor: string, updatedFactor: FactorDTO) {
-    await this.pestelModel.findById(id).then((pestel) => {
-      const factor = pestel
-        .toObject()
-        .factores.find((factor) => factor._id.toString() == idFactor);
-
-      factor.area = updatedFactor.area as Area;
-      factor.descripcion = updatedFactor.descripcion;
-      factor.importancia = updatedFactor.importancia as Importancia;
-      factor.intensidad = updatedFactor.intensidad as Intensidad;
-      factor.tendencia = updatedFactor.tendendia as Tendencia;
-      factor.puntuacion =
-        factor.importancia * factor.intensidad * factor.tendencia;
+    const pestel = await this.pestelModel.findById(id).then((pestel) => {
+      const factor = pestel.factores.find(
+        (factor) => factor._id.toString() == idFactor,
+      );
+      if (updatedFactor.area) factor.area = updatedFactor.area as Area;
+      if (updatedFactor.importancia)
+        factor.importancia = updatedFactor.importancia as Importancia;
+      if (updatedFactor.intensidad)
+        factor.intensidad = updatedFactor.intensidad as Intensidad;
+      if (updatedFactor.tendencia)
+        factor.tendencia = updatedFactor.tendencia as Tendencia;
+      if (updatedFactor.descripcion)
+        factor.descripcion = updatedFactor.descripcion;
       return pestel.save();
     });
-    return this.pestelModel.findById(id);
+    return pestel;
   }
 
   async create(newPestel: PestelDTO) {
@@ -68,7 +71,6 @@ export class PestelService {
   }
 
   async update(id: string, updated: PestelDTO) {
-    console.log(updated);
     await this.pestelModel.findOneAndUpdate({ _id: id }, updated);
     return this.pestelModel.findById(id);
   }
@@ -90,23 +92,34 @@ export class PestelService {
 
   private mapToValues(pestel: any): PestelWithValues {
     pestel.factores = pestel?.factores?.map((factor) => {
-      factor.importancia = mapImportanciaToValue(factor.importancia);
-      factor.intensidad = mapIntensidadToValue(factor.intensidad);
-      factor.tendencia = mapTendenciaToValue(factor.tendencia);
-      factor.puntuacion =
-        factor.importancia * factor.intensidad * factor.tendencia;
+      factor.puntuacion = this.getPuntuacion(factor);
       return factor;
     });
     return pestel;
   }
 
+  private getPuntuacion(factor: any): number {
+    const calcular = (_factor) => {
+      const factor = _factor;
+      const importancia = mapImportanciaToValue(
+        factor.importancia,
+        factor.area,
+      );
+      const intensidad = mapIntensidadToValue(factor.intensidad, factor.area);
+      const tendencia = mapTendenciaToValue(factor.tendencia, factor.area);
+
+      return importancia * intensidad * tendencia;
+    };
+
+    return calcular(factor);
+  }
+
   async getOptions() {
     return {
-      ['area']: Object.values(Area),
-      ['importancia']: Object.values(Importancia),
-      ['intensidad']: Object.values(Intensidad),
-      ['tendencia']: Object.values(Tendencia),
-      ['factor']: Object.values(Factor),
+      area: Object.values(Area),
+      importancia: Object.values(Importancia),
+      intensidad: Object.values(Intensidad),
+      tendencia: Object.values(Tendencia),
     };
   }
 }

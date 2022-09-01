@@ -1,9 +1,10 @@
 export enum Area {
-  RECURSOS_HUMANOS = 'Recursos Humanos',
-  MARKETING = 'Marketing',
-  FINANCIERO = 'Financiero',
-  COMERCIAL = 'Comercial',
-  TECNOLOGIA = 'Tecnologia',
+  POLITICO = 'Politico',
+  ECONOMICO = 'Economico',
+  SOCIAL = 'Social',
+  TECNOLOGICO = 'Tecnologico',
+  AMBIENTAL = 'Ambiental',
+  LEGAL = 'Legal',
 }
 
 export enum Importancia {
@@ -28,13 +29,4 @@ export enum Tendencia {
   'Mantiene' = 'Mantiene',
   'Empeoramiento' = 'Empeoramiento',
   'Peor' = 'Peor',
-}
-
-export enum Factor {
-  'Politicos' = 'Politicos',
-  'Economicos' = 'Economicos',
-  ' Sociales' = 'Sociales',
-  ' Tecnologicos' = 'Tecnologicos',
-  ' Ambiental' = 'Ambiental',
-  ' Legal' = 'Legal',
 }

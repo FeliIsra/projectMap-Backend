@@ -113,8 +113,8 @@ export class FodaService {
         factor.importancia = updatedFactor.importancia as Importancia;
       if (updatedFactor.intensidad)
         factor.intensidad = updatedFactor.intensidad as Intensidad;
-      if (updatedFactor.tendendia)
-        factor.tendencia = updatedFactor.tendendia as Tendencia;
+      if (updatedFactor.tendencia)
+        factor.tendencia = updatedFactor.tendencia as Tendencia;
       if (updatedFactor.urgencia)
         factor.urgencia = updatedFactor.urgencia as Urgencia;
       if (updatedFactor.descripcion)
