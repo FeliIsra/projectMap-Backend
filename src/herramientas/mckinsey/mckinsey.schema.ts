@@ -9,8 +9,8 @@ export type MckinseyDocument = McKinsey & Document;
 export class UnidadDeNegocio {
   _id: mongoose.Types.ObjectId;
 
-  @Prop({ type: String, required: true })
-  nombre: number;
+  @Prop({ type: String, required: true, unique: true })
+  nombre: string;
 
   @Prop({ type: Number, required: true })
   fuerzaCompetitiva: number;
@@ -20,6 +20,16 @@ export class UnidadDeNegocio {
 
   @Prop({ type: String })
   cuadrante: string;
+
+  constructor(
+    nombre: string,
+    fuerzaCompetitiva: number,
+    atractivoDeMercado: number,
+  ) {
+    this.nombre = nombre;
+    this.fuerzaCompetitiva = fuerzaCompetitiva;
+    this.atractivoDeMercado = atractivoDeMercado;
+  }
 }
 
 const unidadDeNegocioSchema = SchemaFactory.createForClass(UnidadDeNegocio);

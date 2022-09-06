@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { MckinseyService } from './mckinsey.service';
 import { McKinseyDto, UnidadDeNegocioDto } from './mckinsey.dto';
 
@@ -13,27 +21,51 @@ export class MckinseyController {
   }
 
   @Get('projects/:projectId')
-  async findPorters(@Param('projectId') projectId: string) {
+  async findByProjectId(@Param('projectId') projectId: string) {
     const mcKinsey = await this.mckinseyService.getAllByProjectId(projectId);
     return mcKinsey;
   }
 
   @Get(':mcKinseyId')
-  async findPorter(@Param('mcKinseyId') mcKinseyId: string) {
+  async findById(@Param('mcKinseyId') mcKinseyId: string) {
     const mcKinsey = await this.mckinseyService.findById(mcKinseyId);
     return mcKinsey;
   }
 
   @Put(':mcKinseyId/unidades/:unidadId')
-  async editQuestion(
-    @Param('porterId') porterId: string,
-    @Param('unidadId') questionId: string,
-    @Body() questionDto: UnidadDeNegocioDto,
+  async editUnidadDeNegocio(
+    @Param('mcKinseyId') porterId: string,
+    @Param('unidadId') unidadId: string,
+    @Body() unidadDeNegocioDto: UnidadDeNegocioDto,
   ) {
     const mcKinsey = await this.mckinseyService.editUnidadDeNegocio(
       porterId,
+      unidadId,
+      unidadDeNegocioDto,
+    );
+    return mcKinsey;
+  }
+
+  @Delete(':mcKinseyId/unidades/:unidadId')
+  async removeUnidadDeNegocio(
+    @Param('mcKinseyId') porterId: string,
+    @Param('unidadId') questionId: string,
+  ) {
+    const mcKinsey = await this.mckinseyService.removeUnidadDeNegocio(
+      porterId,
       questionId,
-      questionDto,
+    );
+    return mcKinsey;
+  }
+
+  @Post(':mcKinseyId/unidades')
+  async addUnidadDeNegocio(
+    @Param('mcKinseyId') porterId: string,
+    @Body() unidadDeNegocioDto: UnidadDeNegocioDto,
+  ) {
+    const mcKinsey = await this.mckinseyService.addUnidadDeNegocio(
+      porterId,
+      unidadDeNegocioDto,
     );
     return mcKinsey;
   }
