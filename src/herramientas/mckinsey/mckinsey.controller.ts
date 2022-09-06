@@ -34,12 +34,12 @@ export class MckinseyController {
 
   @Put(':mcKinseyId/unidades/:unidadId')
   async editUnidadDeNegocio(
-    @Param('mcKinseyId') porterId: string,
+    @Param('mcKinseyId') mcKinseyId: string,
     @Param('unidadId') unidadId: string,
     @Body() unidadDeNegocioDto: UnidadDeNegocioDto,
   ) {
     const mcKinsey = await this.mckinseyService.editUnidadDeNegocio(
-      porterId,
+      mcKinseyId,
       unidadId,
       unidadDeNegocioDto,
     );
@@ -48,11 +48,11 @@ export class MckinseyController {
 
   @Delete(':mcKinseyId/unidades/:unidadId')
   async removeUnidadDeNegocio(
-    @Param('mcKinseyId') porterId: string,
+    @Param('mcKinseyId') mcKinseyId: string,
     @Param('unidadId') questionId: string,
   ) {
     const mcKinsey = await this.mckinseyService.removeUnidadDeNegocio(
-      porterId,
+      mcKinseyId,
       questionId,
     );
     return mcKinsey;
@@ -60,11 +60,11 @@ export class MckinseyController {
 
   @Post(':mcKinseyId/unidades')
   async addUnidadDeNegocio(
-    @Param('mcKinseyId') porterId: string,
+    @Param('mcKinseyId') mcKinseyId: string,
     @Body() unidadDeNegocioDto: UnidadDeNegocioDto,
   ) {
     const mcKinsey = await this.mckinseyService.addUnidadDeNegocio(
-      porterId,
+      mcKinseyId,
       unidadDeNegocioDto,
     );
     return mcKinsey;
