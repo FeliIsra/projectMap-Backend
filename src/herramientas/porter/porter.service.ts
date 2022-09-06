@@ -28,23 +28,21 @@ export class PorterService {
     };
   }
 
-  async getPorterById(projectId: string, porterId: string) {
+  async getPorterById(porterId: string) {
     return this.porterModel
       .findOne({
-        projectId: projectId,
         _id: porterId,
       })
       .exec();
   }
 
   async editQuestion(
-    projectId: string,
     porterId: string,
     questionId: string,
     preguntaDto: PreguntaDto,
   ) {
     const porter: Porter = await this.porterModel
-      .findOne({ projectId: projectId, _id: porterId })
+      .findOne({ _id: porterId })
       .exec();
     porter.preguntas = porter.preguntas.map((pregunta) => {
       if (pregunta._id.toString() == questionId) {
