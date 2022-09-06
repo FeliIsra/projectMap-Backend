@@ -11,6 +11,7 @@ import { PestelModule } from './herramientas/pestel/pestel.module';
 import { AnsoffModule } from './herramientas/ansoff/ansoff.module';
 import { ProjectModule } from './project/project.module';
 import { PorterModule } from './herramientas/porter/porter.module';
+import { MckinseyModule } from './herramientas/mckinsey/mckinsey.module';
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ dotenv.config();
     AnsoffModule,
     ProjectModule,
     PorterModule,
+    MckinseyModule,
   ],
   controllers: [AppController],
   providers: [AppService],
