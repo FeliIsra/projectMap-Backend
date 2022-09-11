@@ -4,19 +4,21 @@ import {
   Delete,
   Get,
   Param,
-  Put,
   Post,
+  Put,
   Req,
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { FodaService } from 'src/herramientas/foda/foda.service';
 import { PestelService } from 'src/herramientas/pestel/pestel.service';
-import { ProjectDTO, PuedeVerDTO } from './project.dto';
+import { ProjectDTO, ShareProjectDto } from './project.dto';
 import { ProjectService } from './project.service';
 import { AnsoffService } from '../herramientas/ansoff/ansoff.service';
+import { ApiTags } from '@nestjs/swagger';
 
 @UseGuards(AuthGuard('jwt'))
+@ApiTags('projects')
 @Controller('projects')
 export class ProjectController {
   constructor(
@@ -27,14 +29,21 @@ export class ProjectController {
   ) {}
 
   @Get('')
-  async getAll(@Req() req: any) {
+  async getAllUserProjects(@Req() req: any) {
     const { id } = req.user;
-    const projects = await this.projectService.getAll(id);
+    const projects = await this.projectService.findUserProjects(id);
+    return projects;
+  }
+
+  @Get('shared')
+  async getAllSharedProjects(@Req() req: any) {
+    const { id: userId } = req.user;
+    const projects = await this.projectService.findSharedProjects(userId);
     return projects;
   }
 
   @Get(':id')
-  async getOne(@Param('id') id: string) {
+  async findById(@Param('id') id: string) {
     const project = await this.projectService.getOne(id);
     return project;
   }
@@ -62,20 +71,32 @@ export class ProjectController {
     const { id } = req.user;
 
     projectDTO.owner = id;
-    projectDTO.puedenVer = [id];
+    projectDTO.sharedUsers = [id];
 
     const project = await this.projectService.create(projectDTO);
     return project;
   }
 
-  @Post(':id/puedeVer')
-  async insertPuedeVer(
-    @Param('id') id: string,
-    @Body() puedeVerDTO: PuedeVerDTO,
+  @Post(':projectId/share')
+  async shareProject(
+    @Param('projectId') projectId: string,
+    @Body() shareProjectDto: ShareProjectDto,
   ) {
-    const project = await this.projectService.createPuedeVer(
-      id,
-      puedeVerDTO.puedeVer,
+    const project = await this.projectService.shareProject(
+      projectId,
+      shareProjectDto.users,
+    );
+    return project;
+  }
+
+  @Delete(':projectId/share')
+  async stopSharing(
+    @Param('projectId') projectId: string,
+    @Param('userId') userId: string,
+  ) {
+    const project = await this.projectService.removeUserFromProject(
+      projectId,
+      userId,
     );
     return project;
   }

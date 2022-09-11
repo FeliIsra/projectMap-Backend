@@ -11,8 +11,10 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { FactorDTO, FodaDTO } from './foda.dto';
 import { FodaService } from './foda.service';
+import { ApiTags } from '@nestjs/swagger';
 
 @UseGuards(AuthGuard('jwt'))
+@ApiTags('foda')
 @Controller('foda')
 export class FodaController {
   constructor(private fodaService: FodaService) {}

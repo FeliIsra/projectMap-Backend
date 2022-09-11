@@ -2,7 +2,9 @@ import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { PorterService } from './porter.service';
 import { PorterDto, PreguntaDto } from './porter.dto';
 import { Porter } from './porter.schema';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('porter')
 @Controller('porter')
 export class PorterController {
   constructor(private porterService: PorterService) {}

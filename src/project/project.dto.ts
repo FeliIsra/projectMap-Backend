@@ -2,10 +2,10 @@ export interface ProjectDTO {
   owner: string;
   titulo: string;
   descripcion: string;
-  puedenVer: string[];
+  sharedUsers: string[];
   color: string;
 }
 
-export interface PuedeVerDTO {
-  puedeVer: string[];
+export interface ShareProjectDto {
+  users: string[];
 }

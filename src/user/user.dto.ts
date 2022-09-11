@@ -1,3 +1,5 @@
+import { UserType } from './user.types';
+
 export interface UserDTO {
   email: string;
   password: string;
@@ -9,4 +11,5 @@ export interface CreateUserDTO {
   password: string;
   confirmPassword: string;
   email: string;
+  type: UserType;
 }

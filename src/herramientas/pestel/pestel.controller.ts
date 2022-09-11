@@ -11,8 +11,10 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { FactorDTO, PestelDTO } from './pestel.dto';
 import { PestelService } from './pestel.service';
+import { ApiTags } from '@nestjs/swagger';
 
 @UseGuards(AuthGuard('jwt'))
+@ApiTags('pestel')
 @Controller('pestel')
 export class PestelController {
   constructor(private pestelService: PestelService) {}
