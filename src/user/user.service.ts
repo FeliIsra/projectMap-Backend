@@ -1,15 +1,15 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { CreateUserDTO, UserDTO } from './user.dto';
-import { User } from './user.type';
+import { CreateUserDto, UserDto } from './user.dto';
 import * as bcrypt from 'bcrypt';
+import { User } from './user.schema';
 
 @Injectable()
 export class UserService {
   constructor(@InjectModel('User') private userModel: Model<User>) {}
 
-  async create(userDTO: CreateUserDTO) {
+  async create(userDTO: CreateUserDto) {
     await this.validate(userDTO);
     const createUser = new this.userModel(userDTO);
     await createUser.save();
@@ -17,7 +17,7 @@ export class UserService {
     return this.sanitizeUser(createUser);
   }
 
-  async findByLogin(UserDTO: UserDTO) {
+  async findByLogin(UserDTO: UserDto) {
     const { email, password } = UserDTO;
     const user = await this.userModel.findOne({ email });
     if (!user) {
@@ -30,18 +30,22 @@ export class UserService {
     }
   }
 
-  sanitizeUser(user: User) {
-    const sanitized = user.toObject();
+  private sanitizeUser(user: User) {
+    const sanitized = user;
     delete sanitized['password'];
     return sanitized;
   }
 
   async findByPayload(payload: { email: string }) {
     const { email } = payload;
-    return await this.userModel.findOne({ email });
+    return this.userModel.findOne({ email });
   }
 
-  async validate(newUser: CreateUserDTO) {
+  async findById(id: string) {
+    return this.userModel.findById(id);
+  }
+
+  async validate(newUser: CreateUserDto) {
     const { email, password, confirmPassword } = newUser;
     if (password !== confirmPassword)
       throw new HttpException('Passwords not match', HttpStatus.BAD_REQUEST);

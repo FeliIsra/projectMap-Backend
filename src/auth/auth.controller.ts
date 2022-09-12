@@ -1,11 +1,13 @@
 import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { CreateUserDTO } from 'src/user/user.dto';
+import { CreateUserDto } from 'src/user/user.dto';
 import { UserService } from 'src/user/user.service';
 import { AuthService } from './auth.service';
 import { LoginDTO } from './login.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('auth')
+@ApiTags('auth')
 export class AuthController {
   constructor(
     private userService: UserService,
@@ -19,7 +21,7 @@ export class AuthController {
   }
 
   @Post('/register')
-  async register(@Body() userDTO: CreateUserDTO) {
+  async register(@Body() userDTO: CreateUserDto) {
     const user = await this.userService.create(userDTO);
     const payload = {
       email: user.email,

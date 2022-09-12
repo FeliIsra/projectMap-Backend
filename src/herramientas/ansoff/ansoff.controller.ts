@@ -12,9 +12,11 @@ import { AnsoffService } from './ansoff.service';
 import { Ansoff } from './ansoff.schema';
 import { AnsoffDto, AnsoffProductDto } from './ansoff.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags } from '@nestjs/swagger';
 
 @UseGuards(AuthGuard('jwt'))
 @Controller('ansoff')
+@ApiTags('ansoff')
 export class AnsoffController {
   constructor(private ansoffService: AnsoffService) {}
 

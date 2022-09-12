@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Area, Importancia, Intensidad, Tendencia, Urgencia } from './enums';
-import { FactorDTO, FodaDTO } from './foda.dto';
+import { FactorDto, FodaDto } from './foda.dto';
 import { Foda, FodaWithValues } from './foda.type';
 import {
   mapImportanciaToValue,
@@ -69,7 +69,7 @@ export class FodaService {
     return this.mapToValues(foda);
   }
 
-  async insertFactor(id: string, factor: FactorDTO) {
+  async insertFactor(id: string, factor: FactorDto) {
     let foda = await this.fodaModel.findById(id);
     const fodaObject = foda.toObject();
     const factores = fodaObject.factores;
@@ -79,13 +79,13 @@ export class FodaService {
     return this.mapToValues(foda);
   }
 
-  async create(newFoda: FodaDTO) {
+  async create(newFoda: FodaDto) {
     const foda = new this.fodaModel(newFoda);
     const fodaCreadted = await foda.save();
     return fodaCreadted;
   }
 
-  async update(id: string, updated: FodaDTO) {
+  async update(id: string, updated: FodaDto) {
     return this.fodaModel.findOneAndUpdate({ _id: id }, updated);
   }
 
@@ -103,7 +103,7 @@ export class FodaService {
     return this.fodaModel.findById(id);
   }
 
-  async updateFactor(id: string, idFactor: string, updatedFactor: FactorDTO) {
+  async updateFactor(id: string, idFactor: string, updatedFactor: FactorDto) {
     const foda = await this.fodaModel.findById(id).then((foda) => {
       const factor = foda.factores.find(
         (factor) => factor._id.toString() == idFactor,

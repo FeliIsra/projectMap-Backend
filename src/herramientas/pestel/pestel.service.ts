@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { FactorDTO, PestelDTO } from './pestel.dto';
+import { FactorDto, PestelDto } from './pestel.dto';
 import { Pestel, PestelWithValues } from './pestel.type';
 import {
   mapImportanciaToValue,
@@ -35,7 +35,7 @@ export class PestelService {
     return this.mapToValues(pestel);
   }
 
-  async insertFactor(id: string, factor: FactorDTO) {
+  async insertFactor(id: string, factor: FactorDto) {
     let pestel = await this.pestelModel.findById(id);
     const pestelObject = pestel.toObject();
     const factores = pestelObject.factores;
@@ -45,7 +45,7 @@ export class PestelService {
     return this.mapToValues(pestel);
   }
 
-  async editFactor(id: string, idFactor: string, updatedFactor: FactorDTO) {
+  async editFactor(id: string, idFactor: string, updatedFactor: FactorDto) {
     const pestel = await this.pestelModel.findById(id).then((pestel) => {
       const factor = pestel.factores.find(
         (factor) => factor._id.toString() == idFactor,
@@ -64,13 +64,13 @@ export class PestelService {
     return pestel;
   }
 
-  async create(newPestel: PestelDTO) {
+  async create(newPestel: PestelDto) {
     const pestel = new this.pestelModel(newPestel);
     const pestelCreadted = await pestel.save();
     return pestelCreadted;
   }
 
-  async update(id: string, updated: PestelDTO) {
+  async update(id: string, updated: PestelDto) {
     await this.pestelModel.findOneAndUpdate({ _id: id }, updated);
     return this.pestelModel.findById(id);
   }

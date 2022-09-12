@@ -9,8 +9,11 @@ import {
 } from '@nestjs/common';
 import { MckinseyService } from './mckinsey.service';
 import { McKinseyDto, UnidadDeNegocioDto } from './mckinsey.dto';
+import { ApiExtraModels, ApiTags } from '@nestjs/swagger';
 
 @Controller('mckinsey')
+@ApiTags('mckinsey')
+@ApiExtraModels(UnidadDeNegocioDto)
 export class MckinseyController {
   constructor(private mckinseyService: MckinseyService) {}
 
