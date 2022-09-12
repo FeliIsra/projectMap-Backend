@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { ProjectDTO } from './project.dto';
+import { ProjectDto } from './project.dto';
 import { Project } from './project.schema';
 
 @Injectable()
@@ -18,7 +18,7 @@ export class ProjectService {
     return project;
   }
 
-  async create(newProject: ProjectDTO) {
+  async create(newProject: ProjectDto) {
     const project = new this.projectModel(newProject);
     const projectCreadted = await project.save();
     return projectCreadted;
@@ -42,7 +42,7 @@ export class ProjectService {
     const projects = await this.projectModel.find({ sharedUsers: userId });
     return projects;
   }
-  async update(id: string, updated: ProjectDTO) {
+  async update(id: string, updated: ProjectDto) {
     return this.projectModel.findOneAndUpdate({ _id: id }, updated);
   }
 

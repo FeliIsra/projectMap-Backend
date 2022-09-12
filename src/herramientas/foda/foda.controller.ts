@@ -9,7 +9,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { FactorDTO, FodaDTO } from './foda.dto';
+import { FactorDto, FodaDto } from './foda.dto';
 import { FodaService } from './foda.service';
 import { ApiTags } from '@nestjs/swagger';
 
@@ -38,19 +38,19 @@ export class FodaController {
   }
 
   @Post('')
-  async insert(@Body() fodaDTO: FodaDTO) {
+  async insert(@Body() fodaDTO: FodaDto) {
     const foda = await this.fodaService.create(fodaDTO);
     return foda;
   }
 
   @Post(':id/factor')
-  async insertRelation(@Param('id') id: string, @Body() factorDTO: FactorDTO) {
+  async insertRelation(@Param('id') id: string, @Body() factorDTO: FactorDto) {
     const foda = await this.fodaService.insertFactor(id, factorDTO);
     return foda;
   }
 
   @Put(':id')
-  async update(@Param('id') id: string, @Body() fodaDTO: FodaDTO) {
+  async update(@Param('id') id: string, @Body() fodaDTO: FodaDto) {
     const foda = await this.fodaService.update(id, fodaDTO);
     return foda;
   }
@@ -59,7 +59,7 @@ export class FodaController {
   async updateFactor(
     @Param('id') id: string,
     @Param('idFactor') idFactor: string,
-    @Body() factorDTO: FactorDTO,
+    @Body() factorDTO: FactorDto,
   ) {
     const foda = await this.fodaService.updateFactor(id, idFactor, factorDTO);
     return foda;

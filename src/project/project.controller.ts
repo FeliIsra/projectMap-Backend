@@ -12,7 +12,7 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { FodaService } from 'src/herramientas/foda/foda.service';
 import { PestelService } from 'src/herramientas/pestel/pestel.service';
-import { ProjectDTO, ShareProjectDto } from './project.dto';
+import { ProjectDto, ShareProjectDto } from './project.dto';
 import { ProjectService } from './project.service';
 import { AnsoffService } from '../herramientas/ansoff/ansoff.service';
 import { ApiTags } from '@nestjs/swagger';
@@ -67,7 +67,7 @@ export class ProjectController {
   }
 
   @Post('')
-  async insert(@Req() req: any, @Body() projectDTO: ProjectDTO) {
+  async insert(@Req() req: any, @Body() projectDTO: ProjectDto) {
     const { id } = req.user;
 
     projectDTO.owner = id;
@@ -102,7 +102,7 @@ export class ProjectController {
   }
 
   @Put(':id')
-  async update(@Param('id') id: string, @Body() projectDTO: ProjectDTO) {
+  async update(@Param('id') id: string, @Body() projectDTO: ProjectDto) {
     const project = await this.projectService.update(id, projectDTO);
     return project;
   }

@@ -4,7 +4,8 @@ import { FodaService } from '../herramientas/foda/foda.service';
 import { PestelService } from '../herramientas/pestel/pestel.service';
 import { AnsoffService } from '../herramientas/ansoff/ansoff.service';
 import { UserService } from './user.service';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiExtraModels, ApiTags } from '@nestjs/swagger';
+import { CreateUserDto, UserDto } from './user.dto';
 
 @ApiTags('users')
 @Controller('users')
