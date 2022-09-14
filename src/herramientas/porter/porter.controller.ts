@@ -1,7 +1,15 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { PorterService } from './porter.service';
-import { PorterDto, PreguntaDto } from './porter.dto';
-import { Porter } from './porter.schema';
+import { BulkEditQuestions, PorterDto, PreguntaDto } from './porter.dto';
+import { Porter, Pregunta } from './porter.schema';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('porter')
@@ -25,16 +33,31 @@ export class PorterController {
     return this.porterService.getPreguntas();
   }
 
-  @Get(':projectId')
-  async findByProjectId(@Param('projectId') projectId: string) {
-    const porters = await this.porterService.getAllByProjectId(projectId);
-    return porters;
-  }
-
   @Get(':porterId')
   async findById(@Param('porterId') porterId: string) {
     const porters = await this.porterService.getPorterById(porterId);
     return porters;
+  }
+
+  @Delete(':porterId')
+  async delete(@Param('porterId') porterId: string) {
+    return this.porterService.deletePorter(porterId);
+  }
+
+  @Post(':porterId/preguntas')
+  async addPregunta(
+    @Param('porterId') porterId: string,
+    @Body() question: PreguntaDto,
+  ) {
+    return this.porterService.addQuestion(porterId, question);
+  }
+
+  @Delete(':porterId/preguntas/:questionId')
+  async deletePregunta(
+    @Param('porterId') porterId: string,
+    @Param('questionId') questionId: string,
+  ) {
+    return this.porterService.deleteQuestion(porterId, questionId);
   }
 
   @Put(':porterId/preguntas/:questionId')
@@ -49,6 +72,14 @@ export class PorterController {
       questionDto,
     );
     return porter;
+  }
+
+  @Post(':porterId/preguntas/replace')
+  async replaceQuestions(
+    @Param('porterId') porterId: string,
+    @Body() questions: BulkEditQuestions,
+  ) {
+    return this.porterService.replaceQuestions(porterId, questions);
   }
 
   @Get(':porterId/consejos')

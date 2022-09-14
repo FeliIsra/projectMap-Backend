@@ -6,6 +6,8 @@ import { ProjectController } from './project.controller';
 import { ProjectSchema } from './project.schema';
 import { ProjectService } from './project.service';
 import { AnsoffModule } from '../herramientas/ansoff/ansoff.module';
+import { PorterModule } from '../herramientas/porter/porter.module';
+import { MckinseyModule } from '../herramientas/mckinsey/mckinsey.module';
 
 @Module({
   imports: [
@@ -13,6 +15,8 @@ import { AnsoffModule } from '../herramientas/ansoff/ansoff.module';
     FodaModule,
     PestelModule,
     AnsoffModule,
+    PorterModule,
+    MckinseyModule,
   ],
   providers: [ProjectService],
   controllers: [ProjectController],

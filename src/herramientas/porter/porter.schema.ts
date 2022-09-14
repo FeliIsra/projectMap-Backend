@@ -23,10 +23,12 @@ export class Pregunta {
   valoracion: string;
 
   constructor(
+    preguntaId: number,
     fuerza: Fuerza,
     nivelDeConcordancia: NivelDeConcordancia,
     valoracion: Valoracion,
   ) {
+    this.preguntaId = preguntaId;
     this.fuerza = fuerza.valueOf();
     this.nivelDeConcordancia = nivelDeConcordancia.valueOf();
     this.valoracion = valoracion.valueOf();

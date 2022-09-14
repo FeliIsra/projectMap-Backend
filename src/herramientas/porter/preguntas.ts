@@ -91,7 +91,8 @@ export class Preguntas {
     },
     {
       id: 6,
-      pregunta: 'Hay una escasez de puntos de venta de este tipo de negocio?',
+      pregunta:
+        'Existe un riesgo de nuevas tecnologías derribar las barreras de entrada?',
     },
   ];
 
@@ -99,7 +100,7 @@ export class Preguntas {
     { id: 1, pregunta: 'Hay reemplazos directos a su producto / servicio?' },
     {
       id: 2,
-      pregunta: 'productos sustitutos tienen un alto grado de innovación?',
+      pregunta: 'Los productos sustitutos tienen un alto grado de innovación?',
     },
     {
       id: 3,

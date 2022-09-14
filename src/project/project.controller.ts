@@ -16,6 +16,8 @@ import { ProjectDto, ShareProjectDto } from './project.dto';
 import { ProjectService } from './project.service';
 import { AnsoffService } from '../herramientas/ansoff/ansoff.service';
 import { ApiTags } from '@nestjs/swagger';
+import { PorterService } from '../herramientas/porter/porter.service';
+import { MckinseyService } from '../herramientas/mckinsey/mckinsey.service';
 
 @UseGuards(AuthGuard('jwt'))
 @ApiTags('projects')
@@ -26,6 +28,8 @@ export class ProjectController {
     private fodaService: FodaService,
     private pestelService: PestelService,
     private ansoffService: AnsoffService,
+    private porterService: PorterService,
+    private mckinsery: MckinseyService,
   ) {}
 
   @Get('')
@@ -64,6 +68,18 @@ export class ProjectController {
   async getAnsoff(@Param('id') id: string) {
     const ansoffs = await this.ansoffService.getAllByProjectId(id);
     return ansoffs;
+  }
+
+  @Get(':projectId/porter')
+  async getPorter(@Param('projectId') projectId: string) {
+    const porters = await this.porterService.getAllByProjectId(projectId);
+    return porters;
+  }
+
+  @Get(':projectId/mckinsey')
+  async getMcKinsey(@Param('projectId') projectId: string) {
+    const mckinseys = await this.mckinsery.getAllByProjectId(projectId);
+    return mckinseys;
   }
 
   @Post('')

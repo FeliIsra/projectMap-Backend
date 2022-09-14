@@ -3,6 +3,8 @@ import { SituacionDelProducto } from '../ansoff/situacionDelProducto';
 import { Fuerza } from './fuerza';
 import { Pregunta } from './porter.schema';
 import { ApiProperty } from '@nestjs/swagger';
+import { NivelDeConcordancia } from './nivelDeConcordancia';
+import { Valoracion } from './valoracion';
 
 export class PorterDto {
   @ApiProperty()
@@ -26,14 +28,26 @@ export class PreguntaDto {
   _id: string;
 
   @ApiProperty()
-  preguntaId: string;
+  preguntaId: number;
 
   @ApiProperty()
   fuerza: Fuerza;
 
   @ApiProperty()
-  nivelDeConcordancia: SituacionDelMercado;
+  nivelDeConcordancia: NivelDeConcordancia;
 
   @ApiProperty()
-  valoracion: SituacionDelProducto;
+  valoracion: Valoracion;
+}
+
+export class BulkEditQuestions {
+  preguntas: Map<Fuerza, Map<number, BulkQuestionItem>>;
+}
+
+export class BulkQuestionItem {
+  @ApiProperty()
+  nivelDeConcordancia: NivelDeConcordancia;
+
+  @ApiProperty()
+  valoracion: Valoracion;
 }

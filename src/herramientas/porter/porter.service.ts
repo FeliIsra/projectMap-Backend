@@ -1,7 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { PorterDto, PreguntaDto } from './porter.dto';
+import {
+  PorterDto,
+  PreguntaDto,
+  BulkEditQuestions,
+  BulkQuestionItem,
+} from './porter.dto';
 import { Porter, PorterDocument, Pregunta } from './porter.schema';
 import { Fuerza } from './fuerza';
 import { NivelDeConcordancia } from './nivelDeConcordancia';
@@ -55,8 +60,63 @@ export class PorterService {
     return new this.porterModel(porter).save();
   }
 
+  async deleteQuestion(porterId: string, questionId: string) {
+    const porter: Porter = await this.porterModel
+      .findOne({ _id: porterId })
+      .exec();
+    porter.preguntas = porter.preguntas.filter((pregunta) => {
+      return pregunta._id.toString() != questionId;
+    });
+    return new this.porterModel(porter).save();
+  }
+
+  async addQuestion(porterId: string, preguntaDto: PreguntaDto) {
+    const porter: Porter = await this.porterModel
+      .findOne({ _id: porterId })
+      .exec();
+
+    const question = new Pregunta(
+      preguntaDto.preguntaId,
+      preguntaDto.fuerza,
+      preguntaDto.nivelDeConcordancia,
+      preguntaDto.valoracion,
+    );
+    porter.preguntas.push(question);
+    return new this.porterModel(porter).save();
+  }
+
+  async replaceQuestions(
+    porterId: string,
+    questionsByFuerza: BulkEditQuestions,
+  ) {
+    const newQuestions = [];
+
+    Object.entries(questionsByFuerza.preguntas).forEach(
+      ([fuerza, questions]) => {
+        Object.entries(questions).forEach(([questionId, questionObject]) => {
+          const question = questionObject as BulkQuestionItem;
+          const preguntaDto = new Pregunta(
+            parseInt(questionId),
+            fuerza as Fuerza,
+            question.nivelDeConcordancia,
+            question.valoracion,
+          );
+
+          newQuestions.push(preguntaDto);
+        });
+      },
+    );
+
+    const porter: Porter = await this.porterModel.findById(porterId).exec();
+    porter.preguntas = newQuestions;
+    return new this.porterModel(porter).save();
+  }
   async getAllByProjectId(projectId: string) {
     return this.porterModel.find({ projectId: projectId }).exec();
+  }
+
+  async deletePorter(porterId: string) {
+    return this.porterModel.findByIdAndDelete(porterId).exec();
   }
 
   getPreguntas() {
