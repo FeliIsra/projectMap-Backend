@@ -1,11 +1,7 @@
-import { Controller, Get, Param } from '@nestjs/common';
-import { ProjectService } from '../project/project.service';
-import { FodaService } from '../herramientas/foda/foda.service';
-import { PestelService } from '../herramientas/pestel/pestel.service';
-import { AnsoffService } from '../herramientas/ansoff/ansoff.service';
+import { Controller, Get, Param, Put, Query } from '@nestjs/common';
 import { UserService } from './user.service';
-import { ApiExtraModels, ApiTags } from '@nestjs/swagger';
-import { CreateUserDto, UserDto } from './user.dto';
+import { ApiTags } from '@nestjs/swagger';
+import { Roles } from './user.roles';
 
 @ApiTags('users')
 @Controller('users')
@@ -15,5 +11,10 @@ export class UserController {
   @Get(':userId')
   async findById(@Param('userId') userId: string) {
     return this.userService.findById(userId);
+  }
+
+  @Put(':userId/role')
+  async updateRole(@Param('userId') userId, @Query('role') role: Roles) {
+    return this.userService.updateRole(userId, role);
   }
 }

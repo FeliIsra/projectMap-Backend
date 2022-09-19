@@ -4,6 +4,9 @@ import { Model } from 'mongoose';
 import { CreateUserDto, UserDto } from './user.dto';
 import * as bcrypt from 'bcrypt';
 import { User } from './user.schema';
+import { Consultora } from '../consultora/consultora.schema';
+import { use } from 'passport';
+import { Roles } from './user.roles';
 
 @Injectable()
 export class UserService {
@@ -43,6 +46,35 @@ export class UserService {
 
   async findById(id: string) {
     return this.userModel.findById(id);
+  }
+
+  async updateRole(userId: string, role: Roles) {
+    const user: User = await this.userModel.findById(userId);
+    user.role = role;
+    return new this.userModel(user).save();
+  }
+
+  async assignConsultora(userId: string, consultoraId: string) {
+    const user: User = await this.userModel.findById(userId);
+
+    if (!Roles.isConsultor(user))
+      throw new HttpException('User is not consultant', HttpStatus.BAD_REQUEST);
+
+    await this.userModel
+      .findByIdAndUpdate(userId, {
+        consultora: consultoraId,
+      })
+      .exec();
+
+    return this.userModel.findById(userId);
+  }
+
+  async removeConsultor(userId: string, consultoraId: string) {
+    const user: User = await this.userModel.findByIdAndUpdate(userId, {
+      $unset: { consultora: 1 },
+    });
+
+    return this.userModel.findById(userId);
   }
 
   async validate(newUser: CreateUserDto) {

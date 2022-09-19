@@ -12,18 +12,20 @@ import { AnsoffModule } from './herramientas/ansoff/ansoff.module';
 import { ProjectModule } from './project/project.module';
 import { PorterModule } from './herramientas/porter/porter.module';
 import { MckinseyModule } from './herramientas/mckinsey/mckinsey.module';
+import { ConsultoraModule } from './consultora/consultora.module';
 
 dotenv.config();
 
 @Module({
   imports: [
     MongooseModule.forRoot(process.env.MONGO_URI),
+    ProjectModule,
     UserModule,
+    ConsultoraModule,
     AuthModule,
     FodaModule,
     PestelModule,
     AnsoffModule,
-    ProjectModule,
     PorterModule,
     MckinseyModule,
   ],

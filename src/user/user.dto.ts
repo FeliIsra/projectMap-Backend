@@ -1,4 +1,4 @@
-import { UserType } from './user.types';
+import { Roles } from './user.roles';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class UserDto {
@@ -26,5 +26,5 @@ export class CreateUserDto {
   email: string;
 
   @ApiProperty()
-  type: UserType;
+  type: Roles;
 }
