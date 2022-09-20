@@ -164,14 +164,20 @@ export class PorterService {
       if (puntaje) consejos.push({ consejo: consejo.consejo, factor: factor });
     }
 
+    let puntajeTotal = 0;
     const consejoGeneral = this.calcularConsejoGeneral(
       preguntasConPuntaje,
+      puntajeTotal,
       fuerza,
+    );
+    preguntasConPuntaje.forEach(
+      (value, _) => (puntajeTotal = puntajeTotal + value),
     );
 
     return {
       fuerza: fuerza,
       consejoGeneral: consejoGeneral,
+      valorConsejoGeneral: puntajeTotal,
       consejos: consejos
         .sort((a, b) => -(a.factor - b.factor))
         .splice(0, 5)
@@ -181,17 +187,16 @@ export class PorterService {
 
   private calcularConsejoGeneral(
     preguntasConPuntaje: Map<number, number>,
+    puntajeTotal: number,
     fuerza: Fuerza,
   ) {
-    let accum = 0;
-    preguntasConPuntaje.forEach((value, _) => (accum = accum + value));
-    if (accum > 40)
+    if (puntajeTotal > 40)
       return (
         'Este índice es muy alto, lo que quiere decir que su estrategia debe siempre tener en cuenta la ' +
         fuerza +
         ', siga los consejos priorizados de acuerdo a su situación!'
       );
-    else if (accum > 30)
+    else if (puntajeTotal > 30)
       return 'Este índice es medio, lo que quiere decir que ese no es un punto prioritario en su estrategia, pero merece atención constante, siga los principales consejos propuestos.';
     else
       return 'La fuerza de ese índice es baja, lo que significa que éste no es un elemento prioritario en su estrategia.';
