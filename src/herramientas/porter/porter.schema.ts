@@ -50,6 +50,9 @@ export class Porter {
 
   @Prop([preguntaSchema])
   preguntas: Pregunta[];
+
+  @Prop({ type: Object })
+  preguntasFormatted: any;
 }
 
 export const porterSchema = SchemaFactory.createForClass(Porter);

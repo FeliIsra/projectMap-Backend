@@ -34,11 +34,15 @@ export class PorterService {
   }
 
   async getPorterById(porterId: string) {
-    return this.porterModel
+    const porter = await this.porterModel
       .findOne({
         _id: porterId,
       })
       .exec();
+
+    porter.preguntasFormatted = this.formatPreguntas(porter.preguntas);
+
+    return porter;
   }
 
   async editQuestion(
@@ -170,5 +174,26 @@ export class PorterService {
       if (puntaje) consejos.push({ consejo: consejo.consejo, factor: factor });
     }
     return consejos;
+  }
+
+  private formatPreguntas(preguntas: Pregunta[]) {
+    const preguntasFormatted = {};
+    const fuerzas = [];
+    preguntas.map((pregunta) => {
+      if (!fuerzas.includes(pregunta.fuerza)) fuerzas.push(pregunta.fuerza);
+    });
+
+    fuerzas.forEach((fuerza) => {
+      preguntasFormatted[fuerza] = {};
+      preguntas.forEach((pregunta) => {
+        if (pregunta.fuerza === fuerza) {
+          preguntasFormatted[fuerza][pregunta.preguntaId] = {
+            nivelDeConcordancia: pregunta.nivelDeConcordancia,
+            valoracion: pregunta.valoracion,
+          };
+        }
+      });
+    });
+    return preguntasFormatted;
   }
 }
