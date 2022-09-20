@@ -77,11 +77,11 @@ export class AnsoffService {
     return this.ansoffModel.find({ projectId: projectId }).exec();
   }
 
-  async getOptions() {
+  getOptions() {
     return {
-      ['situacionDelMercado']: Object.values(SituacionDelMercado),
-      ['situacionDelProducto']: Object.values(SituacionDelProducto),
-      ['exito']: Object.values(Exito),
+      situacionDelMercado: Object.values(SituacionDelMercado),
+      situacionDelProducto: Object.values(SituacionDelProducto),
+      exito: Object.values(Exito),
     };
   }
 }

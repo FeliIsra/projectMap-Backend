@@ -27,8 +27,8 @@ export class AnsoffController {
   }
 
   @Get('options')
-  async getOptions() {
-    return await this.ansoffService.getOptions();
+  getOptions() {
+    return this.ansoffService.getOptions();
   }
 
   @Get(':id')

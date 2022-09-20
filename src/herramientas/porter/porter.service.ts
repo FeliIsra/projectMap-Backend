@@ -34,11 +34,16 @@ export class PorterService {
   }
 
   async getPorterById(porterId: string) {
-    return this.porterModel
+    const porter = await this.porterModel
       .findOne({
         _id: porterId,
       })
       .exec();
+
+    if (porter.preguntas.length > 0)
+      porter.preguntasFormatted = this.formatPreguntas(porter.preguntas);
+
+    return porter;
   }
 
   async editQuestion(
@@ -190,5 +195,26 @@ export class PorterService {
       return 'Este índice es medio, lo que quiere decir que ese no es un punto prioritario en su estrategia, pero merece atención constante, siga los principales consejos propuestos.';
     else
       return 'La fuerza de ese índice es baja, lo que significa que éste no es un elemento prioritario en su estrategia.';
+  }
+
+  private formatPreguntas(preguntas: Pregunta[]) {
+    const preguntasFormatted = {};
+    const fuerzas = [];
+    preguntas.map((pregunta) => {
+      if (!fuerzas.includes(pregunta.fuerza)) fuerzas.push(pregunta.fuerza);
+    });
+
+    fuerzas.forEach((fuerza) => {
+      preguntasFormatted[fuerza] = {};
+      preguntas.forEach((pregunta) => {
+        if (pregunta.fuerza === fuerza) {
+          preguntasFormatted[fuerza][pregunta.preguntaId] = {
+            nivelDeConcordancia: pregunta.nivelDeConcordancia,
+            valoracion: pregunta.valoracion,
+          };
+        }
+      });
+    });
+    return preguntasFormatted;
   }
 }
