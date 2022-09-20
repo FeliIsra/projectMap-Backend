@@ -135,18 +135,7 @@ export class PorterService {
 
   calcularConsejos(preguntas: Pregunta[]) {
     return Object.values(Fuerza).map((fuerza) => {
-      const consejosPorFuerza = this.calcularConsejosSegunFuerza(
-        preguntas,
-        fuerza,
-      );
-
-      consejosPorFuerza.sort((a, b) => -(a.factor - b.factor));
-      return {
-        fuerza: fuerza,
-        consejos: consejosPorFuerza
-          .splice(0, 5)
-          .map((consejo) => consejo.consejo),
-      };
+      return this.calcularConsejosSegunFuerza(preguntas, fuerza);
     });
   }
 
@@ -169,6 +158,37 @@ export class PorterService {
       const factor = puntaje + Number(id) / 10000;
       if (puntaje) consejos.push({ consejo: consejo.consejo, factor: factor });
     }
-    return consejos;
+
+    const consejoGeneral = this.calcularConsejoGeneral(
+      preguntasConPuntaje,
+      fuerza,
+    );
+
+    return {
+      fuerza: fuerza,
+      consejoGeneral: consejoGeneral,
+      consejos: consejos
+        .sort((a, b) => -(a.factor - b.factor))
+        .splice(0, 5)
+        .map((consejo) => consejo.consejo),
+    };
+  }
+
+  private calcularConsejoGeneral(
+    preguntasConPuntaje: Map<number, number>,
+    fuerza: Fuerza,
+  ) {
+    let accum = 0;
+    preguntasConPuntaje.forEach((value, _) => (accum = accum + value));
+    if (accum > 40)
+      return (
+        'Este índice es muy alto, lo que quiere decir que su estrategia debe siempre tener en cuenta la ' +
+        fuerza +
+        ', siga los consejos priorizados de acuerdo a su situación!'
+      );
+    else if (accum > 30)
+      return 'Este índice es medio, lo que quiere decir que ese no es un punto prioritario en su estrategia, pero merece atención constante, siga los principales consejos propuestos.';
+    else
+      return 'La fuerza de ese índice es baja, lo que significa que éste no es un elemento prioritario en su estrategia.';
   }
 }
