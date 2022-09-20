@@ -40,7 +40,8 @@ export class PorterService {
       })
       .exec();
 
-    porter.preguntasFormatted = this.formatPreguntas(porter.preguntas);
+    if (porter.preguntas.length > 0)
+      porter.preguntasFormatted = this.formatPreguntas(porter.preguntas);
 
     return porter;
   }
