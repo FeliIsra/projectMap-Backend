@@ -1,6 +1,6 @@
 export enum SituacionDelMercado {
-  ACTUAL = 'Actual',
-  NUEVO = 'Nuevo',
+  ACTUAL = 'Mercado Existe',
+  NUEVO = 'Nuevo Mercado',
 }
 
 //si el mercado existe o es un mercado nuevo
