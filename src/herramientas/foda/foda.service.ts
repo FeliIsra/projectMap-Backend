@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Area, Importancia, Intensidad, Tendencia, Urgencia } from './enums';
 import { FactorDto, FodaDto } from './foda.dto';
-import { Foda, FodaWithValues } from './foda.type';
+import { Foda, FodaPreSeed, FodaWithValues } from './foda.type';
 import {
   mapImportanciaToValue,
   mapIntensidadToValue,
@@ -13,7 +13,10 @@ import {
 
 @Injectable()
 export class FodaService {
-  constructor(@InjectModel('FODA') private fodaModel: Model<Foda>) {}
+  constructor(
+    @InjectModel('FODA') private fodaModel: Model<Foda>,
+    @InjectModel('FODAPreSeed') private preSeedModel: Model<FodaPreSeed>,
+  ) {}
 
   async getAll() {
     const fodas = await this.fodaModel.find({});
@@ -21,6 +24,20 @@ export class FodaService {
       const fodaObject = foda.toObject();
       return this.mapToValues(fodaObject);
     });
+  }
+
+  async getPreSeeds() {
+    const preSeeds = await this.preSeedModel.find({});
+    const preSeedsFormated = {};
+
+    preSeeds.forEach((preSeed) => {
+      const { area, descripcion, consejo } = preSeed;
+      const list = preSeedsFormated[area];
+      if (!list) preSeedsFormated[area] = [];
+      preSeedsFormated[area].push({ descripcion, consejo });
+    });
+
+    return preSeedsFormated;
   }
 
   async getOptions() {
@@ -77,6 +94,12 @@ export class FodaService {
     await this.fodaModel.findOneAndUpdate({ _id: id }, { factores });
     foda = await this.fodaModel.findById(id);
     return this.mapToValues(foda);
+  }
+
+  async insertPreSeed(preSeedDTO) {
+    const preSeed = new this.preSeedModel(preSeedDTO);
+    const preSeedCreated = await preSeed.save();
+    return preSeedCreated;
   }
 
   async create(newFoda: FodaDto) {

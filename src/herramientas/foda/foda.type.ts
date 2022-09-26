@@ -26,3 +26,9 @@ export interface FodaWithValues {
     puntuacion: number;
   }[];
 }
+
+export interface FodaPreSeed extends Document {
+  area: Area;
+  descripcion: string;
+  consejo: string;
+}

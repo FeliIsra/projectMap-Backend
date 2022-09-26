@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { FactorDto, PestelDto } from './pestel.dto';
-import { Pestel, PestelWithValues } from './pestel.type';
+import { Pestel, PestelPreSeed, PestelWithValues } from './pestel.type';
 import {
   mapImportanciaToValue,
   mapIntensidadToValue,
@@ -12,7 +12,10 @@ import { Area, Importancia, Intensidad, Tendencia } from './enums';
 
 @Injectable()
 export class PestelService {
-  constructor(@InjectModel('PESTEL') private pestelModel: Model<Pestel>) {}
+  constructor(
+    @InjectModel('PESTEL') private pestelModel: Model<Pestel>,
+    @InjectModel('PESTELPreSeed') private preSeedModel: Model<PestelPreSeed>,
+  ) {}
 
   async getAll() {
     const pestels = await this.pestelModel.find();
@@ -20,6 +23,32 @@ export class PestelService {
       const pestelObject = pestel.toObject();
       return this.mapToValues(pestelObject);
     });
+  }
+
+  async getPreSeeds() {
+    const preSeeds = await this.preSeedModel.find({});
+    const preSeedsFormated = {};
+
+    preSeeds.forEach((preSeed) => {
+      const { area, descripcion, consejoPositivo, consejoNegativo, puntaje } =
+        preSeed;
+      const list = preSeedsFormated[area];
+      if (!list) preSeedsFormated[area] = [];
+      preSeedsFormated[area].push({
+        descripcion,
+        consejoPositivo,
+        consejoNegativo,
+        puntaje,
+      });
+    });
+
+    return preSeedsFormated;
+  }
+
+  async insertPreSeed(preSeedDTO) {
+    const preSeed = new this.preSeedModel(preSeedDTO);
+    const preSeedCreated = await preSeed.save();
+    return preSeedCreated;
   }
 
   async getAllByProjectId(projectId: string) {

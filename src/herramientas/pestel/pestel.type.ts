@@ -24,3 +24,11 @@ export interface PestelWithValues {
     puntuacion: number;
   }[];
 }
+
+export interface PestelPreSeed extends Document {
+  area: Area;
+  descripcion: string;
+  consejoPositivo: string;
+  consejoNegativo: string;
+  puntaje: number;
+}

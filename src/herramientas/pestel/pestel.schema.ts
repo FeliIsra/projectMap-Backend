@@ -41,3 +41,27 @@ export const PESTELSchema = new mongoose.Schema({
     },
   ],
 });
+
+export const PESTELPreSeedSchema = new mongoose.Schema({
+  area: {
+    type: String,
+    require: true,
+    enum: Area,
+  },
+  descripcion: {
+    type: String,
+    require: true,
+  },
+  puntaje: {
+    type: Number,
+    require: true,
+  },
+  consejoPositivo: {
+    type: String,
+    required: true,
+  },
+  consejoNegativo: {
+    type: String,
+    required: true,
+  },
+});

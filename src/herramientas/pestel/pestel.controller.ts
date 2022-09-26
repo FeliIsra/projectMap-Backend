@@ -25,6 +25,27 @@ export class PestelController {
     return pestels;
   }
 
+  @Get('preSeeds')
+  async getPreSeeds() {
+    const preSeeds = await this.pestelService.getPreSeeds();
+    return preSeeds;
+  }
+
+  @Post('preSeeds')
+  async insertPreSeeds(
+    @Body()
+    preSeedDTO: {
+      consejoPositvio: string;
+      consejoNegativo: string;
+      puntaje: number;
+      descripcion: string;
+      area: string;
+    },
+  ) {
+    const preSeeds = await this.pestelService.insertPreSeed(preSeedDTO);
+    return preSeeds;
+  }
+
   @Get('options')
   async getOptions() {
     return await this.pestelService.getOptions();

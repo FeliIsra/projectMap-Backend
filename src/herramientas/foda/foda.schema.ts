@@ -46,3 +46,19 @@ export const FODASchema = new mongoose.Schema({
     },
   ],
 });
+
+export const FODAPreSeedSchema = new mongoose.Schema({
+  area: {
+    type: String,
+    require: true,
+    enum: Area,
+  },
+  descripcion: {
+    type: String,
+    require: true,
+  },
+  consejo: {
+    type: String,
+    required: true,
+  },
+});
