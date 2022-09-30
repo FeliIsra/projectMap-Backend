@@ -18,6 +18,7 @@ import { AnsoffService } from '../herramientas/ansoff/ansoff.service';
 import { ApiTags } from '@nestjs/swagger';
 import { PorterService } from '../herramientas/porter/porter.service';
 import { MckinseyService } from '../herramientas/mckinsey/mckinsey.service';
+import { OkrService } from '../herramientas/okr/okr.service';
 
 @UseGuards(AuthGuard('jwt'))
 @ApiTags('projects')
@@ -29,7 +30,8 @@ export class ProjectController {
     private pestelService: PestelService,
     private ansoffService: AnsoffService,
     private porterService: PorterService,
-    private mckinsery: MckinseyService,
+    private mckinseyService: MckinseyService,
+    private okrService: OkrService,
   ) {}
 
   @Get('')
@@ -78,7 +80,13 @@ export class ProjectController {
 
   @Get(':projectId/mckinsey')
   async getMcKinsey(@Param('projectId') projectId: string) {
-    const mckinseys = await this.mckinsery.getAllByProjectId(projectId);
+    const mckinseys = await this.mckinseyService.getAllByProjectId(projectId);
+    return mckinseys;
+  }
+
+  @Get(':projectId/okr')
+  async getOkr(@Param('projectId') projectId: string) {
+    const mckinseys = await this.okrService.getAllByProjectId(projectId);
     return mckinseys;
   }
 

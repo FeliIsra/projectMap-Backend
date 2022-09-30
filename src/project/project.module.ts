@@ -8,6 +8,7 @@ import { ProjectService } from './project.service';
 import { AnsoffModule } from '../herramientas/ansoff/ansoff.module';
 import { PorterModule } from '../herramientas/porter/porter.module';
 import { MckinseyModule } from '../herramientas/mckinsey/mckinsey.module';
+import { OkrModule } from '../herramientas/okr/okr.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { MckinseyModule } from '../herramientas/mckinsey/mckinsey.module';
     AnsoffModule,
     PorterModule,
     MckinseyModule,
+    OkrModule,
   ],
   providers: [ProjectService],
   controllers: [ProjectController],
