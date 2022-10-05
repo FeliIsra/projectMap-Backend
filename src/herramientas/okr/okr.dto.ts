@@ -1,7 +1,7 @@
 export class OkrProjectDto {
   _id: string;
   projectId: string;
-  title: string;
+  titulo: string;
   createdAt: Date;
   okrs: OkrDto[];
 }
