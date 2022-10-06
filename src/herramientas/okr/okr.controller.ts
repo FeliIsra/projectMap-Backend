@@ -8,13 +8,13 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
-import { ApiExtraModels, ApiTags } from '@nestjs/swagger';
+import { ApiTags } from '@nestjs/swagger';
 import { OkrService } from './okr.service';
 import { KeyResultDto, KeyStatusDto, OkrDto, OkrProjectDto } from './okr.dto';
 import { AuthGuard } from '@nestjs/passport';
 
 @Controller('okr-projects')
-@ApiTags('okr')
+@ApiTags('okr-projects')
 @UseGuards(AuthGuard('jwt'))
 export class OkrController {
   constructor(private okrService: OkrService) {}

@@ -90,21 +90,29 @@ export class OkrService {
       .findById(okrProjectId)
       .exec();
 
-    const keyResults = okrDto.keyResults.map((keyResultDto) => {
-      const keyStatuses = keyResultDto.keyStatus.map(
-        (keyStatusDto) => new KeyStatus(keyStatusDto.month, keyStatusDto.value),
-      );
-      const keyResult = new KeyResult(
-        keyResultDto.description,
-        keyResultDto.goal,
-        keyResultDto.responsible,
-      );
-      keyResult.keyStatus = keyStatuses;
-      return keyResult;
-    });
+    const okr = new Okr(
+      okrDto.description,
+      okrDto.globalOkr,
+      okrDto.area,
+      okrDto.quarter,
+    );
 
-    const okr = new Okr(okrDto.description, okrDto.globalOkr, okrDto.area);
-    okr.keyResults = keyResults;
+    if (okrDto.keyResults) {
+      const keyResults = okrDto.keyResults.map((keyResultDto) => {
+        const keyStatuses = keyResultDto.keyStatus.map(
+          (keyStatusDto) =>
+            new KeyStatus(keyStatusDto.month, keyStatusDto.value),
+        );
+        const keyResult = new KeyResult(
+          keyResultDto.description,
+          keyResultDto.goal,
+          keyResultDto.responsible,
+        );
+        keyResult.keyStatus = keyStatuses;
+        return keyResult;
+      });
+      okr.keyResults = keyResults;
+    }
 
     okrProject.okrs.push(okr);
 

@@ -13,6 +13,7 @@ export class OkrDto {
   globalOkr: string;
   area: string;
   progress: number;
+  quarter: number;
 }
 
 export class KeyResultDto {

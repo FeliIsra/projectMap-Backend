@@ -82,10 +82,19 @@ export class Okr {
   @Prop({ type: Number })
   progress: number;
 
-  constructor(description: string, globalOkr: string, area: string) {
+  @Prop({ type: Number, required: true })
+  quarter: number;
+
+  constructor(
+    description: string,
+    globalOkr: string,
+    area: string,
+    quarter: number,
+  ) {
     this.description = description;
     this.globalOkr = globalOkr;
     this.area = area;
+    this.quarter = quarter;
   }
 }
 export const okrSchema = SchemaFactory.createForClass(Okr);
