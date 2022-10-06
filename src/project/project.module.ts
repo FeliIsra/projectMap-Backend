@@ -9,6 +9,7 @@ import { AnsoffModule } from '../herramientas/ansoff/ansoff.module';
 import { PorterModule } from '../herramientas/porter/porter.module';
 import { MckinseyModule } from '../herramientas/mckinsey/mckinsey.module';
 import { OkrModule } from '../herramientas/okr/okr.module';
+import { BalancedScorecard } from '../herramientas/balancedScorecard/balancedScorecard.schema';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { OkrModule } from '../herramientas/okr/okr.module';
     PorterModule,
     MckinseyModule,
     OkrModule,
+    BalancedScorecard,
   ],
   providers: [ProjectService],
   controllers: [ProjectController],

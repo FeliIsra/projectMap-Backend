@@ -84,12 +84,15 @@ export class ProjectController {
     return mckinseys;
   }
 
-  @Get(':projectId/okr')
+  @Get(':projectId/okr-projects')
   async getOkr(@Param('projectId') projectId: string) {
-    const mckinseys = await this.okrService.getAllByProjectId(projectId);
-    return mckinseys;
+    return this.okrService.getAllByProjectId(projectId);
   }
 
+  @Get(':projectId/balanced-scorecards')
+  async getBalancedScorecards(@Param('projectId') projectId: string) {
+    return this.okrService.getAllByProjectId(projectId);
+  }
   @Post('')
   async insert(@Req() req: any, @Body() projectDTO: ProjectDto) {
     const { id } = req.user;

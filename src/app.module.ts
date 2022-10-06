@@ -13,6 +13,7 @@ import { ProjectModule } from './project/project.module';
 import { PorterModule } from './herramientas/porter/porter.module';
 import { MckinseyModule } from './herramientas/mckinsey/mckinsey.module';
 import { ConsultoraModule } from './consultora/consultora.module';
+import { BalancedScorecardModule } from './herramientas/balancedScorecard/balanceScorecard.module';
 
 dotenv.config();
 
@@ -28,6 +29,7 @@ dotenv.config();
     AnsoffModule,
     PorterModule,
     MckinseyModule,
+    BalancedScorecardModule,
   ],
   controllers: [AppController],
   providers: [AppService],
