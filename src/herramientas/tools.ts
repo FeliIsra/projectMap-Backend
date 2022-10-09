@@ -1,0 +1,9 @@
+export enum Tool {
+  PORTER = 'PORTER',
+  PESTEL = 'PESTEL',
+  OKR = 'OKR',
+  MCKINSEY = 'MCKINSEY',
+  FODA = 'FODA',
+  BALANCED_SCORECARD = 'BALANCED_SCORECARD',
+  ANSOFF = 'ANSOFF',
+}

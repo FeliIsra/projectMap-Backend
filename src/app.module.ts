@@ -14,6 +14,7 @@ import { PorterModule } from './herramientas/porter/porter.module';
 import { MckinseyModule } from './herramientas/mckinsey/mckinsey.module';
 import { ConsultoraModule } from './consultora/consultora.module';
 import { BalancedScorecardModule } from './herramientas/balancedScorecard/balanceScorecard.module';
+import { StickyNoteModule } from './sticky-notes/stickyNote.module';
 
 dotenv.config();
 
@@ -30,6 +31,7 @@ dotenv.config();
     PorterModule,
     MckinseyModule,
     BalancedScorecardModule,
+    StickyNoteModule,
   ],
   controllers: [AppController],
   providers: [AppService],
