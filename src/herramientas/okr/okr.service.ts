@@ -107,6 +107,7 @@ export class OkrService {
           keyResultDto.description,
           keyResultDto.goal,
           keyResultDto.responsible,
+          keyResultDto.priority,
         );
         keyResult.keyStatus = keyStatuses;
         return keyResult;
@@ -165,6 +166,7 @@ export class OkrService {
       keyResultDto.description,
       keyResultDto.goal,
       keyResultDto.responsible,
+      keyResultDto.priority,
     );
 
     keyResult.keyStatus = keyStatuses;
@@ -189,9 +191,16 @@ export class OkrService {
 
     okr.keyResults.forEach((keyResult) => {
       if (keyResult._id.toString() == keyResultId) {
-        keyResult.description = keyResultDto.description;
-        keyResult.goal = keyResultDto.goal;
-        keyResult.responsible = keyResultDto.responsible;
+        if (keyResultDto.description)
+          keyResult.description = keyResultDto.description;
+        if (keyResultDto.goal) keyResult.goal = keyResultDto.goal;
+        if (keyResultDto.responsible)
+          keyResult.responsible = keyResultDto.responsible;
+        if (keyResultDto.keyStatus)
+          keyResultDto.keyStatus.forEach(
+            (status, index) =>
+              (keyResult.keyStatus[index].value = status.value),
+          );
       }
     });
 

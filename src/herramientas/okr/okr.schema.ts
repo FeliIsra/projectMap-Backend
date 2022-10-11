@@ -48,10 +48,16 @@ export class KeyResult {
   @Prop({ type: String, required: false })
   responsible: string;
 
-  constructor(description: string, goal: number, responsible: string) {
+  constructor(
+    description: string,
+    goal: number,
+    responsible: string,
+    priority = 0,
+  ) {
     this.description = description;
     this.goal = goal;
     this.responsible = responsible;
+    this.priority = priority;
   }
 }
 export const keyResultSchema = SchemaFactory.createForClass(KeyResult);

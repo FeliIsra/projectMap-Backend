@@ -25,6 +25,7 @@ export class KeyResultDto {
   startDate: string;
   dueDate: string;
   responsible: string;
+  priority: number;
 }
 
 export class KeyStatusDto {
