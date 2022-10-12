@@ -105,7 +105,7 @@ export class BalancedScorecard {
   projectId: string;
 
   @Prop({ type: String })
-  title: string;
+  titulo: string;
 
   @Prop({ type: Date, default: Date.now })
   createdAt: Date;

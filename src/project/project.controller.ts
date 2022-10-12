@@ -19,6 +19,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { PorterService } from '../herramientas/porter/porter.service';
 import { MckinseyService } from '../herramientas/mckinsey/mckinsey.service';
 import { OkrService } from '../herramientas/okr/okr.service';
+import { BalancedScorecardService } from 'src/herramientas/balancedScorecard/balancedScorecard.service';
 
 @UseGuards(AuthGuard('jwt'))
 @ApiTags('projects')
@@ -32,6 +33,7 @@ export class ProjectController {
     private porterService: PorterService,
     private mckinseyService: MckinseyService,
     private okrService: OkrService,
+    private balancedService: BalancedScorecardService,
   ) {}
 
   @Get('')
@@ -91,7 +93,7 @@ export class ProjectController {
 
   @Get(':projectId/balanced-scorecards')
   async getBalancedScorecards(@Param('projectId') projectId: string) {
-    return this.okrService.getAllByProjectId(projectId);
+    return this.balancedService.getAllByProjectId(projectId);
   }
   @Post('')
   async insert(@Req() req: any, @Body() projectDTO: ProjectDto) {

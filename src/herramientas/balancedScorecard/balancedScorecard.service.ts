@@ -59,7 +59,7 @@ export class BalancedScorecardService {
   ) {
     const balancedScorecard: BalancedScorecard =
       await this.balancedScorecardModel.findById(balancedScorecardId);
-    balancedScorecard.title = balancedScorecardDto.titulo;
+    balancedScorecard.titulo = balancedScorecardDto.titulo;
     return new this.balancedScorecardModel(balancedScorecard).save();
   }
 
