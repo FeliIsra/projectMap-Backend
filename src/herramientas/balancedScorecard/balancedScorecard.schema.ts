@@ -52,11 +52,21 @@ export class Objective {
   @Prop({ type: String })
   trend: Trend;
 
-  constructor(action: string, measure: string, target: number, area: Area) {
+  @Prop({ type: String, required: false })
+  responsible: string;
+
+  constructor(
+    action: string,
+    measure: string,
+    target: number,
+    area: Area,
+    responsible: string,
+  ) {
     this.action = action;
     this.measure = measure;
     this.target = target;
     this.area = area;
+    this.responsible = responsible;
   }
 }
 

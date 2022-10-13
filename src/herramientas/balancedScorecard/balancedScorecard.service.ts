@@ -111,6 +111,7 @@ export class BalancedScorecardService {
       objectiveDto.measure,
       objectiveDto.target,
       objectiveDto.area as Area,
+      objectiveDto.responsible,
     );
 
     balancedScorecard.objectives.push(objective);

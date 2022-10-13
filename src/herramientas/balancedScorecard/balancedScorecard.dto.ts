@@ -17,6 +17,7 @@ export class ObjectiveDto {
   checkpoints: CheckpointDto[];
   progress: number;
   trend: Trend;
+  responsible: string;
 }
 
 export class InitiativeDto {
