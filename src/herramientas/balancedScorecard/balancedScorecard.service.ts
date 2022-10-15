@@ -4,6 +4,7 @@ import {
   BalancedScorecard,
   BalancedScoreCardDocument,
   Checkpoint,
+  checkPointSchema,
   Initiative,
   Objective,
 } from './balancedScorecard.schema';
@@ -16,6 +17,7 @@ import {
 } from './balancedScorecard.dto';
 import { Area } from './perspectives';
 import { Trend } from './trends';
+import { CheckpointMonths } from './checkpointMonths';
 
 @Injectable()
 export class BalancedScorecardService {
@@ -114,7 +116,15 @@ export class BalancedScorecardService {
       objectiveDto.responsible,
     );
 
+    objective.checkpoints = [];
+    const targetPerMonth = objective.target / CheckpointMonths.length;
+    CheckpointMonths.forEach((month) => {
+      const checkpoint = new Checkpoint(month, targetPerMonth, 0);
+      objective.checkpoints.push(checkpoint);
+    });
+
     balancedScorecard.objectives.push(objective);
+
     return new this.balancedScorecardModel(balancedScorecard).save();
   }
 
@@ -132,6 +142,18 @@ export class BalancedScorecardService {
         objective.measure = objectiveDto.measure;
         objective.target = objectiveDto.target;
         objective.area = objectiveDto.area as Area;
+
+        objectiveDto.checkpoints.forEach((checkpointDto) => {
+          const objectiveToUpdate = objective.checkpoints.find(
+            (checkpoint) =>
+              checkpoint._id.toString() == checkpointDto._id.toString(),
+          );
+          if (objectiveToUpdate) {
+            objectiveToUpdate.actual = checkpointDto.actual;
+            objectiveToUpdate.month = checkpointDto.month;
+            objectiveToUpdate.target = checkpointDto.target;
+          }
+        });
       }
     });
 

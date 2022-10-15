@@ -75,7 +75,7 @@ objectiveSchema.pre('save', function (next) {
   if (this.checkpoints) {
     const actual = this.checkpoints
       .map((k) => k.actual)
-      .reduce((a, b) => a + b);
+      .reduce((a, b) => a + b, 0);
     const newProgress = (actual / this.target) * 100;
     if (this.progress) {
       if (this.progress > newProgress) this.trend = Trend.Downwards;
