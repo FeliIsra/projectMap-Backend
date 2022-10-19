@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
 import { Trend } from './trends';
 import { Area } from './perspectives';
+import { Deviation } from './deviations';
 
 export type BalancedScoreCardDocument = BalancedScorecard & Document;
 
@@ -52,6 +53,9 @@ export class Objective {
   @Prop({ type: String })
   trend: Trend;
 
+  @Prop({ type: String })
+  deviation: Deviation;
+
   @Prop({ type: String, required: false })
   responsible: string;
 
@@ -95,6 +99,16 @@ objectiveSchema.pre('save', function (next) {
       .map((k) => k.actual)
       .reduce((a, b) => a + b, 0);
     this.progress = (actual / this.target) * 100;
+
+    const progressFromCompletedCheckpoints =
+      completedCheckpoints
+        .map((k) => (k.actual / k.target) * 100)
+        .reduce((a, b) => a + b, 0) / completedCheckpoints.length;
+
+    if (progressFromCompletedCheckpoints > 95) this.deviation = Deviation.None;
+    else if (progressFromCompletedCheckpoints <= 70)
+      this.deviation = Deviation.Acceptable;
+    else this.deviation = Deviation.Risky;
   }
 
   next();

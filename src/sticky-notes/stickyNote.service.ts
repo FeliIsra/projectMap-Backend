@@ -38,19 +38,23 @@ export class StickyNoteService {
   }
 
   async findById(stickyNoteId: string) {
-    return this.stickyNoteModel.findById(stickyNoteId);
+    return this.stickyNoteModel.findById(stickyNoteId).populate('author');
   }
 
   async findByToolId(tool: Tool, toolId: string) {
-    return this.stickyNoteModel.find({
-      tool: tool.valueOf(),
-      toolId: toolId,
-    });
+    return this.stickyNoteModel
+      .find({
+        tool: tool.valueOf(),
+        toolId: toolId,
+      })
+      .populate('author');
   }
 
   async findByProjectId(projectId: string) {
-    return this.stickyNoteModel.find({
-      project: projectId,
-    });
+    return this.stickyNoteModel
+      .find({
+        project: projectId,
+      })
+      .populate('author');
   }
 }

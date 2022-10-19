@@ -12,7 +12,7 @@ export class StickyNote {
   @Prop({ required: true })
   projectId: string;
 
-  @Prop({ type: String })
+  @Prop({ type: mongoose.Types.ObjectId, ref: 'User' })
   author: string;
 
   @Prop({ type: String })

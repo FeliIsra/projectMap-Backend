@@ -18,6 +18,7 @@ import {
 import { Area } from './perspectives';
 import { Trend } from './trends';
 import { CheckpointMonths } from './checkpointMonths';
+import { Deviation } from './deviations';
 
 @Injectable()
 export class BalancedScorecardService {
@@ -237,6 +238,7 @@ export class BalancedScorecardService {
   async getOptions() {
     return {
       trend: Object.values(Trend),
+      deviation: Object.values(Deviation),
       area: Object.values(Area),
     };
   }
