@@ -73,17 +73,28 @@ export class Objective {
 export const objectiveSchema = SchemaFactory.createForClass(Objective);
 objectiveSchema.pre('save', function (next) {
   if (this.checkpoints) {
+    const completedCheckpoints = this.checkpoints.filter(
+      (checkpoint) => checkpoint.actual && checkpoint.actual != 0,
+    );
+    const historicProgress = completedCheckpoints
+      .slice(0, completedCheckpoints.length - 1)
+      .map((k) => (k.actual / k.target) * 100);
+    const avgHistoricProgress =
+      historicProgress.reduce((a, b) => a + b, 0) / historicProgress.length;
+
+    const lastCheckpoint = completedCheckpoints.at(
+      completedCheckpoints.length - 1,
+    );
+    const lastProgress = (lastCheckpoint.actual / lastCheckpoint.target) * 100;
+
+    if (lastProgress > avgHistoricProgress) this.trend = Trend.Upwards;
+    else if (lastProgress < avgHistoricProgress) this.trend = Trend.Downwards;
+    else this.trend = Trend.Stable;
+
     const actual = this.checkpoints
       .map((k) => k.actual)
       .reduce((a, b) => a + b, 0);
-    const newProgress = (actual / this.target) * 100;
-    if (this.progress) {
-      if (this.progress > newProgress) this.trend = Trend.Downwards;
-      else if (this.progress < newProgress) this.trend = Trend.Upwards;
-      else this.trend = Trend.Stable;
-    } // TODO fix
-
-    this.progress = newProgress;
+    this.progress = (actual / this.target) * 100;
   }
 
   next();
