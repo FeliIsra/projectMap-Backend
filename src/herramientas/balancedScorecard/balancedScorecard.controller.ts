@@ -20,7 +20,7 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 
 @Controller('balanced-scorecards')
-@ApiTags('balancedScorecards')
+@ApiTags('balanced-scorecards')
 @UseGuards(AuthGuard('jwt'))
 export class BalancedScorecardController {
   constructor(private balancedScorecardService: BalancedScorecardService) {}
