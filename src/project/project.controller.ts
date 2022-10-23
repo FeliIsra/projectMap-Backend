@@ -20,6 +20,7 @@ import { PorterService } from '../herramientas/porter/porter.service';
 import { MckinseyService } from '../herramientas/mckinsey/mckinsey.service';
 import { OkrService } from '../herramientas/okr/okr.service';
 import { BalancedScorecardService } from 'src/herramientas/balancedScorecard/balancedScorecard.service';
+import { QuestionnaireService } from '../herramientas/continuosImprovement/questionnaire.service';
 
 @UseGuards(AuthGuard('jwt'))
 @ApiTags('projects')
@@ -34,6 +35,7 @@ export class ProjectController {
     private mckinseyService: MckinseyService,
     private okrService: OkrService,
     private balancedService: BalancedScorecardService,
+    private questionnaireService: QuestionnaireService,
   ) {}
 
   @Get('')
@@ -95,6 +97,12 @@ export class ProjectController {
   async getBalancedScorecards(@Param('projectId') projectId: string) {
     return this.balancedService.getAllByProjectId(projectId);
   }
+
+  @Get(':projectId/questionnaires')
+  async getQuestionnaires(@Param('projectId') projectId: string) {
+    return this.questionnaireService.findByProjectId(projectId);
+  }
+
   @Post('')
   async insert(@Req() req: any, @Body() projectDTO: ProjectDto) {
     const { id } = req.user;

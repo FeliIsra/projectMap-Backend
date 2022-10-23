@@ -15,6 +15,7 @@ import { MckinseyModule } from './herramientas/mckinsey/mckinsey.module';
 import { ConsultoraModule } from './consultora/consultora.module';
 import { BalancedScorecardModule } from './herramientas/balancedScorecard/balanceScorecard.module';
 import { StickyNoteModule } from './sticky-notes/stickyNote.module';
+import { QuestionnaireModule } from './herramientas/continuosImprovement/questionnaire.module';
 
 dotenv.config();
 
@@ -31,6 +32,7 @@ dotenv.config();
     PorterModule,
     MckinseyModule,
     BalancedScorecardModule,
+    QuestionnaireModule,
     StickyNoteModule,
   ],
   controllers: [AppController],
