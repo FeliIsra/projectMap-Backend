@@ -87,9 +87,8 @@ objectiveSchema.pre('save', function (next) {
       const avgHistoricProgress =
         historicProgress.reduce((a, b) => a + b, 0) / historicProgress.length;
 
-      const lastCheckpoint = completedCheckpoints.at(
-        completedCheckpoints.length - 1,
-      );
+      const lastCheckpoint =
+        completedCheckpoints[completedCheckpoints.length - 1];
       const lastProgress =
         (lastCheckpoint.actual / lastCheckpoint.target) * 100;
 
