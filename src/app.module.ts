@@ -16,6 +16,7 @@ import { ConsultoraModule } from './consultora/consultora.module';
 import { BalancedScorecardModule } from './herramientas/balancedScorecard/balanceScorecard.module';
 import { StickyNoteModule } from './sticky-notes/stickyNote.module';
 import { QuestionnaireModule } from './herramientas/continuosImprovement/questionnaire.module';
+import { ContinuousImprovementModule } from './herramientas/continuousImprovement/continuousImprovement.module';
 
 dotenv.config();
 
@@ -34,6 +35,7 @@ dotenv.config();
     BalancedScorecardModule,
     QuestionnaireModule,
     StickyNoteModule,
+    ContinuousImprovementModule,
   ],
   controllers: [AppController],
   providers: [AppService],

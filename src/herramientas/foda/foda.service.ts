@@ -74,11 +74,7 @@ export class FodaService {
   }
 
   async getAllByProjectId(projectId) {
-    const fodas = await this.fodaModel.find({ projectId });
-    return fodas.map((foda) => {
-      const fodaObject = foda.toObject();
-      return this.mapToValues(fodaObject);
-    });
+    return this.fodaModel.find({ projectId }).exec();
   }
 
   async getOne(id: string) {
