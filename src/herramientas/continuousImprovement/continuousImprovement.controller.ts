@@ -32,6 +32,9 @@ export class ContinuousImprovementController {
     const pestels = await this.pestelService.getAllByProjectId(projectId);
     const ansoffs = await this.ansoffService.getAllByProjectId(projectId);
     const porters = await this.porterService.getAllByProjectId(projectId);
+    const porters_consejos = porters.map((porter) =>
+      this.porterService.calcularConsejos(porter.preguntas),
+    );
     const mckinseys = await this.mckinseyService.getAllByProjectId(projectId);
     const okrs = await this.okrService.getAllByProjectId(projectId);
     const balancedScorecards = await this.balancedService.getAllByProjectId(
@@ -42,6 +45,7 @@ export class ContinuousImprovementController {
       pestels: pestels.slice(0, 1),
       ansoffs: ansoffs.slice(0, 2),
       porters: porters.slice(0, 2),
+      porters_consejos: porters_consejos.slice(0, 2),
       mckinseys: mckinseys.slice(0, 1),
       okrs: okrs.slice(0, 1),
       balancedScorecards: balancedScorecards.slice(0, 1),

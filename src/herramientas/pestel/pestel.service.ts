@@ -52,7 +52,8 @@ export class PestelService {
   }
 
   async getAllByProjectId(projectId: string) {
-    return this.pestelModel.find({ projectId }).exec();
+    const pestels = await this.pestelModel.find({ projectId }).exec();
+    return pestels.map((pestel) => this.mapToValues(pestel));
   }
 
   async getOne(id: string) {

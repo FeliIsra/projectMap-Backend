@@ -19,7 +19,7 @@ export class QuestionnaireController {
   constructor(private questionnaireService: QuestionnaireService) {}
 
   @Get('questions')
-  getOptions() {
+  getQuestions() {
     return this.questionnaireService.getQuestions();
   }
 
