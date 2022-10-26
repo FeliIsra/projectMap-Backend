@@ -10,7 +10,7 @@ import { PorterModule } from '../herramientas/porter/porter.module';
 import { MckinseyModule } from '../herramientas/mckinsey/mckinsey.module';
 import { OkrModule } from '../herramientas/okr/okr.module';
 import { BalancedScorecardModule } from '../herramientas/balancedScorecard/balanceScorecard.module';
-import { QuestionnaireModule } from '../herramientas/continuosImprovement/questionnaire.module';
+import { QuestionnaireModule } from '../herramientas/questionnaire/questionnaire.module';
 
 @Module({
   imports: [

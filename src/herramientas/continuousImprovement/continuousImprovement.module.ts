@@ -8,7 +8,7 @@ import { PorterModule } from '../porter/porter.module';
 import { MckinseyModule } from '../mckinsey/mckinsey.module';
 import { OkrModule } from '../okr/okr.module';
 import { BalancedScorecardModule } from '../balancedScorecard/balanceScorecard.module';
-import { QuestionnaireModule } from '../continuosImprovement/questionnaire.module';
+import { QuestionnaireModule } from '../questionnaire/questionnaire.module';
 import { ContinuousImprovementController } from './continuousImprovement.controller';
 
 @Module({
