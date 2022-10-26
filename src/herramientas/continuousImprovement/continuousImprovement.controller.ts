@@ -32,9 +32,10 @@ export class ContinuousImprovementController {
     const pestels = await this.pestelService.getAllByProjectId(projectId);
     const ansoffs = await this.ansoffService.getAllByProjectId(projectId);
     const porters = await this.porterService.getAllByProjectId(projectId);
-    const porters_consejos = porters.map((porter) =>
-      this.porterService.calcularConsejos(porter.preguntas),
-    );
+    const porters_consejos = porters.map((porter) => ({
+      titulo: porter.titulo,
+      consejos: this.porterService.calcularConsejos(porter.preguntas),
+    }));
     const mckinseys = await this.mckinseyService.getAllByProjectId(projectId);
     const okrs = await this.okrService.getAllByProjectId(projectId);
     const balancedScorecards = await this.balancedService.getAllByProjectId(
