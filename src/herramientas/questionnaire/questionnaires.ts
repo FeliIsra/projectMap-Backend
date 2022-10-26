@@ -9,7 +9,7 @@ export class Questionnaires {
           answers: {
             1: 'Respuesta 1',
             2: 'Respuesta 2',
-            3: 'Respuesta 2',
+            3: 'Respuesta 3',
           },
           right_answer: 2,
         },
@@ -18,7 +18,7 @@ export class Questionnaires {
           answers: {
             1: 'Respuesta 1',
             2: 'Respuesta 2',
-            3: 'Respuesta 2',
+            3: 'Respuesta 3',
           },
           right_answer: 2,
         },
@@ -27,7 +27,7 @@ export class Questionnaires {
           answers: {
             1: 'Respuesta 1',
             2: 'Respuesta 2',
-            3: 'Respuesta 2',
+            3: 'Respuesta 3',
           },
           right_answer: 3,
         },
@@ -36,7 +36,7 @@ export class Questionnaires {
           answers: {
             1: 'Respuesta 1',
             2: 'Respuesta 2',
-            3: 'Respuesta 2',
+            3: 'Respuesta 3',
           },
           right_answer: 3,
         },
@@ -51,7 +51,7 @@ export class Questionnaires {
           answers: {
             1: 'Respuesta 1',
             2: 'Respuesta 2',
-            3: 'Respuesta 2',
+            3: 'Respuesta 3',
           },
           right_answer: 2,
         },
@@ -60,7 +60,7 @@ export class Questionnaires {
           answers: {
             1: 'Respuesta 1',
             2: 'Respuesta 2',
-            3: 'Respuesta 2',
+            3: 'Respuesta 3',
           },
           right_answer: 2,
         },
@@ -69,7 +69,7 @@ export class Questionnaires {
           answers: {
             1: 'Respuesta 1',
             2: 'Respuesta 2',
-            3: 'Respuesta 2',
+            3: 'Respuesta 3',
           },
           right_answer: 3,
         },
@@ -78,7 +78,7 @@ export class Questionnaires {
           answers: {
             1: 'Respuesta 1',
             2: 'Respuesta 2',
-            3: 'Respuesta 2',
+            3: 'Respuesta 3',
           },
           right_answer: 3,
         },
