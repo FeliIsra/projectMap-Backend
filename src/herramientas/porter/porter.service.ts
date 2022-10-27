@@ -103,8 +103,8 @@ export class PorterService {
           const preguntaDto = new Pregunta(
             parseInt(questionId),
             fuerza as Fuerza,
-            question.nivelDeConcordancia,
-            question.valoracion,
+            question.nivelDeConcordancia as NivelDeConcordancia,
+            question.valoracion as Valoracion,
           );
 
           newQuestions.push(preguntaDto);
