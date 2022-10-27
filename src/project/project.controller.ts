@@ -20,7 +20,7 @@ import { PorterService } from '../herramientas/porter/porter.service';
 import { MckinseyService } from '../herramientas/mckinsey/mckinsey.service';
 import { OkrService } from '../herramientas/okr/okr.service';
 import { BalancedScorecardService } from 'src/herramientas/balancedScorecard/balancedScorecard.service';
-import { QuestionnaireService } from '../herramientas/continuosImprovement/questionnaire.service';
+import { QuestionnaireService } from '../herramientas/questionnaire/questionnaire.service';
 
 @UseGuards(AuthGuard('jwt'))
 @ApiTags('projects')

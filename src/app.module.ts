@@ -15,7 +15,7 @@ import { MckinseyModule } from './herramientas/mckinsey/mckinsey.module';
 import { ConsultoraModule } from './consultora/consultora.module';
 import { BalancedScorecardModule } from './herramientas/balancedScorecard/balanceScorecard.module';
 import { StickyNoteModule } from './sticky-notes/stickyNote.module';
-import { QuestionnaireModule } from './herramientas/continuosImprovement/questionnaire.module';
+import { QuestionnaireModule } from './herramientas/questionnaire/questionnaire.module';
 import { ContinuousImprovementModule } from './herramientas/continuousImprovement/continuousImprovement.module';
 
 dotenv.config();

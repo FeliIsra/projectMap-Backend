@@ -10,7 +10,7 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { QuestionnaireService } from './questionnaire.service';
-import { QuestionnaireDto } from './questionnaire.dto';
+import { AnswerDto, QuestionnaireDto } from './questionnaire.dto';
 
 @Controller('questionnaires')
 @ApiTags('questionnaires')
@@ -28,25 +28,37 @@ export class QuestionnaireController {
     return this.questionnaireService.create(questionnaireDto);
   }
 
+  @Put(':id/answers')
+  answerQuestions(@Param('id') id: string, @Body() answers: AnswerDto[]) {
+    return this.questionnaireService.answerQuestionnaire(id, answers);
+  }
+
   @Get(':id')
   findById(@Param('id') id: string) {
     return this.questionnaireService.findById(id);
   }
 
-  @Get(':id/questions/:questionId')
+  @Get(':id/chapters/:chapterId/questions/:questionId')
   findQuestion(
     @Param('id') id: string,
+    @Param('chapterId') chapterId: number,
     @Param('questionId') questionId: number,
   ) {
-    return this.questionnaireService.getQuestion(id, questionId);
+    return this.questionnaireService.getQuestion(id, chapterId, questionId);
   }
 
-  @Put(':id/questions/:questionId/answers/:answerId')
+  @Put(':id/chapters/:chapterId/questions/:questionId/answers/:answerId')
   editAnswer(
     @Param('id') id: string,
+    @Param('chapterId') chapterId: number,
     @Param('questionId') questionId: number,
     @Param('answerId') answerId: number,
   ) {
-    return this.questionnaireService.editAnswer(id, questionId, answerId);
+    return this.questionnaireService.editAnswer(
+      id,
+      chapterId,
+      questionId,
+      answerId,
+    );
   }
 }

@@ -9,7 +9,7 @@ import { PorterService } from '../porter/porter.service';
 import { MckinseyService } from '../mckinsey/mckinsey.service';
 import { OkrService } from '../okr/okr.service';
 import { BalancedScorecardService } from '../balancedScorecard/balancedScorecard.service';
-import { QuestionnaireService } from '../continuosImprovement/questionnaire.service';
+import { QuestionnaireService } from '../questionnaire/questionnaire.service';
 
 @UseGuards(AuthGuard('jwt'))
 @ApiTags('continuous-improvements"')

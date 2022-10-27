@@ -52,6 +52,34 @@ export class Question {
 const questionSchema = SchemaFactory.createForClass(Question);
 
 @Schema()
+export class Chapter {
+  @Prop({ type: Number, required: true })
+  chapterId: number;
+
+  @Prop({ type: String, required: true })
+  title: string;
+
+  @Prop([String])
+  presentations: string[];
+
+  constructor(
+    chapterId: number,
+    title: string,
+    questions: Question[],
+    presentations: string[],
+  ) {
+    this.chapterId = chapterId;
+    this.title = title;
+    this.presentations = presentations;
+    this.questions = questions;
+  }
+
+  @Prop([questionSchema])
+  questions: Question[];
+}
+const chapterSchema = SchemaFactory.createForClass(Chapter);
+
+@Schema()
 export class Questionnaire {
   @Prop({ required: true })
   projectId: string;
@@ -62,19 +90,19 @@ export class Questionnaire {
   @Prop({ type: Date, default: Date.now })
   createdAt: Date;
 
-  @Prop([questionSchema])
-  questions: Question[];
+  @Prop([chapterSchema])
+  chapters: Chapter[];
 
   constructor(
     projectId: string,
     titulo: string,
     createdAt: Date,
-    questions: Question[],
+    chapters: Chapter[],
   ) {
     this.projectId = projectId;
     this.titulo = titulo;
     this.createdAt = createdAt;
-    this.questions = questions;
+    this.chapters = chapters;
   }
 }
 export const QuestionnaireSchema = SchemaFactory.createForClass(Questionnaire);
