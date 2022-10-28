@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { ProjectDto } from './project.dto';
@@ -47,6 +47,8 @@ export class ProjectService {
   }
 
   async delete(id: string) {
-    return this.projectModel.deleteOne({ _id: id });
+    const result = await this.projectModel.deleteOne({ _id: id });
+    if (result.deletedCount) return id;
+    else throw new HttpException('Project not found', HttpStatus.NOT_FOUND);
   }
 }
