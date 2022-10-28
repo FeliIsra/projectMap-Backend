@@ -21,7 +21,13 @@ export class StickyNoteService {
       stickyNoteDto.tool,
       stickyNoteDto.toolId,
     );
-    return new this.stickyNoteModel(stickyNote).save();
+    const stickyNoteDocument = await new this.stickyNoteModel(
+      stickyNote,
+    ).save();
+
+    return this.stickyNoteModel
+      .findById(stickyNoteDocument._id.toString())
+      .populate('author');
   }
 
   async delete(stickyNoteId: string) {
