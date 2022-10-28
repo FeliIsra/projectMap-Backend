@@ -72,4 +72,12 @@ export class MckinseyController {
     );
     return mcKinsey;
   }
+
+  @Delete(':id')
+  async delete(@Param('id') id: string) {
+    const documentId = await this.mckinseyService.delete(id);
+    return {
+      _id: documentId,
+    };
+  }
 }
