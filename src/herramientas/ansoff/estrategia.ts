@@ -14,12 +14,12 @@ export namespace Estrategia {
     situacionDelProducto: SituacionDelProducto,
   ) {
     switch (situacionDelMercado) {
-      case SituacionDelMercado.ACTUAL:
-        if (situacionDelProducto == SituacionDelProducto.ACTUAL)
+      case SituacionDelMercado.MERCADO_EXISTENTE:
+        if (situacionDelProducto == SituacionDelProducto.PRODUCTO_EXISTENTE)
           return Estrategia.PENETRACION;
         else return Estrategia.DESARROLLO_DE_PRODUCTO;
       case SituacionDelMercado.NUEVO:
-        if (situacionDelProducto == SituacionDelProducto.ACTUAL)
+        if (situacionDelProducto == SituacionDelProducto.PRODUCTO_EXISTENTE)
           return Estrategia.DESARROLLO_DE_MERCADO;
         else return Estrategia.DIVERSIFICAICON;
     }

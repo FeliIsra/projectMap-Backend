@@ -6,70 +6,82 @@ export class Preguntas {
     {
       id: 1,
       pregunta:
-        'En la industria desea introducir / actos ya están establecidos los competidores?',
+        '¿En la industria en la que se quiere introducir, ya estan establecidos los competidores?',
     },
     {
       id: 2,
-      pregunta:
-        'La (s) competidor (s) presente ya se puede satisfacer a todo el mercado?',
+      pregunta: '¿Los competidores presenten, satisfacen a todo el mercado?',
     },
     {
       id: 3,
-      pregunta: 'Ya existe una competencia explícita entre los competidores?',
-    },
-    { id: 4, pregunta: 'Va a entrar en el mismo mercado que?' },
-    { id: 5, pregunta: 'La diversidad de estos competidores es alto?' },
-    {
-      id: 6,
-      pregunta: 'Hay una guerra de precios o la calidad en el sector deseado?',
-    },
-  ];
-  static poderDeNegociacionConElCliente = [
-    { id: 1, pregunta: 'Sus clientes son sensibles a los cambios de precios?' },
-    {
-      id: 2,
-      pregunta:
-        'Hay una escasez de clientes para su negocio en relación con su industria?',
-    },
-    { id: 3, pregunta: '¿Tiene dificultad para retener a sus clientes?' },
-    { id: 4, pregunta: 'El volumen de compra de sus clientes es alto?' },
-    {
-      id: 5,
-      pregunta:
-        'El costo para los fabricantes de conmutadores cliente es baja?',
-    },
-    {
-      id: 6,
-      pregunta: 'Hay una posibilidad de que su cliente al producto en sí?',
-    },
-  ];
-
-  static poderDeNegociacionConProveedores = [
-    { id: 1, pregunta: 'Hay pocos proveedores de las entradas de su negocio?' },
-    {
-      id: 2,
-      pregunta:
-        'El precio de los suministros necesarios para su negocio es muy variable?',
-    },
-    {
-      id: 3,
-      pregunta:
-        'El perfil profesional requerido para su negocio es fácil de encontrar?',
+      pregunta: '¿Ya existe una competencia explicita entre los competidores?',
     },
     {
       id: 4,
       pregunta:
-        'Hay una falta de formación profesional para sus vendedores del mercado?',
+        '¿Va a entrar en el mismo submercado que uno de los competidores?',
     },
+    { id: 5, pregunta: '¿La diversidad de competidores es alta?' },
+    {
+      id: 6,
+      pregunta:
+        '¿Existe una guerra de precios actualmente en el sector deseado?',
+    },
+  ];
+  static poderDeNegociacionConElCliente = [
+    {
+      id: 1,
+      pregunta:
+        '¿Son sus clientes sensibles a los cambios de precios en sus productos?',
+    },
+    {
+      id: 2,
+      pregunta:
+        '¿Existe una escasez de clientes en su emprendimiento en comparacion con otros competidores en la industria? ',
+    },
+    { id: 3, pregunta: '¿Tiene dificultad para retener a sus clientes?' },
+    { id: 4, pregunta: '¿El volumen de compra de sus clientes es alto?' },
     {
       id: 5,
       pregunta:
-        '¿Tiene dificultad para sustituir sus entradas para otros (calidad, precio, etc.)?',
+        '¿El costo para los fabricantes de productos sustitutos es baja?',
     },
     {
       id: 6,
       pregunta:
-        'Hay investigaciones para mejorar la tecnología en el ámbito de sus proveedores?',
+        '¿Hay posibilidad de que el cliente acceda a su producto en otro lado?',
+    },
+  ];
+
+  static poderDeNegociacionConProveedores = [
+    {
+      id: 1,
+      pregunta:
+        '¿Hay pocos proveedores de las materias primas necesarias/personal para desarrollar su actividad economica?',
+    },
+    {
+      id: 2,
+      pregunta: '¿Hay mucha variacion en los precios de sus proveedores?',
+    },
+    {
+      id: 3,
+      pregunta:
+        '¿El perfil profesional requerido para realizar su actividad economica, es facil de encontrar?',
+    },
+    {
+      id: 4,
+      pregunta:
+        '¿Existe una falta de formacion profesional para el personal a contratar en el mercado?',
+    },
+    {
+      id: 5,
+      pregunta:
+        '¿Tiene dificultad para sustituir sus proveedores por otros? (Sea por temas de calidad, precio, etc)',
+    },
+    {
+      id: 6,
+      pregunta:
+        '¿Existen esfuerzos de investigacion y desarrollo (R&D) para mejorar las tecnologias en el ambito de sus proveedores?',
     },
   ];
 
@@ -77,49 +89,58 @@ export class Preguntas {
     {
       id: 1,
       pregunta:
-        'El costo para iniciar un nuevo negocio dentro de su industria es baja?',
+        '¿Es el costo para iniciar un nuevo negocio dentro de su industria es baja?',
     },
     {
       id: 2,
-      pregunta: 'Hay espacio para más competidores fuera de la ya establecida?',
+      pregunta:
+        '¿Hay espacio para más competidores fuera de los ya establecidos?',
     },
-    { id: 3, pregunta: 'La industria es pequeña escala?' },
-    { id: 4, pregunta: 'Los costes de cambio para los clientes son bajos?' },
+    { id: 3, pregunta: '¿Es pequeña la escala de la industria?' },
+    {
+      id: 4,
+      pregunta: '¿Es costoso para los clientes cambiar de empresa proveedora?',
+    },
     {
       id: 5,
-      pregunta: 'Hay una escasez de puntos de venta de este tipo de negocio?',
+      pregunta: '¿Hay una escasez de puntos de venta de este tipo de negocio?',
     },
     {
       id: 6,
       pregunta:
-        'Existe un riesgo de nuevas tecnologías derribar las barreras de entrada?',
+        '¿Existen chances de que nuevas tecnologias derriben las barreras de entradas como estan establecidadas en este momento?',
     },
   ];
 
   static amenazaDeSustitucion = [
-    { id: 1, pregunta: 'Hay reemplazos directos a su producto / servicio?' },
+    {
+      id: 1,
+      pregunta: '¿Hay reemplazos directos para su producto o servicio?',
+    },
     {
       id: 2,
-      pregunta: 'Los productos sustitutos tienen un alto grado de innovación?',
+      pregunta:
+        '¿Los productos sustitutos tienen un grado alto de innovacion en comparacion con sus productos?',
     },
     {
       id: 3,
       pregunta:
-        'Hay propensión de sus clientes para cambiar su oferta de sustitutos?',
+        '¿Existe un interes en sus clientes de cambiarse a estos productos sustitutos?',
     },
     {
       id: 4,
-      pregunta: 'El cambio en el costo de los clientes a sustituir es baja?',
+      pregunta:
+        '¿El costo de cambio para sus clientes a estos productos sustitutos, es bajo?',
     },
     {
       id: 5,
       pregunta:
-        'El precio de los productos de sustitución es menor que su producto o servicio?',
+        '¿El precio de estos productos sustitutos es menor que el de los suyos?',
     },
     {
       id: 6,
       pregunta:
-        'La calidad de los productos de sustitución es mayor que la calidad de su producto o servicio?',
+        '¿La calidad de estos productos sustitutos es mayor que la de los suyos?',
     },
   ];
 

@@ -1,5 +1,5 @@
 export enum SituacionDelProducto {
-  ACTUAL = 'Existe Producto',
+  PRODUCTO_EXISTENTE = 'Producto existente',
   NUEVO = 'Nuevo Producto',
 }
 

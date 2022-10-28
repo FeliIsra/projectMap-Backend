@@ -1,5 +1,5 @@
 export enum SituacionDelMercado {
-  ACTUAL = 'Mercado Existe',
+  MERCADO_EXISTENTE = 'Mercado Existente',
   NUEVO = 'Nuevo Mercado',
 }
 
