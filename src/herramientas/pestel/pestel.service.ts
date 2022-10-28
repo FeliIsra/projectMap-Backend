@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { FactorDto, PestelDto } from './pestel.dto';
@@ -102,8 +102,9 @@ export class PestelService {
   }
 
   async delete(id: string) {
-    await this.pestelModel.deleteOne({ _id: id });
-    return this.pestelModel.findById(id);
+    const result = await this.pestelModel.deleteOne({ _id: id });
+    if (result.deletedCount) return id;
+    else throw new HttpException('Pestel not found', HttpStatus.NOT_FOUND);
   }
 
   async deleteFactor(id: string, idFactor: string) {

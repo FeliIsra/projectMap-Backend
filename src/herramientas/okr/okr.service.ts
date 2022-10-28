@@ -297,4 +297,10 @@ export class OkrService {
 
     return new this.okrModel(okrProject).save();
   }
+
+  async delete(id: string) {
+    const result = await this.okrModel.deleteOne({ _id: id });
+    if (result.deletedCount) return id;
+    else throw new HttpException('Okr Project not found', HttpStatus.NOT_FOUND);
+  }
 }

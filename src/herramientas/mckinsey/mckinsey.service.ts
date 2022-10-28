@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { McKinsey, MckinseyDocument, UnidadDeNegocio } from './mckinsey.schema';
@@ -71,5 +71,11 @@ export class MckinseyService {
     );
     mcKinsey.unidadesDeNegocio.push(unidadDeNegocio);
     return new this.mckinseyModel(mcKinsey).save();
+  }
+
+  async delete(id: string) {
+    const result = await this.mckinseyModel.deleteOne({ _id: id });
+    if (result.deletedCount) return id;
+    else throw new HttpException('McKinsey not found', HttpStatus.NOT_FOUND);
   }
 }

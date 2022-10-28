@@ -118,4 +118,11 @@ export class QuestionnaireService {
 
     return new this.questionnaireModel(questionnaire).save();
   }
+
+  async delete(id: string) {
+    const result = await this.questionnaireModel.deleteOne({ _id: id });
+    if (result.deletedCount) return id;
+    else
+      throw new HttpException('Questionnaire not found', HttpStatus.NOT_FOUND);
+  }
 }

@@ -79,12 +79,6 @@ export class FodaController {
     return foda;
   }
 
-  @Delete(':id')
-  async delete(@Param('id') id: string) {
-    const response = await this.fodaService.delete(id);
-    return response;
-  }
-
   @Delete(':id/factor/:idFactor')
   async deleteFactor(
     @Param('id') id: string,
@@ -92,5 +86,13 @@ export class FodaController {
   ) {
     const response = await this.fodaService.deleteFactor(id, idFactor);
     return response;
+  }
+
+  @Delete(':id')
+  async delete(@Param('id') id: string) {
+    const documentId = await this.fodaService.delete(id);
+    return {
+      _id: documentId,
+    };
   }
 }

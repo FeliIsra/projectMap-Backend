@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Area, Importancia, Intensidad, Tendencia, Urgencia } from './enums';
@@ -110,7 +110,9 @@ export class FodaService {
   }
 
   async delete(id: string) {
-    return this.fodaModel.deleteOne({ _id: id });
+    const result = await this.fodaModel.deleteOne({ _id: id });
+    if (result.deletedCount) return id;
+    else throw new HttpException('Foda not found', HttpStatus.NOT_FOUND);
   }
 
   async deleteFactor(id: string, idFactor: string) {

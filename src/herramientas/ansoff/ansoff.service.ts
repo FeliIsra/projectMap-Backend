@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Ansoff, AnsoffDocument, Producto } from './ansoff.schema';
 import { Model } from 'mongoose';
@@ -83,5 +83,11 @@ export class AnsoffService {
       situacionDelProducto: Object.values(SituacionDelProducto),
       exito: Object.values(Exito),
     };
+  }
+
+  async delete(id: string) {
+    const result = await this.ansoffModel.deleteOne({ _id: id });
+    if (result.deletedCount) return id;
+    else throw new HttpException('Ansoff not found', HttpStatus.NOT_FOUND);
   }
 }

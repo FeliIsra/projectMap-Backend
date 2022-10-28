@@ -39,11 +39,6 @@ export class PorterController {
     return porters;
   }
 
-  @Delete(':porterId')
-  async delete(@Param('porterId') porterId: string) {
-    return this.porterService.deletePorter(porterId);
-  }
-
   @Post(':porterId/preguntas')
   async addPregunta(
     @Param('porterId') porterId: string,
@@ -86,5 +81,13 @@ export class PorterController {
   async getConsejos(@Param('porterId') porterId: string) {
     const porter = await this.porterService.getPorterById(porterId);
     return this.porterService.calcularConsejos((porter as Porter).preguntas);
+  }
+
+  @Delete(':id')
+  async delete(@Param('id') id: string) {
+    const documentId = await this.porterService.delete(id);
+    return {
+      _id: documentId,
+    };
   }
 }

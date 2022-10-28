@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import {
@@ -120,8 +120,10 @@ export class PorterService {
     return this.porterModel.find({ projectId: projectId }).exec();
   }
 
-  async deletePorter(porterId: string) {
-    return this.porterModel.findByIdAndDelete(porterId).exec();
+  async delete(id: string) {
+    const result = await this.porterModel.deleteOne({ _id: id });
+    if (result.deletedCount) return id;
+    else throw new HttpException('Porter not found', HttpStatus.NOT_FOUND);
   }
 
   getPreguntas() {

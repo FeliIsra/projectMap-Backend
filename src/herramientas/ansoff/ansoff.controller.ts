@@ -60,4 +60,12 @@ export class AnsoffController {
   ) {
     return await this.ansoffService.deleteProduct(projectId, productId);
   }
+
+  @Delete(':id')
+  async delete(@Param('id') id: string) {
+    const documentId = await this.ansoffService.delete(id);
+    return {
+      _id: documentId,
+    };
+  }
 }

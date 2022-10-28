@@ -69,11 +69,6 @@ export class BalancedScorecardController {
     );
   }
 
-  @Delete(':id')
-  async removeBalancedScorecard(@Param('id') id: string) {
-    return this.balancedScorecardService.delete(id);
-  }
-
   @Delete(':id/initiatives/:initiativeId')
   async removeInitiative(
     @Param('id') id: string,
@@ -150,5 +145,13 @@ export class BalancedScorecardController {
       checkpointId,
       checkpointDto,
     );
+  }
+
+  @Delete(':id')
+  async delete(@Param('id') id: string) {
+    const documentId = await this.balancedScorecardService.delete(id);
+    return {
+      _id: documentId,
+    };
   }
 }

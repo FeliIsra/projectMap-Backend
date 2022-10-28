@@ -1,10 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import {
   BalancedScorecard,
   BalancedScoreCardDocument,
   Checkpoint,
-  checkPointSchema,
   Initiative,
   Objective,
 } from './balancedScorecard.schema';
@@ -34,8 +33,14 @@ export class BalancedScorecardService {
     return balancedScorecard.save();
   }
 
-  async delete(balancedScorecardId: string) {
-    return this.balancedScorecardModel.findByIdAndDelete(balancedScorecardId);
+  async delete(id: string) {
+    const result = await this.balancedScorecardModel.deleteOne({ _id: id });
+    if (result.deletedCount) return id;
+    else
+      throw new HttpException(
+        'Balanced Scorecard not found',
+        HttpStatus.NOT_FOUND,
+      );
   }
 
   async findById(balancedScorecardId: string) {

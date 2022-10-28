@@ -75,12 +75,6 @@ export class PestelController {
     return pestel;
   }
 
-  @Delete(':id')
-  async delete(@Param('id') id: string) {
-    const response = await this.pestelService.delete(id);
-    return response;
-  }
-
   @Delete(':id/factor/:idFactor')
   async deleteFactor(
     @Param('id') id: string,
@@ -101,5 +95,13 @@ export class PestelController {
       updatedFactor,
     );
     return response;
+  }
+
+  @Delete(':id')
+  async delete(@Param('id') id: string) {
+    const documentId = await this.pestelService.delete(id);
+    return {
+      _id: documentId,
+    };
   }
 }

@@ -177,4 +177,12 @@ export class OkrController {
     );
     return okrProject;
   }
+
+  @Delete(':id')
+  async delete(@Param('id') id: string) {
+    const documentId = await this.okrService.delete(id);
+    return {
+      _id: documentId,
+    };
+  }
 }

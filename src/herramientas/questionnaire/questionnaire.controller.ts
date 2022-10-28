@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -60,5 +61,13 @@ export class QuestionnaireController {
       questionId,
       answerId,
     );
+  }
+
+  @Delete(':id')
+  async delete(@Param('id') id: string) {
+    const documentId = await this.questionnaireService.delete(id);
+    return {
+      _id: documentId,
+    };
   }
 }
