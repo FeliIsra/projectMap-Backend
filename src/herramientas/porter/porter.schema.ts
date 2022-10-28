@@ -3,6 +3,8 @@ import mongoose from 'mongoose';
 import { NivelDeConcordancia } from './nivelDeConcordancia';
 import { Valoracion } from './valoracion';
 import { Fuerza } from './fuerza';
+import { okrSchema } from '../okr/okr.schema';
+import { Preguntas } from './preguntas';
 
 export type PorterDocument = Porter & Document;
 
@@ -53,6 +55,21 @@ export class Porter {
 
   @Prop({ type: Object })
   preguntasFormatted: any;
+
+  @Prop({ type: Boolean, default: false })
+  completed: boolean;
 }
 
 export const porterSchema = SchemaFactory.createForClass(Porter);
+porterSchema.pre('save', function (next) {
+  const numberOfQuestionsToAnswer =
+    Preguntas.rivalidadEntreCompetidores.length +
+    Preguntas.amenazaDeNuevosCompetidores.length +
+    Preguntas.amenazaDeSustitucion.length +
+    Preguntas.poderDeNegociacionConProveedores.length +
+    Preguntas.poderDeNegociacionConProveedores.length;
+
+  this.completed = this.preguntas.length == numberOfQuestionsToAnswer;
+
+  next();
+});
