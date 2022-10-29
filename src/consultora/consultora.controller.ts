@@ -8,7 +8,7 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { ConsultoraDto } from './consultora.dto';
+import { ConsultantDto, ConsultoraDto } from './consultora.dto';
 import { ConsultoraService } from './consultora.service';
 import { use } from 'passport';
 
@@ -35,20 +35,45 @@ export class ConsultoraController {
     return this.consultoraService.update(consultoraId, consultoraDto);
   }
 
-  @Put(':consultoraId/assign/:userId')
-  async assignConsultor(
+  @Put(':consultoraId/admin')
+  async assignAdmin(
     @Param('consultoraId') consultoraId: string,
-    @Param('userId') userId: string,
+    @Body() consultant: ConsultantDto,
   ) {
-    return this.consultoraService.assignNewConsultor(consultoraId, userId);
+    return this.consultoraService.assignNewAdmin(
+      consultoraId,
+      consultant.email,
+    );
   }
 
-  @Delete(':consultoraId/assign/:userId')
+  @Put(':consultoraId/admin')
+  async removeAdmin(
+    @Param('consultoraId') consultoraId: string,
+    @Body() consultant: ConsultantDto,
+  ) {
+    return this.consultoraService.removeAdmin(consultoraId);
+  }
+
+  @Put(':consultoraId/consultants')
+  async assignConsultor(
+    @Param('consultoraId') consultoraId: string,
+    @Body() consultant: ConsultantDto,
+  ) {
+    return this.consultoraService.assignNewConsultor(
+      consultoraId,
+      consultant.email,
+    );
+  }
+
+  @Delete(':consultoraId/consultants')
   async removeConsultor(
     @Param('consultoraId') consultoraId: string,
-    @Param('userId') userId: string,
+    @Body() consultant: ConsultantDto,
   ) {
-    return this.consultoraService.removeConsultor(consultoraId, userId);
+    return this.consultoraService.removeConsultor(
+      consultoraId,
+      consultant.email,
+    );
   }
 
   @Delete(':consultoraId')

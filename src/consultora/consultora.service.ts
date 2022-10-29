@@ -14,7 +14,10 @@ export class ConsultoraService {
   ) {}
 
   async findById(consultoraId: string) {
-    return this.consultoraModel.findById(consultoraId);
+    return this.consultoraModel
+      .findById(consultoraId)
+      .populate(['admin', 'projects', 'consultants'])
+      .exec();
   }
   async create(consultoraDto: ConsultoraDto) {
     return new this.consultoraModel(consultoraDto).save();
@@ -24,7 +27,6 @@ export class ConsultoraService {
     const consultora: Consultora = await this.consultoraModel.findById(
       consultoraId,
     );
-    consultora.admin = consultoraDto.admin;
     return new this.consultoraModel(consultora).save();
   }
 
@@ -32,19 +34,62 @@ export class ConsultoraService {
     return this.consultoraModel.findByIdAndDelete(consultoraId);
   }
 
-  async assignNewConsultor(consultoraId: string, userId: string) {
+  async assignNewConsultor(consultoraId: string, userEmail: string) {
     const consultora: Consultora = await this.consultoraModel.findById(
       consultoraId,
     );
 
-    const user = await this.userService.assignConsultora(userId, consultoraId);
+    const user = await this.userService
+      .findUserByEmail(userEmail)
+      .then((user) =>
+        this.userService.assignConsultora(user._id.toString(), consultoraId),
+      );
 
-    return user;
+    consultora.consultants.push(user);
+
+    return new this.consultoraModel(consultora).save();
   }
 
-  async removeConsultor(consultoraId: string, userId: string) {
-    const user = await this.userService.removeConsultor(userId, consultoraId);
+  async removeConsultor(consultoraId: string, userEmail: string) {
+    const consultora: Consultora = await this.consultoraModel.findById(
+      consultoraId,
+    );
 
-    return user;
+    const user = await this.userService
+      .findUserByEmail(userEmail)
+      .then((user) =>
+        this.userService.removeConsultor(user._id.toString(), consultoraId),
+      );
+
+    consultora.consultants = consultora.consultants.filter(
+      (consultant) => consultant._id.toString() != user._id.toString(),
+    );
+
+    return new this.consultoraModel(consultora).save();
+  }
+
+  async assignNewAdmin(consultoraId: string, userEmail: string) {
+    const consultora = await this.consultoraModel.findById(consultoraId);
+
+    const user: User = await this.userService
+      .findUserByEmail(userEmail)
+      .then((user) =>
+        this.userService.assignConsultora(user._id.toString(), consultoraId),
+      );
+
+    consultora.admin = user;
+    consultora.consultants.push(user);
+
+    return new this.consultoraModel(consultora).save();
+  }
+
+  async removeAdmin(consultoraId: string) {
+    const consultora: Consultora = await this.consultoraModel.findById(
+      consultoraId,
+    );
+
+    consultora.admin = undefined;
+
+    return new this.consultoraModel(consultora).save;
   }
 }

@@ -7,6 +7,8 @@ import { Consultora } from '../consultora/consultora.schema';
 
 @Schema()
 export class User {
+  _id: mongoose.Types.ObjectId;
+
   @Prop({ type: String, required: true })
   firstName: string;
 

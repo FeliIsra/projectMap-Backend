@@ -7,6 +7,7 @@ import { User } from './user.schema';
 import { Consultora } from '../consultora/consultora.schema';
 import { use } from 'passport';
 import { Roles } from './user.roles';
+import { exec } from 'child_process';
 
 @Injectable()
 export class UserService {
@@ -52,6 +53,10 @@ export class UserService {
     const user: User = await this.userModel.findById(userId);
     user.role = role;
     return new this.userModel(user).save();
+  }
+
+  async findUserByEmail(email: string) {
+    return this.userModel.findOne({ email: email }).exec();
   }
 
   async assignConsultora(userId: string, consultoraId: string) {

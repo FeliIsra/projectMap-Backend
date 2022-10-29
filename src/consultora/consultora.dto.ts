@@ -7,8 +7,10 @@ export class ConsultoraDto {
   name: string;
 
   @ApiProperty()
-  admin: string;
-
-  @ApiProperty()
   projects: string[];
+}
+
+export class ConsultantDto {
+  @ApiProperty()
+  email: string;
 }
