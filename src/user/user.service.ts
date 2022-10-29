@@ -46,7 +46,7 @@ export class UserService {
   }
 
   async findById(id: string) {
-    return this.userModel.findById(id);
+    return this.userModel.findById(id).populate(['projects', 'consultora']);
   }
 
   async updateRole(userId: string, role: Roles) {
