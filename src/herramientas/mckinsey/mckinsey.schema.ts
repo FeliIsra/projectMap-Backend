@@ -2,6 +2,8 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
 import { Porter, Pregunta } from '../porter/porter.schema';
 import { Cuadrantes } from './cuadrantes';
+import { Completition } from '../completition';
+import { AnsoffSchema } from '../ansoff/ansoff.schema';
 
 export type MckinseyDocument = McKinsey & Document;
 
@@ -54,6 +56,18 @@ export class McKinsey {
 
   @Prop([unidadDeNegocioSchema])
   unidadesDeNegocio: UnidadDeNegocio[];
+
+  @Prop({ type: String, default: Completition.Vacio })
+  completion: Completition;
 }
 
 export const mcKinseySchema = SchemaFactory.createForClass(McKinsey);
+mcKinseySchema.pre('save', function (next) {
+  if (this.unidadesDeNegocio.length >= 3)
+    this.completion = Completition.Completo;
+  else if (this.unidadesDeNegocio.length == 0)
+    this.completion = Completition.Vacio;
+  else this.completion = Completition.Incompleto;
+
+  next();
+});

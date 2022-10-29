@@ -1,5 +1,9 @@
 import * as mongoose from 'mongoose';
 import { Area, Importancia, Intensidad, Tendencia } from './enums';
+import { Prop } from '@nestjs/mongoose';
+import { Completition } from '../completition';
+import { Preguntas } from '../porter/preguntas';
+import { porterSchema } from '../porter/porter.schema';
 
 export const PESTELSchema = new mongoose.Schema({
   projectId: { type: String, require: true },
@@ -40,6 +44,21 @@ export const PESTELSchema = new mongoose.Schema({
       },
     },
   ],
+  completion: {
+    type: String,
+    require: false,
+    default: function () {
+      return Completition.Vacio;
+    },
+  },
+});
+
+PESTELSchema.pre('save', function (next) {
+  if (this.factores.length >= 4) this.completion = Completition.Completo;
+  else if (this.factores.length == 0) this.completion = Completition.Vacio;
+  else this.completion = Completition.Incompleto;
+
+  next();
 });
 
 export const PESTELPreSeedSchema = new mongoose.Schema({

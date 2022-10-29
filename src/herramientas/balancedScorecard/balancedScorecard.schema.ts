@@ -3,6 +3,8 @@ import mongoose, { Document } from 'mongoose';
 import { Trend } from './trends';
 import { Area } from './perspectives';
 import { Deviation } from './deviations';
+import { Completition } from '../completition';
+import { mcKinseySchema } from '../mckinsey/mckinsey.schema';
 
 export type BalancedScoreCardDocument = BalancedScorecard & Document;
 
@@ -153,7 +155,37 @@ export class BalancedScorecard {
 
   @Prop([initiativesSchema])
   initiatives: Initiative[];
+
+  @Prop({ type: String, default: Completition.Vacio })
+  completion: Completition;
 }
 
 export const BalanceScorecardSchema =
   SchemaFactory.createForClass(BalancedScorecard);
+
+BalanceScorecardSchema.pre('save', function (next) {
+  const objectiveAprendizaje = this.objectives.find(
+    (objective) => objective.area == Area.Aprendizaje,
+  );
+  const objectiveClientes = this.objectives.find(
+    (objective) => objective.area == Area.Clientes,
+  );
+  const objectiveFinanciera = this.objectives.find(
+    (objective) => objective.area == Area.Financiera,
+  );
+  const objectiveProcesosInternos = this.objectives.find(
+    (objective) => objective.area == Area.ProcesosInternos,
+  );
+
+  if (
+    objectiveAprendizaje &&
+    objectiveClientes &&
+    objectiveFinanciera &&
+    objectiveProcesosInternos
+  )
+    this.completion = Completition.Completo;
+  else if (this.objectives.length == 0) this.completion = Completition.Vacio;
+  else this.completion = Completition.Incompleto;
+
+  next();
+});

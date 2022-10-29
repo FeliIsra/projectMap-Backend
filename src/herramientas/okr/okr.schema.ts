@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
+import { Completition } from '../completition';
 
 export type OkrDocument = OkrProject & Document;
 
@@ -128,6 +129,21 @@ export class OkrProject {
 
   @Prop([okrSchema])
   okrs: Okr[];
+
+  @Prop({ type: String, default: Completition.Vacio })
+  completion: Completition;
 }
 
 export const okrProjectSchema = SchemaFactory.createForClass(OkrProject);
+
+okrProjectSchema.pre('save', function (next) {
+  const completedKeyResults = this.okrs.filter(
+    (okr) => okr.keyResults.length > 1,
+  );
+  if (completedKeyResults.length >= 2) this.completion = Completition.Completo;
+  else if (completedKeyResults.length == 0)
+    this.completion = Completition.Vacio;
+  else this.completion = Completition.Incompleto;
+
+  next();
+});

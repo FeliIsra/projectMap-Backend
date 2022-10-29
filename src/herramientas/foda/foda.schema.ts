@@ -1,5 +1,6 @@
 import * as mongoose from 'mongoose';
 import { Area, Importancia, Intensidad, Tendencia, Urgencia } from './enums';
+import { Completition } from '../completition';
 
 export const FODASchema = new mongoose.Schema({
   projectId: { type: String, require: true },
@@ -45,6 +46,35 @@ export const FODASchema = new mongoose.Schema({
       },
     },
   ],
+  completion: {
+    type: String,
+    require: false,
+    default: function () {
+      return Completition.Vacio;
+    },
+  },
+});
+
+FODASchema.pre('save', function (next) {
+  const amenaza = this.factores.find(
+    (objective) => objective.area == Area.AMENAZA,
+  );
+  const debilidad = this.factores.find(
+    (objective) => objective.area == Area.DEBILIDAD,
+  );
+  const oportunidad = this.factores.find(
+    (objective) => objective.area == Area.OPORTUNIDAD,
+  );
+  const fortaleza = this.factores.find(
+    (objective) => objective.area == Area.FORTALEZA,
+  );
+
+  if (fortaleza && oportunidad && debilidad && amenaza)
+    this.completion = Completition.Completo;
+  else if (this.factores.length == 0) this.completion = Completition.Vacio;
+  else this.completion = Completition.Incompleto;
+
+  next();
 });
 
 export const FODAPreSeedSchema = new mongoose.Schema({

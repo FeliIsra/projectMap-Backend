@@ -5,6 +5,7 @@ import { Valoracion } from './valoracion';
 import { Fuerza } from './fuerza';
 import { okrSchema } from '../okr/okr.schema';
 import { Preguntas } from './preguntas';
+import { Completition } from '../completition';
 
 export type PorterDocument = Porter & Document;
 
@@ -56,8 +57,8 @@ export class Porter {
   @Prop({ type: Object })
   preguntasFormatted: any;
 
-  @Prop({ type: Boolean, default: false })
-  completed: boolean;
+  @Prop({ type: String, default: Completition.Vacio })
+  completion: Completition;
 }
 
 export const porterSchema = SchemaFactory.createForClass(Porter);
@@ -69,7 +70,10 @@ porterSchema.pre('save', function (next) {
     Preguntas.poderDeNegociacionConProveedores.length +
     Preguntas.poderDeNegociacionConProveedores.length;
 
-  this.completed = this.preguntas.length == numberOfQuestionsToAnswer;
+  const incompleteQuestions = this.preguntas.length - numberOfQuestionsToAnswer;
+  if (incompleteQuestions == 0) this.completion = Completition.Completo;
+  else if (this.preguntas.length == 0) this.completion = Completition.Vacio;
+  else this.completion = Completition.Incompleto;
 
   next();
 });

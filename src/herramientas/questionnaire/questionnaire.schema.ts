@@ -1,5 +1,7 @@
 import { Document } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Preguntas } from '../porter/preguntas';
+import { Completition } from '../completition';
 
 export type QuestionnaireDocument = Questionnaire & Document;
 
@@ -93,6 +95,9 @@ export class Questionnaire {
   @Prop([chapterSchema])
   chapters: Chapter[];
 
+  @Prop({ type: String, default: Completition.Vacio })
+  completion: Completition;
+
   constructor(
     projectId: string,
     titulo: string,
@@ -106,3 +111,17 @@ export class Questionnaire {
   }
 }
 export const QuestionnaireSchema = SchemaFactory.createForClass(Questionnaire);
+
+QuestionnaireSchema.pre('save', function (next) {
+  const questions = this.chapters.flatMap((chapter) => chapter.questions);
+  const answeredQuestions = questions.filter(
+    (question) => question.selectedAnswer,
+  ).length;
+
+  const completionPercentage = answeredQuestions / questions.length;
+  if (completionPercentage >= 0.8) this.completion = Completition.Completo;
+  else if (completionPercentage == 0) this.completion = Completition.Vacio;
+  else this.completion = Completition.Completo;
+
+  next();
+});

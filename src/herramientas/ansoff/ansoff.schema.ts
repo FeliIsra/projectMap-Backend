@@ -4,6 +4,8 @@ import { SituacionDelProducto } from './situacionDelProducto';
 import { SituacionDelMercado } from './situacionDelMercado';
 import { Exito } from './exito';
 import { Estrategia } from './estrategia';
+import { Completition } from '../completition';
+import { PESTELSchema } from '../pestel/pestel.schema';
 
 export type AnsoffDocument = Ansoff & Document;
 
@@ -58,6 +60,17 @@ export class Ansoff {
 
   @Prop([productSchema])
   productos: Producto[];
+
+  @Prop({ type: String, default: Completition.Vacio })
+  completion: Completition;
 }
 
 export const AnsoffSchema = SchemaFactory.createForClass(Ansoff);
+AnsoffSchema.pre('save', function (next) {
+  if (this.productos.length >= 2) this.completion = Completition.Completo;
+  else if (this.productos.length == 1)
+    this.completion = Completition.Incompleto;
+  else this.completion = Completition.Vacio;
+
+  next();
+});
