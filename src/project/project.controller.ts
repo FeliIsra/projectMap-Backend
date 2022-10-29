@@ -108,7 +108,6 @@ export class ProjectController {
     const { id } = req.user;
 
     projectDTO.owner = id;
-    projectDTO.sharedUsers = [id];
 
     const project = await this.projectService.create(projectDTO);
     return project;

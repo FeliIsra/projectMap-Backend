@@ -3,10 +3,14 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { ProjectDto } from './project.dto';
 import { Project } from './project.schema';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class ProjectService {
-  constructor(@InjectModel('Project') private projectModel: Model<Project>) {}
+  constructor(
+    @InjectModel('Project') private projectModel: Model<Project>,
+    private userService: UserService,
+  ) {}
 
   async findUserProjects(owner: string) {
     const projects = await this.projectModel.find({ owner });
@@ -14,8 +18,10 @@ export class ProjectService {
   }
 
   async getOne(id: string) {
-    const project = await this.projectModel.findById(id);
-    return project;
+    return this.projectModel
+      .findById(id)
+      .populate(['owner', 'sharedUsers'])
+      .exec();
   }
 
   async create(newProject: ProjectDto) {
@@ -24,16 +30,19 @@ export class ProjectService {
     return projectCreadted;
   }
 
-  async shareProject(id: string, users: string[]) {
+  async shareProject(id: string, userIds: string[]) {
     const project = await this.projectModel.findById(id);
-    project.sharedUsers.push(...users);
+    const users = await Promise.all(
+      userIds.map((userId) => this.userService.findById(userId)),
+    );
+    await project.sharedUsers.push(...users);
     return await new this.projectModel(project).save();
   }
 
   async removeUserFromProject(id: string, userId: string) {
     const project: Project = await this.projectModel.findById(id);
     const newSharedUsers = project.sharedUsers.map((sharedUser) => {
-      if (sharedUser != userId) return sharedUser;
+      if (sharedUser._id.toString() != userId) return sharedUser;
     });
     project.sharedUsers = newSharedUsers;
     return await new this.projectModel(project).save();

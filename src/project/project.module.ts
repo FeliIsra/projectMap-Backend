@@ -11,6 +11,7 @@ import { MckinseyModule } from '../herramientas/mckinsey/mckinsey.module';
 import { OkrModule } from '../herramientas/okr/okr.module';
 import { BalancedScorecardModule } from '../herramientas/balancedScorecard/balanceScorecard.module';
 import { QuestionnaireModule } from '../herramientas/questionnaire/questionnaire.module';
+import { UserModule } from '../user/user.module';
 
 @Module({
   imports: [
@@ -23,9 +24,10 @@ import { QuestionnaireModule } from '../herramientas/questionnaire/questionnaire
     OkrModule,
     BalancedScorecardModule,
     QuestionnaireModule,
+    UserModule,
   ],
   providers: [ProjectService],
   controllers: [ProjectController],
-  exports: [],
+  exports: [ProjectService],
 })
 export class ProjectModule {}

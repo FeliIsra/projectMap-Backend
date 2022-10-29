@@ -4,12 +4,16 @@ import { StickyNote, StickyNoteDocument } from './stickyNote.schema';
 import { Model } from 'mongoose';
 import { StickyNoteDto } from './stickyNote.dto';
 import { Tool } from '../herramientas/tools';
+import { NewStickyNoteNotification } from '../notifications/NewStickyNoteNotification';
+import { ProjectService } from '../project/project.service';
+import { Project } from '../project/project.schema';
 
 @Injectable()
 export class StickyNoteService {
   constructor(
     @InjectModel(StickyNote.name)
     private stickyNoteModel: Model<StickyNoteDocument>,
+    private projectService: ProjectService,
   ) {}
 
   async create(stickyNoteDto: StickyNoteDto, userId: string) {
@@ -24,6 +28,15 @@ export class StickyNoteService {
     const stickyNoteDocument = await new this.stickyNoteModel(
       stickyNote,
     ).save();
+
+    const project = await this.projectService.getOne(
+      stickyNoteDocument.projectId,
+    );
+
+    await new NewStickyNoteNotification(
+      stickyNoteDocument,
+      project,
+    ).notifyUsers();
 
     return this.stickyNoteModel
       .findById(stickyNoteDocument._id.toString())
