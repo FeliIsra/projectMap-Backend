@@ -20,7 +20,7 @@ export class ProjectService {
   }
 
   async create(newProject: ProjectDto) {
-    return new this.projectModel(newProject).save;
+    return new this.projectModel(newProject).save();
   }
 
   async shareProject(id: string, userIds: string[]) {
@@ -34,7 +34,7 @@ export class ProjectService {
   }
 
   async findUserProjects(owner: string) {
-    return this.projectModel.find({ owner: owner });
+    return this.projectModel.find({ owner });
   }
 
   async findSharedProjects(userId: string) {
