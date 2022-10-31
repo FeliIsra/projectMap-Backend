@@ -3,6 +3,8 @@ import { ProjectService } from '../project/project.service';
 import { EmailNotification } from './EmailNotification';
 import { PipelineStage } from 'mongoose';
 import { Project } from '../project/project.schema';
+import { UserService } from '../user/user.service';
+import { User } from '../user/user.schema';
 
 export class NewStickyNoteNotification extends EmailNotification {
   stickyNote: StickyNote;
@@ -15,12 +17,9 @@ export class NewStickyNoteNotification extends EmailNotification {
     this.subject = `New note!`;
   }
 
-  async notifyUsers() {
-    const destinations = [];
-    if (this.project.sharedUsers) destinations.push(this.project.sharedUsers);
-    destinations.push(this.project.owner);
+  async notifyUsers(destinations: string[]) {
     return Promise.all(
-      destinations.map((destination) => super.send(destination.email)),
+      destinations.map((destination) => super.send(destination)),
     );
   }
 }

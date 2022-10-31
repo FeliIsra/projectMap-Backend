@@ -1,13 +1,17 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  forwardRef,
+  HttpException,
+  HttpStatus,
+  Inject,
+  Injectable,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateUserDto, UserDto } from './user.dto';
 import * as bcrypt from 'bcrypt';
 import { User } from './user.schema';
-import { Consultora } from '../consultora/consultora.schema';
-import { use } from 'passport';
 import { Roles } from './user.roles';
-import { exec } from 'child_process';
+import { ProjectService } from '../project/project.service';
 
 @Injectable()
 export class UserService {
@@ -46,7 +50,9 @@ export class UserService {
   }
 
   async findById(id: string) {
-    return this.userModel.findById(id).populate(['projects', 'consultora']);
+    return this.userModel
+      .findById(id)
+      .populate(['projects', 'sharedProjects', 'consultora']);
   }
 
   async updateRole(userId: string, role: Roles) {
@@ -56,15 +62,14 @@ export class UserService {
   }
 
   async findUserByEmail(email: string) {
-    return this.userModel.findOne({ email: email }).exec();
+    const user = await this.userModel.findOne({ email: email }).exec();
+    if (!user)
+      throw new HttpException('User not found', HttpStatus.BAD_REQUEST);
+
+    return user;
   }
 
   async assignConsultora(userId: string, consultoraId: string) {
-    const user: User = await this.userModel.findById(userId);
-
-    if (!Roles.isConsultor(user))
-      throw new HttpException('User is not consultant', HttpStatus.BAD_REQUEST);
-
     await this.userModel
       .findByIdAndUpdate(userId, {
         consultora: consultoraId,
@@ -74,12 +79,29 @@ export class UserService {
     return this.userModel.findById(userId);
   }
 
-  async removeConsultor(userId: string, consultoraId: string) {
-    const user: User = await this.userModel.findByIdAndUpdate(userId, {
+  async assignProjects(userId: string, projectIds: string[]) {
+    return this.userModel.findByIdAndUpdate(userId, {
+      $push: { sharedProjects: projectIds },
+    });
+  }
+
+  async removeProjects(userId: string, projectIds: string[]) {
+    const user = await this.findById(userId);
+
+    user.sharedProjects = user.sharedProjects.filter(
+      (project) => !projectIds.includes(project._id.toString()),
+    );
+    return new this.userModel(user).save();
+  }
+
+  async removeConsultant(userId: string) {
+    return this.userModel.findByIdAndUpdate(userId, {
       $unset: { consultora: 1 },
     });
+  }
 
-    return this.userModel.findById(userId);
+  async findUsersBySharedProject(projectId: string) {
+    return this.userModel.find({ sharedProjects: projectId });
   }
 
   async validate(newUser: CreateUserDto) {

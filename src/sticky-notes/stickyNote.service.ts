@@ -7,6 +7,8 @@ import { Tool } from '../herramientas/tools';
 import { NewStickyNoteNotification } from '../notifications/NewStickyNoteNotification';
 import { ProjectService } from '../project/project.service';
 import { Project } from '../project/project.schema';
+import { User } from '../user/user.schema';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class StickyNoteService {
@@ -14,6 +16,7 @@ export class StickyNoteService {
     @InjectModel(StickyNote.name)
     private stickyNoteModel: Model<StickyNoteDocument>,
     private projectService: ProjectService,
+    private userService: UserService,
   ) {}
 
   async create(stickyNoteDto: StickyNoteDto, userId: string) {
@@ -33,10 +36,18 @@ export class StickyNoteService {
       stickyNoteDocument.projectId,
     );
 
+    const destinations = [];
+    const sharedUsers: User[] = await this.userService.findUsersBySharedProject(
+      project._id.toString(),
+    );
+
+    destinations.push(...sharedUsers);
+    destinations.push(project.owner);
+
     await new NewStickyNoteNotification(
       stickyNoteDocument,
       project,
-    ).notifyUsers();
+    ).notifyUsers(destinations.map((user) => user.email));
 
     return this.stickyNoteModel
       .findById(stickyNoteDocument._id.toString())

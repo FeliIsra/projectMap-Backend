@@ -12,11 +12,6 @@ export class ProjectService {
     private userService: UserService,
   ) {}
 
-  async findUserProjects(owner: string) {
-    const projects = await this.projectModel.find({ owner });
-    return projects;
-  }
-
   async getOne(id: string) {
     return this.projectModel
       .findById(id)
@@ -25,31 +20,27 @@ export class ProjectService {
   }
 
   async create(newProject: ProjectDto) {
-    const project = new this.projectModel(newProject);
-    const projectCreadted = await project.save();
-    return projectCreadted;
+    return new this.projectModel(newProject).save;
   }
 
   async shareProject(id: string, userIds: string[]) {
-    const project = await this.projectModel.findById(id);
-    const users = await Promise.all(
-      userIds.map((userId) => this.userService.findById(userId)),
+    return Promise.all(
+      userIds.map((userId) => this.userService.removeProjects(userId, [id])),
     );
-    await project.sharedUsers.push(...users);
-    return await new this.projectModel(project).save();
   }
 
   async removeUserFromProject(id: string, userId: string) {
-    const project: Project = await this.projectModel.findById(id);
-    const newSharedUsers = project.sharedUsers.map((sharedUser) => {
-      if (sharedUser._id.toString() != userId) return sharedUser;
-    });
-    project.sharedUsers = newSharedUsers;
-    return await new this.projectModel(project).save();
+    return this.userService.removeProjects(userId, [id]);
   }
+
+  async findUserProjects(owner: string) {
+    const user = await this.userService.findById(owner);
+    return user.projects;
+  }
+
   async findSharedProjects(userId: string) {
-    const projects = await this.projectModel.find({ sharedUsers: userId });
-    return projects;
+    const user = await this.userService.findById(userId);
+    return user.sharedProjects;
   }
   async update(id: string, updated: ProjectDto) {
     return this.projectModel.findOneAndUpdate({ _id: id }, updated);

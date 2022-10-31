@@ -4,6 +4,8 @@ import { User } from '../user/user.schema';
 
 @Schema()
 export class Project {
+  _id: mongoose.Types.ObjectId;
+
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true })
   owner: User;
 
@@ -15,9 +17,6 @@ export class Project {
 
   @Prop({ type: String, require: true })
   color: string;
-
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
-  sharedUsers: User[];
 }
 
 export const ProjectSchema = SchemaFactory.createForClass(Project);

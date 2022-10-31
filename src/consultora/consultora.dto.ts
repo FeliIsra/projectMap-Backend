@@ -14,3 +14,11 @@ export class ConsultantDto {
   @ApiProperty()
   email: string;
 }
+
+export class AssignProjectDto {
+  @ApiProperty()
+  email: string;
+
+  @ApiProperty()
+  projects: string[];
+}
