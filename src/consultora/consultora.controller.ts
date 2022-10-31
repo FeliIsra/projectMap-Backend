@@ -107,4 +107,20 @@ export class ConsultoraController {
   async delete(@Param('consultoraId') consultoraId: string) {
     return this.consultoraService.delete(consultoraId);
   }
+
+  @Post(':consultoraId/projects/:projectId')
+  async addProject(
+    @Param('consultoraId') consultoraId: string,
+    @Param('projectId') projectId: string,
+  ) {
+    return this.consultoraService.addProject(consultoraId, projectId);
+  }
+
+  @Delete(':consultoraId/projects/:projectId')
+  async removeProject(
+    @Param('consultoraId') consultoraId: string,
+    @Param('projectId') projectId: string,
+  ) {
+    return this.consultoraService.removeProject(consultoraId, projectId);
+  }
 }

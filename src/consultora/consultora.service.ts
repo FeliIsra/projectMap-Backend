@@ -21,7 +21,8 @@ export class ConsultoraService {
       .exec();
   }
   async create(consultoraDto: ConsultoraDto) {
-    return new this.consultoraModel(consultoraDto).save();
+    const consultora = await new this.consultoraModel(consultoraDto).save();
+    return this.findById(consultora._id.toString());
   }
 
   async update(consultoraId: string, consultoraDto: ConsultoraDto) {
@@ -29,7 +30,8 @@ export class ConsultoraService {
       consultoraId,
     );
     consultora.name = consultoraDto.name;
-    return new this.consultoraModel(consultora).save();
+    await new this.consultoraModel(consultora).save();
+    return this.findById(consultoraId);
   }
 
   async delete(consultoraId: string) {
@@ -53,7 +55,8 @@ export class ConsultoraService {
 
     consultora.consultants.push(user);
 
-    return new this.consultoraModel(consultora).save();
+    await new this.consultoraModel(consultora).save();
+    return this.findById(consultoraId);
   }
 
   async removeConsultor(consultoraId: string, userEmail: string) {
@@ -72,7 +75,9 @@ export class ConsultoraService {
       (consultant) => consultant._id.toString() != user._id.toString(),
     );
 
-    return new this.consultoraModel(consultora).save();
+    await new this.consultoraModel(consultora).save();
+
+    return this.findById(consultoraId);
   }
 
   async assignProjectsToConsultant(
@@ -86,11 +91,13 @@ export class ConsultoraService {
 
     this.checkProjectsBelongToConsultora(projects, consultora);
 
-    return this.userService.findUserByEmail(userEmail).then((user) => {
+    await this.userService.findUserByEmail(userEmail).then((user) => {
       this.checkUserIsConsultant(user);
 
       return this.userService.assignProjects(user._id.toString(), projects);
     });
+
+    return this.findById(consultoraId);
   }
 
   async removeProjectsToConsultant(
@@ -101,11 +108,13 @@ export class ConsultoraService {
     const consultora: Consultora = await this.findById(consultoraId);
     this.checkProjectsBelongToConsultora(projects, consultora);
 
-    return this.userService.findUserByEmail(userEmail).then((user) => {
+    await this.userService.findUserByEmail(userEmail).then((user) => {
       this.checkUserIsConsultant(user);
 
       return this.userService.removeProjects(user._id.toString(), projects);
     });
+
+    return this.findById(consultoraId);
   }
 
   async assignNewAdmin(consultoraId: string, userEmail: string) {
@@ -120,7 +129,8 @@ export class ConsultoraService {
     consultora.admin = user;
     consultora.consultants.push(user);
 
-    return new this.consultoraModel(consultora).save();
+    await new this.consultoraModel(consultora).save();
+    return this.findById(consultoraId);
   }
 
   async removeAdmin(consultoraId: string) {
@@ -130,7 +140,23 @@ export class ConsultoraService {
 
     consultora.admin = undefined;
 
-    return new this.consultoraModel(consultora).save;
+    await new this.consultoraModel(consultora).save();
+    return this.findById(consultoraId);
+  }
+
+  async addProject(consultoraId: string, projectId: string) {
+    await this.consultoraModel.findByIdAndUpdate(consultoraId, {
+      $push: { projects: projectId },
+    });
+
+    return this.findById(consultoraId);
+  }
+
+  async removeProject(consultoraId: string, projectId: string) {
+    await this.consultoraModel.findByIdAndUpdate(consultoraId, {
+      $pull: { projects: projectId },
+    });
+    return this.findById(consultoraId);
   }
 
   private checkUserIsConsultant(user: User) {
