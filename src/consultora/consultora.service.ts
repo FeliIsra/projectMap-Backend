@@ -127,7 +127,6 @@ export class ConsultoraService {
       );
 
     consultora.admin = user;
-    consultora.consultants.push(user);
 
     await new this.consultoraModel(consultora).save();
     return this.findById(consultoraId);
