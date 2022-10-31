@@ -25,9 +25,6 @@ export class User {
   role: Roles;
 
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Project' }] })
-  projects: Project[];
-
-  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Project' }] })
   sharedProjects: Project[];
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Consultora' })

@@ -34,8 +34,7 @@ export class ProjectService {
   }
 
   async findUserProjects(owner: string) {
-    const user = await this.userService.findById(owner);
-    return user.projects;
+    return this.projectModel.find({ owner: owner });
   }
 
   async findSharedProjects(userId: string) {
