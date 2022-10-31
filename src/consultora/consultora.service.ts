@@ -15,10 +15,15 @@ export class ConsultoraService {
   ) {}
 
   async findById(consultoraId: string) {
-    return this.consultoraModel
+    const consultora = await this.consultoraModel
       .findById(consultoraId)
       .populate(['admin', 'projects', 'consultants'])
       .exec();
+
+    if (!consultora)
+      throw new HttpException('Consultora doesnt exists', HttpStatus.NOT_FOUND);
+
+    return consultora;
   }
   async create(consultoraDto: ConsultoraDto) {
     const consultora = await new this.consultoraModel(consultoraDto).save();
