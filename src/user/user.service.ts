@@ -52,7 +52,7 @@ export class UserService {
   async findById(id: string) {
     return this.userModel
       .findById(id)
-      .populate(['projects', 'sharedProjects', 'consultora']);
+      .populate(['sharedProjects', 'consultora']);
   }
 
   async updateRole(userId: string, role: Roles) {
