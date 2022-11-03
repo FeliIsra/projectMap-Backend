@@ -13,10 +13,7 @@ export class ProjectService {
   ) {}
 
   async getOne(id: string) {
-    return this.projectModel
-      .findById(id)
-      .populate(['owner', 'sharedUsers'])
-      .exec();
+    return this.projectModel.findById(id).populate(['owner']).exec();
   }
 
   async create(newProject: ProjectDto) {
