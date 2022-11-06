@@ -12,6 +12,8 @@ import * as bcrypt from 'bcrypt';
 import { User } from './user.schema';
 import { Roles } from './user.roles';
 import { ProjectService } from '../project/project.service';
+import { ProjectAssignedNotification } from '../notifications/ProjectAssignedNotification';
+import { Project } from '../project/project.schema';
 
 @Injectable()
 export class UserService {
@@ -77,10 +79,17 @@ export class UserService {
     return this.userModel.findById(userId);
   }
 
-  async assignProjects(userId: string, projectIds: string[]) {
-    return this.userModel.findByIdAndUpdate(userId, {
+  async assignProjects(userId: string, projects: Project[]) {
+    const projectIds = projects.map((project) => project._id.toString());
+    const user = await this.userModel.findByIdAndUpdate(userId, {
       $push: { sharedProjects: projectIds },
     });
+
+    projects.forEach((project) =>
+      new ProjectAssignedNotification(project).notifyUsers([user.email]),
+    );
+
+    return user;
   }
 
   async removeProjects(userId: string, projectIds: string[]) {

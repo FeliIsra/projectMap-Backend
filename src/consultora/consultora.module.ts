@@ -4,6 +4,7 @@ import { ConsultoraService } from './consultora.service';
 import { ConsultoraController } from './consultora.controller';
 import { Consultora, ConsultoraSchema } from './consultora.schema';
 import { UserModule } from '../user/user.module';
+import { ProjectModule } from '../project/project.module';
 
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import { UserModule } from '../user/user.module';
       { name: Consultora.name, schema: ConsultoraSchema },
     ]),
     UserModule,
+    ProjectModule,
   ],
   providers: [ConsultoraService],
   controllers: [ConsultoraController],

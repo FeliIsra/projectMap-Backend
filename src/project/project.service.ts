@@ -21,8 +21,11 @@ export class ProjectService {
   }
 
   async shareProject(id: string, userIds: string[]) {
+    const project = await this.getOne(id);
     return Promise.all(
-      userIds.map((userId) => this.userService.assignProjects(userId, [id])),
+      userIds.map((userId) =>
+        this.userService.assignProjects(userId, [project]),
+      ),
     );
   }
 

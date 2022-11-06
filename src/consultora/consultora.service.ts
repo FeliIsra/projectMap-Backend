@@ -6,12 +6,14 @@ import { ConsultoraDto } from './consultora.dto';
 import { UserService } from '../user/user.service';
 import { User } from '../user/user.schema';
 import { Roles } from '../user/user.roles';
+import { ProjectService } from '../project/project.service';
 
 @Injectable()
 export class ConsultoraService {
   constructor(
     @InjectModel(Consultora.name) private consultoraModel: Model<Consultora>,
     private userService: UserService,
+    private projectService: ProjectService,
   ) {}
 
   async findById(consultoraId: string) {
@@ -88,13 +90,17 @@ export class ConsultoraService {
   async assignProjectsToConsultant(
     consultoraId: string,
     userEmail: string,
-    projects: string[],
+    projectIds: string[],
   ) {
     const consultora: Consultora = await this.consultoraModel.findById(
       consultoraId,
     );
 
-    this.checkProjectsBelongToConsultora(projects, consultora);
+    this.checkProjectsBelongToConsultora(projectIds, consultora);
+
+    const projects = await Promise.all(
+      projectIds.map((projectId) => this.projectService.getOne(projectId)),
+    );
 
     await this.userService.findUserByEmail(userEmail).then((user) => {
       this.checkUserIsConsultant(user);
