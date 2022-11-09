@@ -26,22 +26,24 @@ export class ProjectService {
 
   async shareProject(id: string, userIds: string[]) {
     const project = await this.getOne(id);
-    return Promise.all(
+    await Promise.all(
       userIds.map((userId) =>
         this.userService.assignProjects(userId, [project]),
       ),
     );
+    return this.getSharedUsers(id);
   }
 
   async shareProjectByEmail(id: string, email: string) {
     const project = await this.getOne(id);
     const user = await this.userService.findUserByEmail(email);
     await this.userService.assignProjects(user._id.toString(), [project]);
-    return project;
+    return this.getSharedUsers(id);
   }
 
   async removeUserFromProject(id: string, userId: string) {
-    return this.userService.removeProjects(userId, [id]);
+    await this.userService.removeProjects(userId, [id]);
+    return this.getSharedUsers(id);
   }
 
   async findUserProjects(owner: string) {
