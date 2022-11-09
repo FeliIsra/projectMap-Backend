@@ -16,6 +16,7 @@ import {
   ProjectDto,
   ShareProjectDto,
   ShareProjectEmailDto,
+  StopSharingProjectEmailDto,
 } from './project.dto';
 import { ProjectService } from './project.service';
 import { AnsoffService } from '../herramientas/ansoff/ansoff.service';
@@ -155,6 +156,17 @@ export class ProjectController {
       userId,
     );
     return project;
+  }
+
+  @Put(':projectId/share/email/stop')
+  async stopSharingEmail(
+    @Param('projectId') projectId: string,
+    @Body() stopSharingProjectEmailDto: StopSharingProjectEmailDto,
+  ) {
+    return this.projectService.removeUserFromProjectByEmail(
+      projectId,
+      stopSharingProjectEmailDto.emails,
+    );
   }
 
   @Put(':id')

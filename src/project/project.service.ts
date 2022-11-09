@@ -41,6 +41,18 @@ export class ProjectService {
     return this.getSharedUsers(id);
   }
 
+  async removeUserFromProjectByEmail(id: string, emails: string[]) {
+    const users = await Promise.all(
+      emails.map((email) => this.userService.findUserByEmail(email)),
+    );
+    await Promise.all(
+      users.map((user) =>
+        this.userService.removeProjects(user._id.toString(), [id]),
+      ),
+    );
+    return this.getSharedUsers(id);
+  }
+
   async removeUserFromProject(id: string, userId: string) {
     await this.userService.removeProjects(userId, [id]);
     return this.getSharedUsers(id);

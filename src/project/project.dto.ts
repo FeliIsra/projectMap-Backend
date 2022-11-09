@@ -26,3 +26,8 @@ export class ShareProjectEmailDto {
   @ApiProperty()
   email: string;
 }
+
+export class StopSharingProjectEmailDto {
+  @ApiProperty()
+  emails: string[];
+}
