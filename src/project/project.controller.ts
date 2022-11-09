@@ -62,6 +62,11 @@ export class ProjectController {
     return project;
   }
 
+  @Get(':projectId/shared')
+  async getSharedUsers(@Param('projectId') projectId: string) {
+    return this.projectService.getSharedUsers(projectId);
+  }
+
   @Get(':id/foda')
   async getFoda(@Param('id') id: string) {
     const fodas = await this.fodaService.getAllByProjectId(id);

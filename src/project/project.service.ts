@@ -16,6 +16,10 @@ export class ProjectService {
     return this.projectModel.findById(id).populate(['owner']).exec();
   }
 
+  async getSharedUsers(projectId: string) {
+    return this.userService.findUsersBySharedProject(projectId);
+  }
+
   async create(newProject: ProjectDto) {
     return new this.projectModel(newProject).save();
   }
