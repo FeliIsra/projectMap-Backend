@@ -12,7 +12,11 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { FodaService } from 'src/herramientas/foda/foda.service';
 import { PestelService } from 'src/herramientas/pestel/pestel.service';
-import { ProjectDto, ShareProjectDto } from './project.dto';
+import {
+  ProjectDto,
+  ShareProjectDto,
+  ShareProjectEmailDto,
+} from './project.dto';
 import { ProjectService } from './project.service';
 import { AnsoffService } from '../herramientas/ansoff/ansoff.service';
 import { ApiTags } from '@nestjs/swagger';
@@ -123,6 +127,17 @@ export class ProjectController {
       shareProjectDto.users,
     );
     return project;
+  }
+
+  @Post(':projectId/share/email')
+  async shareProjectEmail(
+    @Param('projectId') projectId: string,
+    @Body() shareProjectDto: ShareProjectEmailDto,
+  ) {
+    return this.projectService.shareProjectByEmail(
+      projectId,
+      shareProjectDto.email,
+    );
   }
 
   @Delete(':projectId/share')

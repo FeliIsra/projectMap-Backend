@@ -21,3 +21,8 @@ export class ShareProjectDto {
   @ApiProperty()
   users: string[];
 }
+
+export class ShareProjectEmailDto {
+  @ApiProperty()
+  email: string;
+}

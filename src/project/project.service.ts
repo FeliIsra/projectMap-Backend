@@ -29,6 +29,13 @@ export class ProjectService {
     );
   }
 
+  async shareProjectByEmail(id: string, email: string) {
+    const project = await this.getOne(id);
+    const user = await this.userService.findUserByEmail(email);
+    await this.userService.assignProjects(user._id.toString(), [project]);
+    return project;
+  }
+
   async removeUserFromProject(id: string, userId: string) {
     return this.userService.removeProjects(userId, [id]);
   }
