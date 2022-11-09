@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { CreateUserDto, UserDto } from './user.dto';
+import { CreateUserDto, UpdateUserDto, UserDto } from './user.dto';
 import * as bcrypt from 'bcrypt';
 import { User } from './user.schema';
 import { Roles } from './user.roles';
@@ -58,6 +58,15 @@ export class UserService {
   async updateRole(userId: string, role: Roles) {
     const user: User = await this.userModel.findById(userId);
     user.role = role;
+    return new this.userModel(user).save();
+  }
+
+  async update(userId: string, updateUserDto: UpdateUserDto) {
+    const user: User = await this.userModel.findById(userId);
+    if (updateUserDto.firstName) user.firstName = updateUserDto.firstName;
+    if (updateUserDto.lastName) user.lastName = updateUserDto.lastName;
+    if (updateUserDto.calendlyUser)
+      user.calendlyUser = updateUserDto.calendlyUser;
     return new this.userModel(user).save();
   }
 

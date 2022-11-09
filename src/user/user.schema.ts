@@ -29,6 +29,9 @@ export class User {
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Consultora' })
   consultora: Consultora;
+
+  @Prop({ type: String })
+  calendlyUser: string;
 }
 export const UserSchema = SchemaFactory.createForClass(User);
 

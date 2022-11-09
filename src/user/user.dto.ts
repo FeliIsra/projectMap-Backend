@@ -28,3 +28,14 @@ export class CreateUserDto {
   @ApiProperty()
   type: Roles;
 }
+
+export class UpdateUserDto {
+  @ApiProperty()
+  firstName: string;
+
+  @ApiProperty()
+  lastName: string;
+
+  @ApiProperty()
+  calendlyUser: string;
+}
