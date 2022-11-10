@@ -34,14 +34,3 @@ export class User {
   calendlyUser: string;
 }
 export const UserSchema = SchemaFactory.createForClass(User);
-
-UserSchema.pre('save', async function (next) {
-  try {
-    if (this.isModified('password'))
-      this.password = await bcrypt.hash(this['password'], 10);
-
-    return next();
-  } catch (err) {
-    return next(err);
-  }
-});

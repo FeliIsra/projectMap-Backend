@@ -21,6 +21,7 @@ export class UserService {
 
   async create(userDTO: CreateUserDto) {
     await this.validate(userDTO);
+    userDTO.password = await bcrypt.hash(userDTO.password, 10);
     const createUser = new this.userModel(userDTO);
     await createUser.save();
 
