@@ -90,15 +90,25 @@ export class UserService {
 
   async assignProjects(userId: string, projects: Project[]) {
     const projectIds = projects.map((project) => project._id.toString());
-    const user = await this.userModel.findByIdAndUpdate(userId, {
-      $push: { sharedProjects: projectIds },
-    });
+    const user = await this.userModel.findById(userId);
+
+    const isProjectAlreadyAssign = user.sharedProjects.find((project) =>
+      projectIds.includes(project._id.toString()),
+    );
+
+    if (isProjectAlreadyAssign)
+      throw new HttpException(
+        `Project ${isProjectAlreadyAssign._id.toString()} already assigned`,
+        HttpStatus.BAD_REQUEST,
+      );
+
+    user.sharedProjects.push(...projects);
 
     projects.forEach((project) =>
       new ProjectAssignedNotification(project).notifyUsers([user.email]),
     );
 
-    return user;
+    return new this.userModel(user).save();
   }
 
   async removeProjects(userId: string, projectIds: string[]) {
