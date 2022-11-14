@@ -74,7 +74,10 @@ export class AnsoffService {
   }
 
   async getAllByProjectId(projectId: string) {
-    return this.ansoffModel.find({ projectId: projectId }).exec();
+    return this.ansoffModel
+      .find({ projectId: projectId })
+      .sort({ createdAt: 'desc' })
+      .exec();
   }
 
   getOptions() {

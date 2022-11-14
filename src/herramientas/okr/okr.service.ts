@@ -43,7 +43,10 @@ export class OkrService {
   }
 
   async getAllByProjectId(projectId: string) {
-    return this.okrModel.find({ projectId: projectId }).exec();
+    return this.okrModel
+      .find({ projectId: projectId })
+      .sort({ createdAt: 'desc' })
+      .exec();
   }
 
   async findGlobalOkrById(okrProjectId: string, okrId: string) {

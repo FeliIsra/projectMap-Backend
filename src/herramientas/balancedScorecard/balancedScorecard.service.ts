@@ -58,7 +58,10 @@ export class BalancedScorecardService {
   }
 
   async getAllByProjectId(projectId: string) {
-    return this.balancedScorecardModel.find({ projectId: projectId }).exec();
+    return this.balancedScorecardModel
+      .find({ projectId: projectId })
+      .sort({ createdAt: 'desc' })
+      .exec();
   }
 
   async edit(

@@ -117,7 +117,10 @@ export class PorterService {
     return new this.porterModel(porter).save();
   }
   async getAllByProjectId(projectId: string) {
-    return this.porterModel.find({ projectId: projectId }).exec();
+    return this.porterModel
+      .find({ projectId: projectId })
+      .sort({ createdAt: 'desc' })
+      .exec();
   }
 
   async delete(id: string) {
