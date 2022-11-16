@@ -34,6 +34,7 @@ export class ContinuousImprovementController {
     const porters = await this.porterService.getAllByProjectId(projectId);
     const porters_consejos = porters.map((porter) => ({
       titulo: porter.titulo,
+      _id: porter._id,
       consejos: this.porterService.calcularConsejos(porter.preguntas),
     }));
     const mckinseys = await this.mckinseyService.getAllByProjectId(projectId);
