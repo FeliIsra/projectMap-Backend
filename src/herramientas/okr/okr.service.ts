@@ -199,6 +199,7 @@ export class OkrService {
         if (keyResultDto.goal) keyResult.goal = keyResultDto.goal;
         if (keyResultDto.responsible)
           keyResult.responsible = keyResultDto.responsible;
+        if (keyResultDto.priority) keyResult.priority = keyResultDto.priority;
         if (keyResultDto.keyStatus)
           keyResultDto.keyStatus.forEach(
             (status, index) =>
