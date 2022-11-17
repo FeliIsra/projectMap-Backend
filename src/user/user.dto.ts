@@ -27,6 +27,8 @@ export class CreateUserDto {
 
   @ApiProperty()
   type: Roles;
+
+  bibliography: string;
 }
 
 export class UpdateUserDto {
@@ -38,4 +40,6 @@ export class UpdateUserDto {
 
   @ApiProperty()
   calendlyUser: string;
+
+  bibliography: string;
 }

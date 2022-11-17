@@ -44,7 +44,10 @@ export class MckinseyService {
   }
 
   async getAllByProjectId(projectId: string) {
-    return this.mckinseyModel.find({ projectId: projectId }).exec();
+    return this.mckinseyModel
+      .find({ projectId: projectId })
+      .sort({ createdAt: 'desc' })
+      .exec();
   }
 
   async removeUnidadDeNegocio(mcKinseyId: string, unidadId: string) {

@@ -71,6 +71,13 @@ export class ProjectService {
   }
 
   async delete(id: string) {
+    const users = await this.getSharedUsers(id);
+
+    await Promise.all(
+      users.map((user) =>
+        this.userService.removeProjects(user._id.toString(), [id]),
+      ),
+    );
     const result = await this.projectModel.deleteOne({ _id: id });
     if (result.deletedCount) return id;
     else throw new HttpException('Project not found', HttpStatus.NOT_FOUND);
