@@ -59,11 +59,13 @@ export const factorSchema = SchemaFactory.createForClass(Factor);
 factorSchema.pre('save', function (next) {
   try {
     const importancia = mapImportanciaToValue(this.importancia);
-    const intensidad = mapIntensidadToValue(this.intensidad, this.area);
+    const intensidad = this.intensidad
+      ? mapIntensidadToValue(this.intensidad, this.area)
+      : 0;
     const tendencia = mapTendenciaToValue(this.tendencia, this.area);
-    const urgencia = mapUrgenciaToValue(this.urgencia);
+    const urgencia = this.urgencia ? mapUrgenciaToValue(this.urgencia) : 0;
 
-    if (this.area == Area.OPORTUNIDAD)
+    if (this.area === Area.OPORTUNIDAD)
       this.puntuacion = importancia * urgencia * tendencia;
     else if (this.area == Area.AMENAZA)
       this.puntuacion = importancia * urgencia * tendencia;
@@ -71,8 +73,6 @@ factorSchema.pre('save', function (next) {
       this.puntuacion = importancia * intensidad * tendencia;
     else if (this.area == Area.FORTALEZA)
       this.puntuacion = importancia * intensidad * tendencia;
-
-    this.puntuacion = importancia * urgencia * tendencia;
   } catch (e) {
     throw new HttpException(
       `Factor: ${this._id.toString()} . ${this.area} parameters are not valid`,
