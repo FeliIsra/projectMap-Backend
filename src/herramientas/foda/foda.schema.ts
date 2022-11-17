@@ -2,11 +2,22 @@ import * as mongoose from 'mongoose';
 import { Area, Importancia, Intensidad, Tendencia, Urgencia } from './enums';
 import { Completition } from '../completition';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import {
+  mapImportanciaToValue,
+  mapIntensidadToValue,
+  mapTendenciaToValue,
+  mapUrgenciaToValue,
+} from './utils/mapEnumsToValues';
+import { HttpException, HttpStatus } from '@nestjs/common';
+
+export type FodaDocument = Foda & Document;
 
 @Schema()
 export class Factor {
+  _id: mongoose.Types.ObjectId;
+
   @Prop({ type: String, required: true })
-  descripcion: Area;
+  descripcion: string;
 
   @Prop({ type: String, required: true })
   area: Area;
@@ -14,23 +25,68 @@ export class Factor {
   @Prop({ type: String, required: true })
   importancia: Importancia;
 
-  @Prop({ type: String, required: true })
+  @Prop({ type: String })
   intensidad: Intensidad;
 
   @Prop({ type: String, required: true })
   tendencia: Tendencia;
 
-  @Prop({ type: String, required: true })
+  @Prop({ type: String })
   urgencia: Urgencia;
 
   @Prop({ type: Number, required: true, default: 0 })
   puntuacion: number;
+
+  constructor(
+    descripcion: string,
+    area: Area,
+    importancia: Importancia,
+    intensidad: Intensidad,
+    tendencia: Tendencia,
+    urgencia: Urgencia,
+  ) {
+    this.descripcion = descripcion;
+    this.area = area;
+    this.importancia = importancia;
+    this.intensidad = intensidad;
+    this.tendencia = tendencia;
+    this.urgencia = urgencia;
+  }
 }
 
 export const factorSchema = SchemaFactory.createForClass(Factor);
 
+factorSchema.pre('save', function (next) {
+  try {
+    const importancia = mapImportanciaToValue(this.importancia);
+    const intensidad = mapIntensidadToValue(this.intensidad, this.area);
+    const tendencia = mapTendenciaToValue(this.tendencia, this.area);
+    const urgencia = mapUrgenciaToValue(this.urgencia);
+
+    if (this.area == Area.OPORTUNIDAD)
+      this.puntuacion = importancia * urgencia * tendencia;
+    else if (this.area == Area.AMENAZA)
+      this.puntuacion = importancia * urgencia * tendencia;
+    else if (this.area == Area.DEBILIDAD)
+      this.puntuacion = importancia * intensidad * tendencia;
+    else if (this.area == Area.FORTALEZA)
+      this.puntuacion = importancia * intensidad * tendencia;
+
+    this.puntuacion = importancia * urgencia * tendencia;
+  } catch (e) {
+    throw new HttpException(
+      `Factor: ${this._id.toString()} . ${this.area} parameters are not valid`,
+      HttpStatus.BAD_REQUEST,
+    );
+  }
+
+  next();
+});
+
 @Schema()
 export class Foda {
+  _id: mongoose.Types.ObjectId;
+
   @Prop({ required: true })
   projectId: string;
 

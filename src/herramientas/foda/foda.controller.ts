@@ -39,12 +39,6 @@ export class FodaController {
     return preSeeds;
   }
 
-  @Get('')
-  async getAll() {
-    const fodas = await this.fodaService.getAll();
-    return fodas;
-  }
-
   @Get(':id')
   async getOne(@Param('id') id: string) {
     const foda = await this.fodaService.getOne(id);

@@ -3,28 +3,16 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Area, Importancia, Intensidad, Tendencia, Urgencia } from './enums';
 import { FactorDto, FodaDto } from './foda.dto';
-import { Foda, FodaPreSeed, FodaWithValues } from './foda.type';
-import {
-  mapImportanciaToValue,
-  mapIntensidadToValue,
-  mapTendenciaToValue,
-  mapUrgenciaToValue,
-} from './utils/mapEnumsToValues';
+import { Factor, FodaDocument } from './foda.schema';
+import { FodaPreSeed } from './foda.type';
+import { Trend } from '../balancedScorecard/trends';
 
 @Injectable()
 export class FodaService {
   constructor(
-    @InjectModel('FODA') private fodaModel: Model<Foda>,
+    @InjectModel('FODA') private fodaModel: Model<FodaDocument>,
     @InjectModel('FODAPreSeed') private preSeedModel: Model<FodaPreSeed>,
   ) {}
-
-  async getAll() {
-    const fodas = await this.fodaModel.find({});
-    return fodas.map((foda) => {
-      const fodaObject = foda.toObject();
-      return this.mapToValues(fodaObject);
-    });
-  }
 
   async getPreSeeds() {
     const preSeeds = await this.preSeedModel.find({});
@@ -42,58 +30,37 @@ export class FodaService {
 
   async getOptions() {
     return {
-      importancia: [
-        Importancia['Totalmente importante'],
-        Importancia['Muy importante'],
-        Importancia.Importante,
-        Importancia.Inmaterial,
-        Importancia['Sin importancia'],
-      ],
-      intensidad: [
-        Intensidad['Muy fuerte'],
-        Intensidad.Fuerte,
-        Intensidad.Promedio,
-        Intensidad.Debil,
-        Intensidad['Muy debil'],
-      ],
-      tendencia: [
-        Tendencia['Mucha mejora'],
-        Tendencia.Mejora,
-        Tendencia.Mantiene,
-        Tendencia.Empeoramiento,
-        Tendencia.Peor,
-      ],
-      urgencia: [
-        Urgencia['Algo urgente'],
-        Urgencia['Muy urgente'],
-        Urgencia['Nada urgente'],
-        Urgencia['Para ayer'],
-        Urgencia.Urgente,
-      ],
+      importancia: Object.values(Importancia),
+      intensidad: Object.values(Intensidad),
+      tendencia: Object.values(Tendencia),
+      urgencia: Object.values(Urgencia),
     };
   }
 
   async getAllByProjectId(projectId) {
-    const fodas = await this.fodaModel
+    return this.fodaModel
       .find({ projectId: projectId })
       .sort({ createdAt: 'desc' })
       .exec();
-    return fodas.map((foda) => this.mapToValues(foda));
   }
 
   async getOne(id: string) {
-    const foda = await this.fodaModel.findById(id);
-    return this.mapToValues(foda);
+    return this.fodaModel.findById(id);
   }
 
-  async insertFactor(id: string, factor: FactorDto) {
-    let foda = await this.fodaModel.findById(id);
-    const fodaObject = foda.toObject();
-    const factores = fodaObject.factores;
-    factores.push(factor);
-    await this.fodaModel.findOneAndUpdate({ _id: id }, { factores });
-    foda = await this.fodaModel.findById(id);
-    return this.mapToValues(foda);
+  async insertFactor(id: string, factorDto: FactorDto) {
+    const foda = await this.fodaModel.findById(id);
+    const factor = new Factor(
+      factorDto.descripcion,
+      factorDto.area as Area,
+      factorDto.importancia as Importancia,
+      factorDto.intensidad as Intensidad,
+      factorDto.tendencia as Tendencia,
+      factorDto.urgencia as Urgencia,
+    );
+    foda.factores.push(factor);
+    await new this.fodaModel(foda).save();
+    return this.getOne(id);
   }
 
   async insertPreSeed(preSeedDTO) {
@@ -109,7 +76,10 @@ export class FodaService {
   }
 
   async update(id: string, updated: FodaDto) {
-    return this.fodaModel.findOneAndUpdate({ _id: id }, updated);
+    const foda = await this.fodaModel.findById(id);
+    foda.titulo = updated.titulo;
+
+    return new this.fodaModel(foda).save();
   }
 
   async delete(id: string) {
@@ -122,10 +92,12 @@ export class FodaService {
     const foda = await this.fodaModel.findById(id);
     const fodaObject = foda.toObject();
     const factores = fodaObject.factores.filter(
-      (factor) => factor._id != idFactor,
+      (factor) => factor._id.toString() != idFactor,
     );
-    await this.fodaModel.findOneAndUpdate({ _id: id }, { factores });
-    return this.fodaModel.findById(id);
+
+    foda.factores = factores;
+    await new this.fodaModel(foda).save();
+    return this.getOne(id);
   }
 
   async updateFactor(id: string, idFactor: string, updatedFactor: FactorDto) {
@@ -147,59 +119,5 @@ export class FodaService {
       return foda.save();
     });
     return foda;
-  }
-
-  private mapToValues(foda: any): FodaWithValues {
-    foda.factores = foda?.factores?.map((factor) => {
-      factor.puntuacion = this.getPuntuacion(factor);
-      return factor;
-    });
-    return foda;
-  }
-
-  private getPuntuacion(factor: any): number {
-    const calcularFortalezas = (_factor) => {
-      const factor = _factor;
-      const importancia = mapImportanciaToValue(factor.importancia);
-      const intensidad = mapIntensidadToValue(factor.intensidad, factor.area);
-      const tendencia = mapTendenciaToValue(factor.tendencia, factor.area);
-
-      return importancia * intensidad * tendencia;
-    };
-
-    const calcularOportunidades = (_factor) => {
-      const factor = _factor;
-      const importancia = mapImportanciaToValue(factor.importancia);
-      const urgencia = mapUrgenciaToValue(factor.urgencia);
-      const tendencia = mapTendenciaToValue(factor.tendencia, factor.area);
-
-      return importancia * urgencia * tendencia;
-    };
-
-    const calcularAmenazas = (_factor) => {
-      const factor = _factor;
-      const importancia = mapImportanciaToValue(factor.importancia);
-      const urgencia = mapUrgenciaToValue(factor.urgencia);
-      const tendencia = mapTendenciaToValue(factor.tendencia, factor.area);
-
-      return importancia * urgencia * tendencia;
-    };
-
-    const calcularDebilidades = (_factor) => {
-      const factor = _factor;
-      const importancia = mapImportanciaToValue(factor.importancia);
-      const intensidad = mapIntensidadToValue(factor.intensidad, factor.area);
-      const tendencia = mapTendenciaToValue(factor.tendencia, factor.area);
-
-      return importancia * intensidad * tendencia;
-    };
-
-    const dict = {
-      [Area.OPORTUNIDAD]: calcularOportunidades,
-      [Area.AMENAZA]: calcularAmenazas,
-      [Area.DEBILIDAD]: calcularDebilidades,
-      [Area.FORTALEZA]: calcularFortalezas,
-    };
-    return dict[factor.area](factor);
   }
 }
