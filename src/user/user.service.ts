@@ -99,11 +99,13 @@ export class UserService {
       (value, index) => user.sharedProjects.indexOf(value) === index,
     );
 
+    const userUpdated = await new this.userModel(user).save();
+
     projects.forEach((project) =>
       new ProjectAssignedNotification(project).notifyUsers([user.email]),
     );
 
-    return new this.userModel(user).save();
+    return userUpdated;
   }
 
   async removeProjects(userId: string, projectIds: string[]) {
