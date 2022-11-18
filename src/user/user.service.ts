@@ -66,6 +66,7 @@ export class UserService {
     const user: User = await this.userModel.findById(userId);
     if (updateUserDto.firstName) user.firstName = updateUserDto.firstName;
     if (updateUserDto.lastName) user.lastName = updateUserDto.lastName;
+    if (updateUserDto.biography) user.biography = updateUserDto.biography;
     if (updateUserDto.calendlyUser)
       user.calendlyUser = updateUserDto.calendlyUser;
     return new this.userModel(user).save();
