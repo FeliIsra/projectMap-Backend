@@ -34,6 +34,6 @@ export class User {
   calendlyUser: string;
 
   @Prop({ type: String, required: false })
-  bibliography: string;
+  biography: string;
 }
 export const UserSchema = SchemaFactory.createForClass(User);
