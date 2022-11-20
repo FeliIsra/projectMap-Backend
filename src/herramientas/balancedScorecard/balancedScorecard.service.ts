@@ -30,6 +30,9 @@ export class BalancedScorecardService {
     const balancedScorecard = new this.balancedScorecardModel(
       balancedScorecardDto,
     );
+    if (!balancedScorecardDto.objectives) balancedScorecard.objectives = [];
+    if (!balancedScorecardDto.initiatives) balancedScorecard.initiatives = [];
+
     return balancedScorecard.save();
   }
 
