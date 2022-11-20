@@ -32,11 +32,15 @@ export class UserService {
     const { email, password } = UserDTO;
     const user = await this.userModel.findOne({ email });
     if (!user)
-      throw new HttpException('user doesnt exists', HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        'El mail ingresado no se encuentra registrado',
+        HttpStatus.BAD_REQUEST,
+      );
 
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (passwordMatch) return this.sanitizeUser(user);
-    else throw new HttpException('invalid credential', HttpStatus.BAD_REQUEST);
+    else
+      throw new HttpException('Contraseña incorrecta', HttpStatus.BAD_REQUEST);
   }
 
   private sanitizeUser(user: User) {
@@ -75,7 +79,7 @@ export class UserService {
   async findUserByEmail(email: string) {
     const user = await this.userModel.findOne({ email: email }).exec();
     if (!user)
-      throw new HttpException('User not found', HttpStatus.BAD_REQUEST);
+      throw new HttpException('Usuario no encontrado', HttpStatus.NOT_FOUND);
 
     return user;
   }
@@ -130,10 +134,16 @@ export class UserService {
   async validate(newUser: CreateUserDto) {
     const { email, password, confirmPassword } = newUser;
     if (password !== confirmPassword)
-      throw new HttpException('Passwords not match', HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        'Las contraseñas no coinciden',
+        HttpStatus.BAD_REQUEST,
+      );
 
     const user = await this.userModel.findOne({ email });
     if (user)
-      throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        'El mail ingresado ya se encuentra registrado',
+        HttpStatus.BAD_REQUEST,
+      );
   }
 }
