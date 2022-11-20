@@ -4,18 +4,14 @@ import { Model } from 'mongoose';
 import { Area, Importancia, Intensidad, Tendencia, Urgencia } from './enums';
 import { FactorDto, FodaDto } from './foda.dto';
 import { Factor, FodaDocument } from './foda.schema';
-import { FodaPreSeed } from './foda.type';
-import { Trend } from '../balancedScorecard/trends';
+import { Preseeds } from './foda.preseeds';
 
 @Injectable()
 export class FodaService {
-  constructor(
-    @InjectModel('FODA') private fodaModel: Model<FodaDocument>,
-    @InjectModel('FODAPreSeed') private preSeedModel: Model<FodaPreSeed>,
-  ) {}
+  constructor(@InjectModel('FODA') private fodaModel: Model<FodaDocument>) {}
 
   async getPreSeeds() {
-    const preSeeds = await this.preSeedModel.find({});
+    const preSeeds = Preseeds.getPreseeds;
     const preSeedsFormated = {};
 
     preSeeds.forEach((preSeed) => {
@@ -61,12 +57,6 @@ export class FodaService {
     foda.factores.push(factor);
     await new this.fodaModel(foda).save();
     return this.getOne(id);
-  }
-
-  async insertPreSeed(preSeedDTO) {
-    const preSeed = new this.preSeedModel(preSeedDTO);
-    const preSeedCreated = await preSeed.save();
-    return preSeedCreated;
   }
 
   async create(newFoda: FodaDto) {

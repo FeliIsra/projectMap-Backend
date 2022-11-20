@@ -31,14 +31,6 @@ export class FodaController {
     return preSeeds;
   }
 
-  @Post('preSeeds')
-  async insertPreSeeds(
-    @Body() preSeedDTO: { consejo: string; descripcion: string; area: string },
-  ) {
-    const preSeeds = await this.fodaService.insertPreSeed(preSeedDTO);
-    return preSeeds;
-  }
-
   @Get(':id')
   async getOne(@Param('id') id: string) {
     const foda = await this.fodaService.getOne(id);
