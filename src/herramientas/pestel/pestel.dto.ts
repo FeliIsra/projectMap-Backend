@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Area, Importancia, Intensidad, Tendencia } from './enums';
 
 export class PestelDto {
   @ApiProperty()
@@ -20,17 +21,17 @@ export class PestelDto {
 
 export class FactorDto {
   @ApiProperty()
-  area: string;
+  area: Area;
 
   @ApiProperty()
   descripcion: string;
 
   @ApiProperty()
-  importancia: string;
+  importancia: Importancia;
 
   @ApiProperty()
-  intensidad: string;
+  intensidad: Intensidad;
 
   @ApiProperty()
-  tendencia: string;
+  tendencia: Tendencia;
 }

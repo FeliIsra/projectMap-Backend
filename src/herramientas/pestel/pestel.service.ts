@@ -2,27 +2,19 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { FactorDto, PestelDto } from './pestel.dto';
-import { Pestel, PestelPreSeed, PestelWithValues } from './pestel.type';
-import {
-  mapImportanciaToValue,
-  mapIntensidadToValue,
-  mapTendenciaToValue,
-} from './utils/mapEnumsToValues';
+import { PestelPreSeed } from './pestel.type';
 import { Area, Importancia, Intensidad, Tendencia } from './enums';
+import { Factor, Pestel } from './pestel.schema';
 
 @Injectable()
 export class PestelService {
   constructor(
-    @InjectModel('PESTEL') private pestelModel: Model<Pestel>,
+    @InjectModel(Pestel.name) private pestelModel: Model<Pestel>,
     @InjectModel('PESTELPreSeed') private preSeedModel: Model<PestelPreSeed>,
   ) {}
 
   async getAll() {
-    const pestels = await this.pestelModel.find();
-    return pestels.map((pestel) => {
-      const pestelObject = pestel.toObject();
-      return this.mapToValues(pestelObject);
-    });
+    return this.pestelModel.find();
   }
 
   async getPreSeeds() {
@@ -52,26 +44,29 @@ export class PestelService {
   }
 
   async getAllByProjectId(projectId: string) {
-    const pestels = await this.pestelModel
+    return this.pestelModel
       .find({ projectId })
       .sort({ createdAt: 'desc' })
       .exec();
-    return pestels.map((pestel) => this.mapToValues(pestel));
   }
 
   async getOne(id: string) {
-    const pestel = await this.pestelModel.findById(id);
-    return this.mapToValues(pestel);
+    return this.pestelModel.findById(id);
   }
 
-  async insertFactor(id: string, factor: FactorDto) {
-    let pestel = await this.pestelModel.findById(id);
-    const pestelObject = pestel.toObject();
-    const factores = pestelObject.factores;
-    factores.push(factor);
-    await this.pestelModel.findOneAndUpdate({ _id: id }, { factores });
-    pestel = await this.pestelModel.findById(id);
-    return this.mapToValues(pestel);
+  async insertFactor(id: string, factorDto: FactorDto) {
+    const pestel = await this.pestelModel.findById(id);
+    const factor = new Factor(
+      factorDto.descripcion,
+      factorDto.area,
+      factorDto.importancia,
+      factorDto.intensidad,
+      factorDto.tendencia,
+    );
+    pestel.factores.push(factor);
+
+    await new this.pestelModel(pestel);
+    return this.pestelModel.findById(id);
   }
 
   async editFactor(id: string, idFactor: string, updatedFactor: FactorDto) {
@@ -111,37 +106,12 @@ export class PestelService {
   }
 
   async deleteFactor(id: string, idFactor: string) {
-    const pestel = await this.pestelModel.findById(id);
-    const pestelObject = pestel.toObject();
-    const factores = pestelObject.factores.filter(
-      (factor) => factor._id != idFactor,
+    const pestel = await this.pestelModel.findById(id).exec();
+    const factores = pestel.factores.filter(
+      (factor) => factor._id.toString() != idFactor,
     );
     await this.pestelModel.findOneAndUpdate({ _id: id }, { factores });
     return this.pestelModel.findById(id);
-  }
-
-  private mapToValues(pestel: any): PestelWithValues {
-    pestel.factores = pestel?.factores?.map((factor) => {
-      factor.puntuacion = this.getPuntuacion(factor);
-      return factor;
-    });
-    return pestel;
-  }
-
-  private getPuntuacion(factor: any): number {
-    const calcular = (_factor) => {
-      const factor = _factor;
-      const importancia = mapImportanciaToValue(
-        factor.importancia,
-        factor.area,
-      );
-      const intensidad = mapIntensidadToValue(factor.intensidad, factor.area);
-      const tendencia = mapTendenciaToValue(factor.tendencia, factor.area);
-
-      return importancia * intensidad * tendencia;
-    };
-
-    return calcular(factor);
   }
 
   async getOptions() {

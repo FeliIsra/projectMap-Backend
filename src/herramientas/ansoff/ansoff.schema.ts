@@ -5,7 +5,6 @@ import { SituacionDelMercado } from './situacionDelMercado';
 import { Exito } from './exito';
 import { Estrategia } from './estrategia';
 import { Completition } from '../completition';
-import { PESTELSchema } from '../pestel/pestel.schema';
 
 export type AnsoffDocument = Ansoff & Document;
 
