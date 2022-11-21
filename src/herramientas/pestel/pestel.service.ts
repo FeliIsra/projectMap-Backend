@@ -65,7 +65,7 @@ export class PestelService {
     );
     pestel.factores.push(factor);
 
-    await new this.pestelModel(pestel);
+    await new this.pestelModel(pestel).save();
     return this.pestelModel.findById(id);
   }
 
