@@ -1,8 +1,8 @@
 export enum Area {
-  POLITICO = 'Politico',
-  ECONOMICO = 'Economico',
+  POLITICO = 'Político',
+  ECONOMICO = 'Económico',
   SOCIAL = 'Social',
-  TECNOLOGICO = 'Tecnologico',
+  TECNOLOGICO = 'Tecnológico',
   AMBIENTAL = 'Ambiental',
   LEGAL = 'Legal',
 }
@@ -24,9 +24,9 @@ export enum Intensidad {
 }
 
 export enum Tendencia {
-  'Mucha mejora' = 'Mucho mejora',
+  'Mejora mucho' = 'Mejora mucho',
   'Mejora' = 'Mejora',
-  'Mantiene' = 'Mantiene',
-  'Empeoramiento' = 'Empeoramiento',
-  'Peor' = 'Peor',
+  'Se mantiene' = 'Se mantiene',
+  'Empeora' = 'Empeora',
+  'Empeora Mucho' = 'Empeora Mucho',
 }

@@ -57,11 +57,11 @@ export const mapTendenciaToValue = (key: Tendencia, area: Area): number => {
     case Area.POLITICO:
     case Area.SOCIAL:
       dict = {
-        [Tendencia['Mucha mejora']]: 5,
+        [Tendencia['Mejora mucho']]: 5,
         [Tendencia.Mejora]: 4,
-        [Tendencia.Mantiene]: 3,
-        [Tendencia.Empeoramiento]: 2,
-        [Tendencia.Peor]: 1,
+        [Tendencia['Se mantiene']]: 3,
+        [Tendencia.Empeora]: 2,
+        [Tendencia['Empeora Mucho']]: 1,
       };
       break;
     case Area.ECONOMICO:
@@ -69,11 +69,11 @@ export const mapTendenciaToValue = (key: Tendencia, area: Area): number => {
     case Area.AMBIENTAL:
     case Area.LEGAL:
       dict = {
-        [Tendencia['Mucha mejora']]: 1,
+        [Tendencia['Mejora mucho']]: 1,
         [Tendencia.Mejora]: 2,
-        [Tendencia.Mantiene]: 3,
-        [Tendencia.Empeoramiento]: 4,
-        [Tendencia.Peor]: 5,
+        [Tendencia['Se mantiene']]: 3,
+        [Tendencia.Empeora]: 4,
+        [Tendencia['Empeora Mucho']]: 5,
       };
       break;
   }
