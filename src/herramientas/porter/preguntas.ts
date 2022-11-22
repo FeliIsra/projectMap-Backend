@@ -6,7 +6,7 @@ export class Preguntas {
     {
       id: 1,
       pregunta:
-        '¿En la industria en la que se quiere introducir, ya estan establecidos los competidores?',
+        '¿En la industria en la que se quiere introducir, ya están establecidos los competidores?',
     },
     {
       id: 2,
@@ -19,7 +19,7 @@ export class Preguntas {
     {
       id: 4,
       pregunta:
-        '¿Va a entrar en el mismo submercado que uno de los competidores?',
+        '¿Va a entrar en el mismo sub-mercado que uno de los competidores?',
     },
     { id: 5, pregunta: '¿La diversidad de competidores es alta?' },
     {
@@ -37,7 +37,7 @@ export class Preguntas {
     {
       id: 2,
       pregunta:
-        '¿Existe una escasez de clientes en su emprendimiento en comparacion con otros competidores en la industria? ',
+        '¿Existe una escasez de clientes en su emprendimiento en comparación con otros competidores en la industria? ',
     },
     { id: 3, pregunta: '¿Tiene dificultad para retener a sus clientes?' },
     { id: 4, pregunta: '¿El volumen de compra de sus clientes es alto?' },
@@ -57,21 +57,21 @@ export class Preguntas {
     {
       id: 1,
       pregunta:
-        '¿Hay pocos proveedores de las materias primas necesarias/personal para desarrollar su actividad economica?',
+        '¿Hay pocos proveedores de las materias primas necesarias/personal para desarrollar su actividad económica?',
     },
     {
       id: 2,
-      pregunta: '¿Hay mucha variacion en los precios de sus proveedores?',
+      pregunta: '¿Hay mucha variación en los precios de sus proveedores?',
     },
     {
       id: 3,
       pregunta:
-        '¿El perfil profesional requerido para realizar su actividad economica, es facil de encontrar?',
+        '¿El perfil profesional requerido para realizar su actividad económica, es fácil de encontrar?',
     },
     {
       id: 4,
       pregunta:
-        '¿Existe una falta de formacion profesional para el personal a contratar en el mercado?',
+        '¿Existe una falta de formación profesional para el personal a contratar en el mercado?',
     },
     {
       id: 5,
@@ -81,7 +81,7 @@ export class Preguntas {
     {
       id: 6,
       pregunta:
-        '¿Existen esfuerzos de investigacion y desarrollo (R&D) para mejorar las tecnologias en el ambito de sus proveedores?',
+        '¿Existen esfuerzos de investigación y desarrollo (R&D) para mejorar las tecnologías en el ámbito de sus proveedores?',
     },
   ];
 
@@ -108,7 +108,7 @@ export class Preguntas {
     {
       id: 6,
       pregunta:
-        '¿Existen chances de que nuevas tecnologias derriben las barreras de entradas como estan establecidadas en este momento?',
+        '¿Existen chances de que nuevas tecnologías derriben las barreras de entradas como están establecidas en este momento?',
     },
   ];
 
@@ -120,12 +120,12 @@ export class Preguntas {
     {
       id: 2,
       pregunta:
-        '¿Los productos sustitutos tienen un grado alto de innovacion en comparacion con sus productos?',
+        '¿Los productos sustitutos tienen un grado alto de innovación en comparación con sus productos?',
     },
     {
       id: 3,
       pregunta:
-        '¿Existe un interes en sus clientes de cambiarse a estos productos sustitutos?',
+        '¿Existe un interés en sus clientes de cambiarse a estos productos sustitutos?',
     },
     {
       id: 4,

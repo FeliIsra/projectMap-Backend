@@ -50,7 +50,7 @@ export class Preseeds {
     ),
     new Preesed(
       Area.OPORTUNIDAD,
-      'Posibilidad de creación de productos alternativos para atacar demografias similares ',
+      'Posibilidad de creación de productos alternativos para atacar demografías similares ',
       'Cambios mínimos en su producto pueden representar la apertura de nuevos mercados no representados actualmente. Esto puede ser desde cómo se presenta el producto (colores, forma), a cambios funcionales leves para apelar a nuevos clientes.',
     ),
     new Preesed(
