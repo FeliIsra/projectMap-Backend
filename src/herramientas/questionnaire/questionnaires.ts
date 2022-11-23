@@ -18,7 +18,7 @@ export class Questionnaires {
           right_answer: 3,
         },
         2: {
-          question: '¿Que es la digitalizacion?',
+          question: '¿Que es la digitalización?',
           answers: {
             1: 'No usar mas papel en las empresas',
             2: 'Una iniciativa de reciclaje',
@@ -30,8 +30,8 @@ export class Questionnaires {
           question: '¿Para que sirve digitalizar?',
           answers: {
             1: 'Funcionalmente para nada, pero esta bueno seguir los trends organizacionales',
-            2: 'Te permite organizar a tu empresa de una manera cuasi autonoma, resguardando el conocimiento en estructuras y no en personas',
-            3: 'Para resolver todos los problemas logisitcos de tu empresa',
+            2: 'Te permite organizar a tu empresa de una manera cuasi autónoma, resguardando el conocimiento en estructuras y no en personas',
+            3: 'Para resolver todos los problemas logísticos de tu empresa',
           },
           right_answer: 2,
         },
