@@ -2,8 +2,8 @@ import { SituacionDelMercado } from './situacionDelMercado';
 import { SituacionDelProducto } from './situacionDelProducto';
 
 export enum Estrategia {
-  PENETRACION = 'Penetración',
-  DIVERSIFICAICON = 'Diversificación',
+  PENETRACION = 'Penetracion',
+  DIVERSIFICAICON = 'Diversificacion',
   DESARROLLO_DE_PRODUCTO = 'Desarrollo de Producto',
   DESARROLLO_DE_MERCADO = 'Desarrollo de Mercado',
 }
