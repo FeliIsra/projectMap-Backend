@@ -204,7 +204,7 @@ export class Consejos {
     },
     6: {
       consejo:
-        'Analice la posibilidad de reemplazar sus productos o servicios por los que tienen mayor grado de innovacion o novedad.',
+        'Analice la posibilidad de reemplazar sus productos o servicios por los que tienen mayor grado de innovación o novedad.',
       pregunta: 2,
     },
     7: {
