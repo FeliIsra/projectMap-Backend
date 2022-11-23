@@ -116,7 +116,7 @@ export class Questionnaires {
             2: 'Sus integrantes y sus deseos.',
             3: 'Los stakeholders inversores de las compañías.',
           },
-          right_answer: 2,
+          right_answer: 1,
         },
         3: {
           question: '¿Que es cierto de las organizaciones según el texto?',
@@ -125,7 +125,7 @@ export class Questionnaires {
             2: 'Las organizaciones exitosas son exitosas porque tienen una estructura acorde a su rubro.',
             3: 'Las organizaciones son exitosas por la velocidad en la que implementan sus cambios.',
           },
-          right_answer: 3,
+          right_answer: 2,
         },
         4: {
           question: '¿Por qué se transforman las empresas?',
@@ -134,7 +134,7 @@ export class Questionnaires {
             2: 'Para dar una mejor imagen ante sus usuarios.',
             3: 'Para dar una mejor imagen ante sus inversores.',
           },
-          right_answer: 3,
+          right_answer: 1,
         },
       },
     },
