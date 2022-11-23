@@ -4,42 +4,42 @@ export class Consejos {
   static rivalidadEntreCompetidores = {
     1: {
       consejo:
-        'Mira satisfacer parte insatisfecha del mercado en el que está insertado',
+        'Concentrese en satisfacer la parte insatisfecha del mercado en el que se esta insertando.',
       pregunta: 1,
     },
     2: {
       consejo:
-        'Trate de aprender de sus competidores que hicieron que sean un éxito',
+        'Observe a sus competidores y cuales son los pasos que siguieron para llegar al exito, e imitelos aprendiendo de sus triunfos y derrotas.',
       pregunta: 1,
     },
     3: {
       consejo:
-        'Analizar la posibilidad de abrir tiendas en los alrededores de crear un polo de su clase y disfrutar de una demanda de su competidor no sabe',
+        'Analice la posibilidad de abrir nuevas sucursales en lugares donde su competidor no este presente para aprovechar demandas insatisfechas.',
       pregunta: 2,
     },
     4: {
       consejo:
-        'Trate de desarrollar reglas de buena conducta con sus competidores y si no es posible, trate de mantenerse a la vanguardia en relación con las ventajas competitivas',
+        'Trate de conectar con sus competidores y desarrollar reglas de buena conducta con los mismos. De no ser posible, trate de mantenerse a la vanguardia en relacion a las ventajas competitivas de sus productos.',
       pregunta: 3,
     },
     5: {
       consejo:
-        'Esté preparado para los precios y la comercialización de los conflictos',
+        'Este preparado para conflictos de precios y de espacios de comercializacion.',
       pregunta: 3,
     },
     6: {
       consejo:
-        'Desarrollar un grupo con miembros de su empresa y los competidores de las medidas adoptadas por las agencias gubernamentales',
+        'Genere espacios de conversacion con los miembros de su empresa y los de las empresas competidoras para enfrentar las medidas adoptadas por las agencias gubernamentales.',
       pregunta: 5,
     },
     7: {
       consejo:
-        'Tratar de establecer su posición en el primer lugar. Si el precio, por ejemplo, permanecer fiel a su estrategia y hacer cambios cuando sea necesario',
+        'Priorice el establecimiento de su posicion. Haga cambios manteniendose fiel a su estrategia general, pero el posicionamiento es clave para el exito.',
       pregunta: 5,
     },
     8: {
       consejo:
-        'A pesar de que el artículo no sea totalmente importante para usted, siempre en la búsqueda de nuevos competidores',
+        'Siempre este en la busqueda de nuevos competidores, aunque este articulo en cuestion no sea totalmente imporante.',
       pregunta: 5,
     },
   };
@@ -47,42 +47,42 @@ export class Consejos {
   static poderDeNegociacionConElCliente = {
     1: {
       consejo:
-        'Si siempre preocuparse de mantener el precio estándar, y cuando eso no es posible, explique los cambios',
+        'Intente mantener su precio estandar siempre que pueda, de no poder, explique sus cambios a sus clientes.',
       pregunta: 1,
     },
     2: {
       consejo:
-        'Piense acerca de cómo mejorar las encuestas de satisfacción de servicio al cliente e implementar mejoras en la lealtad del cliente',
+        'Piense cómo mejorar las encuestas de satisfacción de servicio al cliente e implementar mejoras en su servicio para cementar la lealtad de los clientes.',
       pregunta: 4,
     },
     3: {
       consejo:
-        'Invitar a los clientes a más conversaciones pr; oximas y los intentos de fidelidad',
+        'Acerquese a sus clientes e intente tener mas conversaciones. Aumente los intentos de fidelizacion.',
       pregunta: 5,
     },
     4: {
       consejo:
-        'Preocuparse de su proceso de producción y buscar siempre la reducción de costes para aumentar su margen de beneficio',
+        'Analice su proceso de produccion, busque reducir costos para aumentar su margen de ganancias.',
       pregunta: 1,
     },
     5: {
       consejo:
-        'Pensar en formas de colaboración de producción que reducen los costos y proporcionar más asequible para los clientes',
+        'Piense en formas alternativas de produccion para reducir costos, permitiendole a sus clientes adquirir sus productos mas baratos. Mantenta su margen de ganancia constante.',
       pregunta: 4,
     },
     6: {
       consejo:
-        'Siempre buscan la lealtad, ya que el costo de adquirir nuevos clientes debe ser planteada por las características de su mercado',
+        'El costo de adquirir nuevos clientes es mucho mayor que el de mantener los existentes. Busque la leantad sobre la explotacion de nuevos mercados.',
       pregunta: 2,
     },
     7: {
       consejo:
-        'Llame a sus clientes y hablar con ellos para el análisis en profundidad de su negocio y cómo ve su compañía',
+        'Comuniquese con sus clientes mas importantes para obtener su ayuda en analisar su negocio en profundidad y su vision en su compañia.',
       pregunta: 6,
     },
     8: {
       consejo:
-        'Siempre se sabe el coste de transferencia de llamadas, si se pone demasiado bajo, es probable que pierda clientela',
+        'Tenga cuidado al aumentar los precios. Dependiendo de la naturaleza de sus clientes estos cambios podrian generar perdidas de en su base.',
       pregunta: 5,
     },
   };
@@ -90,40 +90,40 @@ export class Consejos {
   static poderDeNegociacionConLosProveedores = {
     1: {
       consejo:
-        'Buscar nuevas opciones para los proveedores en otras geografías, mercados o sectores',
+        'Busque nuevas opciones para acercarse a nuevos mercados, geografias o sectores.',
       pregunta: 1,
     },
     2: {
       consejo:
-        'Aunque el tema no tiene mucha relevancia para su negocio, siempre vale la pena reloj de buenos proveedores',
+        'Aunque no es tan relevante para su negocio, buenas relaciones con sus proveedores siempre es un gran positivo.',
       pregunta: 3,
     },
     3: {
-      consejo: 'Buscar alternativas para no depender de dichas entradas',
+      consejo:
+        'Busque alternativas para no depender tan enormemente de sus proveedores.',
       pregunta: 5,
     },
     4: {
-      consejo:
-        'Cumplir con el supermercado Mercadona de red y cómo han logrado reducir los costos con sus proveedores',
+      consejo: 'Busque reducir los costos con sus proveedores o busque nuevos.',
       pregunta: 2,
     },
     5: {
       consejo:
-        'Haga una lista de proveedores y la búsqueda de las quejas y las indicaciones de la mejor y que la caída en el perfil de su empresa',
+        'Haga una lista de todos sus proveedores, analice pros y contras de los mismos y como su desaparicion de los mismos afectaria a su empresa.',
       pregunta: 6,
     },
     6: {
-      consejo: 'Tratar de establecer ya homogénea y contratos con proveedores',
+      consejo: 'Intente establecer contratos exclusivos con sus proveedores.',
       pregunta: 2,
     },
     7: {
       consejo:
-        'Haga una lista de las mejoras tecnológicas que le atraigan y enviarlo a sus proveedores',
+        'Investigue una lista de las mejoras tecnologicas que les parezcan relevantes y comuniquese con sus proveedores para hacerlas realidad.',
       pregunta: 3,
     },
     8: {
       consejo:
-        'Entender cuáles son las principales necesidades de sus proveedores y tratar de trabajar para ayudar a mejorar la calidad',
+        'Busque analizar las principales necesidades de sus proveedores y trate de trabajar para ayudar a mejorar la calidad de sus entradas.',
       pregunta: 4,
     },
   };
@@ -131,46 +131,47 @@ export class Consejos {
   static amenazaDeNuevosCompetidores = {
     1: {
       consejo:
-        'Estén atentos a la posibilidad de nuevas empresas surgen de forma rápida y robar una porción de su mercado de clientes',
+        'Este atento a la posibilidad de que nuevas empresas surgan rapido y roben una porcion de su mercado del cliente.',
       pregunta: 1,
     },
     2: {
       consejo:
-        'Considere si usted puede permitirse los costes financieros, operativos y estratégicos esta nueva entrada',
+        'Considere si usted puede permitirse los costoes financieros, operativos y estrategicos de esta nueva entrada.',
       pregunta: 3,
     },
     3: {
       consejo:
-        'Tenga en cuenta que cualquier nuevo participante probable que compita en zonas geográficas próximas',
+        'Tenga en cuenta la posibilidad de que cualquier nuevo participante compita en zonas geograficas cercanas.',
       pregunta: 5,
     },
     4: {
       consejo:
-        'Siempre buscar nuevas oportunidades para diversificar su negocio y trabajar en industrias menos competitivas',
+        'Este constantemente buscando oportunidades para diversificar su negocio y trabajar en industrias menos competitivas.',
       pregunta: 1,
     },
     5: {
       consejo:
-        'Estudiar la mejor manera de conseguir su trabajo en esta industria y planificar dinero a corto plazo para no perderse',
+        'Estudie como conseguir nuevos mercados en esta industria poniendole foco al corto plazo. No se pierda en planes a largo plazo.',
       pregunta: 3,
     },
     6: {
-      consejo: 'Usted está en un mercado muy competitivo, busca diversificar',
+      consejo:
+        'Su mercado es extremadamente competitivo. Diversifiquese urgentemente.',
       pregunta: 2,
     },
     7: {
       consejo:
-        'Empresas de contacto en el sector no se encontraron en otras regiones y exponen la oportunidad ',
+        'Busque empresas en su sector que no se encuentren en otras regiones y expongan posibles oportunidades de expansion.',
       pregunta: 5,
     },
     8: {
       consejo:
-        'Correr para conseguir esta patente, puede ser la diferencia entre su empresa tiene un nuevo competidor o no',
+        'Busque urgentemente conseguir esta patente, puede ser la diferencia entre tener que competir o monopolizar el mercado.',
       pregunta: 4,
     },
     9: {
       consejo:
-        'Siempre busque para las innovaciones y ventajas tecnológicas para mantenerse por delante en este mercado',
+        'Este al tanto de posibles innovaciones y ventajas tecnologicas para mantenerse por delante en este mercado, espercialmente si el mismo es competitivo.',
       pregunta: 6,
     },
   };
@@ -178,47 +179,47 @@ export class Consejos {
   static amenazaDeProductosSubstitutos = {
     1: {
       consejo:
-        'Analizar la posibilidad de utilizar estos sustitutos en su carta de productos o servicios',
+        'Analice la posibilidad de agregar estos posibles sustitutos a su carta de productos o servicios.',
       pregunta: 1,
     },
     2: {
       consejo:
-        'Pensar en maneras de hacer que sus clientes se quedan con usted. Los modelos de suscripción y el cebo y el anzuelo son muy interesantes',
+        'Piense en maneras de generar lealtad en su clientela. Investigue los metodos de subscripcion y de cebo y anzuelo.',
       pregunta: 6,
     },
     3: {
       consejo:
-        'Lo ideal en su caso es centrarse en la calidad y las ventajas competitivas',
+        'En su caso, centrese en la calidad de su producto y sus ventajas competitivas.',
       pregunta: 5,
     },
     4: {
       consejo:
-        'Ver la capacidad de innovar en su negocio para no quedarse atrás en relación con sustitutos',
+        'No se quede por detras en relacion con sus sustitutos, innove o genere valor con urgencia.',
       pregunta: 2,
     },
     5: {
       consejo:
-        'Buscar la lealtad. La satisfacción es la mejor manera de mantener a sus clientes',
+        'Nada es mejor que la satisfaccion para mantener a sus clientes. La manutencion de los mismos siempre sera mas barata que conseguir nuevos.',
       pregunta: 1,
     },
     6: {
       consejo:
-        'Ver la posibilidad de reemplazar sus productos / servicios por los que tienen un alto grado de innovación',
+        'Analice la posibilidad de reemplazar sus productos o servicios por los que tienen mayor grado de innovación o novedad.',
       pregunta: 2,
     },
     7: {
       consejo:
-        'Piense en maneras de mejorar la calidad de entrega de su producto o servicio',
+        'Busque urgentemente maneras de mejorar la calidad de su producto o servicio.',
       pregunta: 3,
     },
     8: {
       consejo:
-        'Cumplir con el caso de Zappos y cómo se las arreglaron para mantener a miles de clientes con una política de atención negrita',
+        'Investigue el caso de Zappos y de como hicieron para mantener miles de clientes con una excelente atencion al cliente.',
       pregunta: 1,
     },
     9: {
       consejo:
-        'Ver la capacidad de concentrarse en otras diferencias, como el precio, servicio o experiencia de marca',
+        'Observe la posibilidad de concentrarse en otras diferencias, como el precio, servicio o experiencia de la marca que provee.',
       pregunta: 6,
     },
   };

@@ -22,11 +22,11 @@ export enum Intensidad {
 }
 
 export enum Tendencia {
-  'Mucha mejora' = 'Mucho mejora',
-  'Mejora' = 'Mejora',
-  'Mantiene' = 'Mantiene',
-  'Empeoramiento' = 'Empeoramiento',
-  'Peor' = 'Peor',
+  MEJORA_MUCHO = 'Mejora mucho',
+  MEJORA = 'Mejora',
+  SE_MANTIENE = 'Se mantiene',
+  EMPEORA = 'Empeora',
+  EMPEORA_MUCHO = 'Empeora Mucho',
 }
 
 export enum Urgencia {

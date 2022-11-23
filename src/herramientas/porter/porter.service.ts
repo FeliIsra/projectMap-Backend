@@ -170,10 +170,10 @@ export class PorterService {
     }
 
     let puntajeTotal = 0;
-    const consejoGeneral = this.calcularConsejoGeneral(puntajeTotal, fuerza);
     preguntasConPuntaje.forEach(
       (value, _) => (puntajeTotal = puntajeTotal + value),
     );
+    const consejoGeneral = this.calcularConsejoGeneral(puntajeTotal, fuerza);
 
     return {
       fuerza: fuerza,
