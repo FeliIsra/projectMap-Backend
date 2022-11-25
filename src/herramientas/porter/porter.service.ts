@@ -188,15 +188,11 @@ export class PorterService {
 
   private calcularConsejoGeneral(puntajeTotal: number, fuerza: Fuerza) {
     if (puntajeTotal > 40)
-      return (
-        'Este índice es muy alto, lo que quiere decir que su estrategia debe siempre tener en cuenta la ' +
-        fuerza +
-        ', siga los consejos priorizados de acuerdo a su situación!'
-      );
+      return 'Este índice es muy alto, lo que quiere decir que su estrategia debe siempre tener en cuenta esta fuerza a la hora de planear un cambio o transformación. Siga los consejos priorizados de acuerdo a su situación.';
     else if (puntajeTotal > 30)
-      return 'Este índice es medio, lo que quiere decir que ese no es un punto prioritario en su estrategia, pero merece atención constante, siga los principales consejos propuestos.';
+      return 'Este índice es medio, lo que quiere decir que ese no es un punto prioritario en su estrategia, pero merece atención constante. Siga los principales consejos propuestos.';
     else
-      return 'La fuerza de ese índice es baja, lo que significa que éste no es un elemento prioritario en su estrategia.';
+      return 'La fuerza de este índice es baja, lo que significa que éste no es un elemento prioritario en su estrategia en este momento. Revise los consejos a continuación para aumentarlo.';
   }
 
   private formatPreguntas(preguntas: Pregunta[]) {
