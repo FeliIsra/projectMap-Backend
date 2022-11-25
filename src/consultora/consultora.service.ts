@@ -105,7 +105,10 @@ export class ConsultoraService {
     await this.userService.findUserByEmail(userEmail).then((user) => {
       this.checkUserIsConsultant(user);
 
-      return this.userService.assignProjects(user._id.toString(), projects);
+      return this.userService.replaceAssignProjects(
+        user._id.toString(),
+        projects,
+      );
     });
 
     return this.findById(consultoraId);
