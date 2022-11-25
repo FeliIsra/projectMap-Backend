@@ -1,8 +1,8 @@
 export enum Area {
-  POLITICO = 'Politico',
-  ECONOMICO = 'Economico',
+  POLITICO = 'Político',
+  ECONOMICO = 'Económico',
   SOCIAL = 'Social',
-  TECNOLOGICO = 'Tecnologico',
+  TECNOLOGICO = 'Tecnológico',
   AMBIENTAL = 'Ambiental',
   LEGAL = 'Legal',
 }
