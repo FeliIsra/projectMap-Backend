@@ -112,6 +112,20 @@ export class UserService {
     return userUpdated;
   }
 
+  async replaceAssignProjects(userId: string, projects: Project[]) {
+    const user = await this.userModel.findById(userId);
+
+    user.sharedProjects = projects;
+
+    const userUpdated = await new this.userModel(user).save();
+
+    projects.forEach((project) =>
+      new ProjectAssignedNotification(project).notifyUsers([user.email]),
+    );
+
+    return userUpdated;
+  }
+
   async removeProjects(userId: string, projectIds: string[]) {
     const user = await this.findById(userId);
 
