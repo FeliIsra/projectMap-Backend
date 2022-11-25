@@ -14,7 +14,7 @@ export class Preguntas {
     },
     {
       id: 3,
-      pregunta: '¿Ya existe una competencia explicita entre los competidores?',
+      pregunta: '¿Ya existe una competencia explícita entre los competidores?',
     },
     {
       id: 4,
